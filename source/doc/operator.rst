@@ -1,7 +1,7 @@
 .. _operator-page:
 
 *******************
-Operators
+运算符
 *******************
 
 Nextflow `operators` are methods that allow you to connect channels to each other or to transform values
