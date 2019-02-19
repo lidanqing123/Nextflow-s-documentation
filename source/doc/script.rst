@@ -470,8 +470,7 @@ See also: :ref:`Channel.fromPath <channel-path>`.
 逐行读取文件
 --------------------------
 
-In order to read a text file line by line you can use the method ``readLines()`` provided by the file object, which
-returns the file content as a list of strings::
+为了逐行读取文本文件，可以使用file对象提供的 ``readLines()`` 方法，该方法以字符串列表的形式返回文件内容::
 
     myFile = file('some/my_file.txt')
     allLines  = myFile.readLines()
@@ -480,17 +479,17 @@ returns the file content as a list of strings::
     }
 
 
-This can also be written in a more idiomatic syntax::
+这也可以用更习惯的语法来写::
 
     file('some/my_file.txt')
         .readLines()
         .each { println it }
 
 
-.. note:: The method ``readLines()`` reads all the file content at once and returns a list containing all the lines. For
-  this reason, do not use it to read big files.
+.. note::  方法readLines()一次读取所有文件内容，并返回一个包含所有行的列表。因此，不要使用它来读取大文件。
 
 
+要处理一个大文件，使用方法 ``eachLine``，每次只读取一行到内存中:
 To process a big file, use the method ``eachLine``, which reads only a single line at a time into memory::
 
     count = 0
@@ -500,14 +499,13 @@ To process a big file, use the method ``eachLine``, which reads only a single li
 
 
 
-Advanced file reading operations
+高级文件读取操作
 -----------------------------------
 
-The classes ``Reader`` and ``InputStream`` provide fine control for reading text and binary files, respectively._
+``Reader`` 和 ``InputStream`` 类分别为读取文本和二进制文件提供了良好的控制。
 
 
-The method ``newReader`` creates a `Reader <http://docs.oracle.com/javase/7/docs/api/java/io/Reader.html>`_ object
-for the given file that allows you to read the content as single characters, lines or arrays of characters::
+``newReader`` 方法为给定的文件创建一个 `Reader <http://docs.oracle.com/javase/7/docs/api/java/io/Reader.html>`_ 对象，允许您以单个字符、行或字符数组的形式读取内容::
 
     myReader = myFile.newReader()
     String line
@@ -517,8 +515,7 @@ for the given file that allows you to read the content as single characters, lin
     myReader.close()
 
 
-The method ``withReader`` works similarly, but automatically calls the ``close`` method for you when you have finished
-processing the file. So, the previous example can be written more simply as::
+``withReader`` 方法的工作原理与此类似，但是在完成文件处理后，它会自动为您调用close方法。因此，前面的例子可以更简单地写成::
 
     myFile.withReader {
         String line
@@ -527,11 +524,9 @@ processing the file. So, the previous example can be written more simply as::
         }
     }
 
-The methods ``newInputStream`` and ``withInputStream`` work similarly. The main difference is that they create an
-`InputStream <http://docs.oracle.com/javase/7/docs/api/java/io/InputStream.html>`_ object useful for writing binary
-data.
+``newInputStream`` 和 ``withInputStream`` 方法的工作原理类似。主要区别在于它们创建了一个 `InputStream <http://docs.oracle.com/javase/7/docs/api/java/io/InputStream.html>`_ 对象，该对象对于编写二进制数据非常有用。
 
-Here are the most important methods for reading from files:
+以下是读取文件的最重要方法:
 
 =============== ==============
 Name            Description
@@ -548,19 +543,17 @@ newInputStream  Returns an `InputStream <http://docs.oracle.com/javase/7/docs/ap
 =============== ==============
 
 
-Read the Java documentation for `Reader <http://docs.oracle.com/javase/7/docs/api/java/io/Reader.html>`_ and
-`InputStream <http://docs.oracle.com/javase/7/docs/api/java/io/InputStream.html>`_ classes to learn more about
-methods available for reading data from files.
+阅读 `Reader <http://docs.oracle.com/javase/7/docs/api/java/io/Reader.html>`_ 和
+`InputStream <http://docs.oracle.com/javase/7/docs/api/java/io/InputStream.html>`_ 类的Java文档，了解更多关于从文件中读取数据的方法.
 
 
-Advanced file writing operations
+
+高级文件写入操作
 ----------------------------------
 
-The ``Writer`` and ``OutputStream`` classes provide fine control for writing text and binary files,
-respectively, including low-level operations for single characters or bytes, and support for big files.
+``Writer`` 和 ``OutputStream`` 类分别为编写文本和二进制文件提供了良好的控制，包括对单个字符或字节的低级操作，以及对大文件的支持。
 
-For example, given two file objects ``sourceFile`` and ``targetFile``, the following code copies the
-first file's content into the second file, replacing all ``U`` characters with ``X``::
+例如，给定两个文件对象 ``sourceFile`` 和 ``targetFile`` ，下面的代码将第一个文件的内容复制到第二个文件中，用 ``X`` 替换所有的 ``U`` 字符::
 
     sourceFile.withReader { source ->
         targetFile.withWriter { target ->
@@ -572,7 +565,7 @@ first file's content into the second file, replacing all ``U`` characters with `
     }
 
 
-Here are the most important methods for writing to files:
+以下是写文件最重要的方法:
 
 =================== ==============
 Name                Description
@@ -589,34 +582,29 @@ withPrintWriter     Applies the specified closure to a `PrintWriter <http://docs
 withOutputStream    Applies the specified closure to an `OutputStream <http://docs.oracle.com/javase/7/docs/api/java/io/OutputStream.html>`_ object, closing it when finished
 =================== ==============
 
-Read the Java documentation for the `Writer <http://docs.oracle.com/javase/7/docs/api/java/io/Writer.html>`_,
-`PrintWriter <http://docs.oracle.com/javase/7/docs/api/java/io/PrintWriter.html>`_ and
-`OutputStream <http://docs.oracle.com/javase/7/docs/api/java/io/OutputStream.html>`_ classes to learn more about
-methods available for writing data to files.
+请阅读 `Writer <http://docs.oracle.com/javase/7/docs/api/java/io/Writer.html>`_,
+`PrintWriter <http://docs.oracle.com/javase/7/docs/api/java/io/PrintWriter.html>`_ 和
+`OutputStream <http://docs.oracle.com/javase/7/docs/api/java/io/OutputStream.html>`_ 类的Java文档，以了解更多关于将数据写入文件的方法。
 
 
-List directory content
+列出目录内容
 ----------------------
 
-Let's assume that you need to walk through a directory of your choice. You can define the ``myDir`` variable
-that points to it::
+让我们假设您需要遍历您选择的目录。您可以定义指向该目录的myDir变量::
 
     myDir = file('any/path')
 
-The simplest way to get a directory list is by using the methods ``list`` or ``listFiles``,
-which return a collection of first-level elements (files and directories) of a directory::
+获取目录列表最简单的方法是使用方法  ``list`` or ``listFiles`` ，它们返回目录的第一级元素(文件和目录)的集合::
 
     allFiles = myDir.list()
     for( def file : allFiles ) {
         println file
     }
 
-.. note:: The only difference between ``list`` and ``listFiles`` is that the former returns a list of strings, and the latter a
-   list of file objects that allow you to access file metadata, e.g. size, last modified time, etc.
+.. note::  ``list`` 和 ``listfile`` 之间的唯一区别是前者返回字符串列表，而后者返回文件对象列表，允许您访问文件元数据，例如大小、最后修改时间等。
 
 
-The ``eachFile`` method allows you to iterate through the first-level elements only
-(just like ``listFiles``). As with other `each-` methods, ``eachFiles`` takes a closure as a parameter::
+``eachFile`` 方法只允许遍历第一级元素(就像 ``listFiles`` 一样)。与其它 ``each-`` 方法, ``eachFiles`` 接受一个闭包作为一个参数::
 
     myDir.eachFile { item ->
         if( item.isFile() ) {
@@ -628,7 +616,7 @@ The ``eachFile`` method allows you to iterate through the first-level elements o
     }
 
 
-Several variants of the above method are available. See the table below for a complete list.
+可以使用上述方法的几个变体。有关完整列表，请参见下表。
 
 =================== ==================
 Name                Description
@@ -645,36 +633,35 @@ eachDirRecurse      Iterates through directories depth-first (regular files are 
 See also: Channel :ref:`channel-path` method.
 
 
-Create directories
+创建目录
 ------------------
 
-Given a file variable representing a nonexistent directory, like the following::
+给定一个表示不存在的目录的文件变量，如下所示::
 
   myDir = file('any/path')
 
-the method ``mkdir`` creates a directory at the given path, returning ``true`` if the directory is created
-successfully, and ``false`` otherwise::
+``mkdir`` 方法在给定路径上创建一个目录，如果目录创建成功，则返回 ``true`` ，否则返回 ``false`` ::
 
    result = myDir.mkdir()
    println result ? "OK" : "Cannot create directory: $myDir"
 
-.. note:: If the parent directories do not exist, the above method will fail and return ``false``.
+.. note::  如果父目录不存在，上述方法将失败并返回 ``false`` 。
 
-The method ``mkdirs`` creates the directory named by the file object, including any nonexistent parent directories::
+``mkdirs`` 方法创建由file对象命名的目录，包括任何不存在的父目录::
 
     myDir.mkdirs()
 
 
-Create links
+创建链接
 ------------
 
-Given a file, the method ``mklink`` creates a *file system link* for that file using the path specified as a parameter::
+给定一个文件， ``mklink`` 方法使用指定的路径作为参数，为该文件创建一个 *文件系统链接* ::
 
   myFile = file('/some/path/file.txt')
   myFile.mklink('/user/name/link-to-file.txt')
 
 
-Table of optional parameters:
+可选参数列表:
 
 ==================  ================
 Name                Description
@@ -684,20 +671,18 @@ overwrite           When ``true`` overwrites any existing file with the same nam
 ==================  ================
 
 
-Copy files
+复制文件
 ----------
 
-The method ``copyTo`` copies a file into a new file or into a directory, or copie a directory to a new
-directory::
+``copyTo`` 方法复制一个文件到一个新的文件或目录，或复制一个目录到一个新的目录::
 
   myFile.copyTo('new_name.txt')
 
 
-.. note:: If the target file already exists, it will be replaced by the new one. Note also that, if the target is
-  a directory, the source file will be copied into that directory, maintaining the file's original name.
+.. note::  如果目标文件已经存在，它将被新文件替换。还要注意，如果目标是一个目录，源文件将被复制到该目录中，并保持文件的原始名称。
 
 
-When the source file is a directory, all its content is copied to the target directory::
+当源文件为目录时，将其所有内容复制到目标目录::
 
   myDir = file('/some/path')
   myDir.copyTo('/some/new/path')
@@ -705,77 +690,65 @@ When the source file is a directory, all its content is copied to the target dir
 
   If the target path does not exist, it will be created automatically.
 
-.. tip:: The ``copyTo`` method mimics the semantics of the Linux command ``cp -r <source> <target>``, with the
-         following caveat: While Linux tools often treat paths ending with a slash (e.g. ``/some/path/name/``)
-         as directories, and those not (e.g. ``/some/path/name``) as regular files, Nextflow (due to its use of
-         the Java files API) views both these paths as the same file system object. If the path exists, it is
-         handled according to its actual type (i.e. as a regular file or as a directory). If the path does not
-         exist, it is treated as a regular file, with any missing parent directories created automatically.
+.. tip::   ``copyTo`` 方法模仿Linux命令 ``cp -r <source> <target>`` 的语义，但有以下几点需要注意: 虽然Linux工具通常将以斜杠结尾的路径(例如 ``/some/path/name/`` )视为目录，而将不以斜杠结尾的路径(例如, ``/some/path/name`` )视为常规文件，但Nextflow(由于使用了Java files API)将这两条路径视为相同的文件系统对象.  如果路径存在，则根据其实际类型(即作为常规文件或目录)来处理它。如果该路径不存在，则将其视为常规文件，并自动创建任何缺失的父目录。
 
 
 
-Move files
+移动文件
 ----------
 
-You can move a file by using the method ``moveTo``::
+你可以使用 ``moveTo`` 方法移动一个文件::
 
   myFile = file('/some/path/file.txt')
   myFile.moveTo('/another/path/new_file.txt')
 
 
-.. note:: When a file with the same name as the target already exists, it will be replaced by the source. Note
-          also that, when the target is a directory, the file will be moved to (or within) that directory,
-          maintaining the file's original name.
+.. note::  当与目标同名的文件已经存在时，它将被源文件替换。还要注意，当目标是一个目录时，文件将被移动到(或在)该目录中，并保持文件的原始名称。
 
-When the source is a directory, all the directory content is moved to the target directory::
+当源为目录时，将目录内容全部移动到目标目录::
 
   myDir = file('/any/dir_a')
   myDir.moveTo('/any/dir_b')
 
 
-Please note that the result of the above example depends on the existence of the target directory. If the target
-directory exists, the source is moved into the target directory, resulting in the path::
+请注意，上面示例的结果取决于目标目录的存在。如果目标目录存在，则将源移动到目标目录中，结果为路径::
 
   /any/dir_b/dir_a
 
-If the target directory does not exist, the source is just renamed to the target name, resulting in the path::
+如果目标目录不存在，则将源重命名为目标名称，结果是路径::
 
   /any/dir_b
 
 
-.. tip:: The ``moveTo`` method mimics the semantics of the Linux command ``mv <source> <target>``, with the
-         same caveat as that given for ``copyTo``, above.
+.. tip::  ``moveTo`` 方法模仿了Linux命令 ``mv <source> <target>`` 的语义，与上面针对 ``copyTo`` 给出的警告相同。
 
 
-Rename files
+重命名文件
 ------------
 
-You can rename a file or directory by simply using the ``renameTo`` file method::
+你可以使用 ``renameTo`` file方法重命名一个文件或目录::
 
   myFile = file('my_file.txt')
   myFile.renameTo('new_file_name.txt')
 
 
-Delete files
+删除文件
 ------------
 
-The file method ``delete`` deletes the file or directory at the given path, returning ``true`` if the
-operation succeeds, and ``false`` otherwise::
+file方法 ``delete`` 删除给定路径上的文件或目录，如果操作成功，返回 ``true`` ，否则返回 ``false`` ::
 
   myFile = file('some/file.txt')
   result = myFile.delete
   println result ? "OK" : "Can delete: $myFile"
 
 
-.. note:: This method deletes a directory ONLY if it does not contain any files or sub-directories. To
-          delete a directory and ALL its content (i.e. removing all the files and sub-directories it may
-          contain), use the method ``deleteDir``.
+.. note::  此方法仅在目录不包含任何文件或子目录时删除该目录。若要删除目录及其所有内容(即删除其中可能包含的所有文件和子目录)，请使用 ``deleteDir`` 方法。
 
 
-Check file attributes
+查看文件属性
 ---------------------
 
-The following methods can be used on a file variable created by using the ``file`` method:
+以下方法可用于使用 ``file`` 方法创建的文件变量:
 
 ==================  ================
 Name                Description
@@ -795,94 +768,86 @@ lastModified        Returns the file last modified timestamp i.e. a long as Linu
 ==================  ================
 
 
-For example, the following line prints a file name and size::
+例如，下面一行打印一个文件名和大小::
 
   println "File ${myFile.getName() size: ${myFile.size()}"
 
 
 
-Get and modify file permissions
+获取和修改文件权限
 -------------------------------
 
-Given a file variable representing a file (or directory), the method ``getPermissions`` returns a
-9-character string representing the file's permissions using the
-`Linux symbolic notation <http://en.wikipedia.org/wiki/File_system_permissions#Symbolic_notation>`_
-e.g. ``rw-rw-r--``::
+给定一个代表文件(或目录)的文件变量， ``getPermissions`` 方法返回一个9个字符的字符串，该字符串使用 `Linux symbolic notation <http://en.wikipedia.org/wiki/File_system_permissions#Symbolic_notation>`_ 表示文件的权限，例如: ``rw-rw-r——`` ::
 
     permissions = myFile.getPermissions()
 
 
-Similarly, the method ``setPermissions`` sets the file's permissions using the same notation::
+类似地， ``setPermissions`` 方法使用相同的符号设置文件的权限::
 
     myFile.setPermissions('rwxr-xr-x')
 
 
-A second version of the ``setPermissions`` method sets a file's permissions given three digits representing,
-respectively, the `owner`, `group` and `other` permissions::
+``setPermissions`` 方法的第二个方式 通过给定三个数字来设置文件权限，分别表示 `owner`, `group` 和 `other` 权限::
 
     myFile.setPermissions(7,5,5)
 
 
-Learn more about `File permissions numeric notation <http://en.wikipedia.org/wiki/File_system_permissions#Numeric_notation>`_.
+了解有关 `文件权限数字符号 <http://en.wikipedia.org/wiki/File_system_permissions#Numeric_notation>`_ 的更多信息.
 
-HTTP/FTP files
+HTTP - FTP文件
 --------------
 
-Nextflow provides transparent integration of HTTP/S and FTP protocols for handling remote resources
-as local file system objects. Simply specify the resource URL as the argument of the `file` object::
+Nextflow提供了HTTP/S和FTP协议的透明集成，用于将远程资源作为本地文件系统对象处理。简单地指定资源URL作为文件对象的参数::
 
     pdb = file('http://files.rcsb.org/header/5FID.pdb')
 
-Then, you can access it as a local file as described in the previous sections::
+然后，你可以将它作为本地文件访问，就像之前的章节所描述的那样::
 
     println pdb.text
 
-The above one-liner prints the content of the remote PDB file. Previous sections provide code examples
-showing how to stream or copy the content of files.
+上面的一行程序打印远程PDB文件的内容。前面的sections提供了代码示例，展示了如何流化或复制文件的内容。
 
-.. note:: Write and list operations are not supported for HTTP/S and FTP files.
+.. note::  HTTP/S和FTP文件不支持写入和列表操作。
 
 
-Counting records
+Records计数
 ----------------
 
 countLines
 ^^^^^^^^^^
 
-The ``countLines`` methods counts the lines in a text files.
+``countLines`` 方法对文本文件中的行进行计数。
+
 ::
 
     def sample = file('/data/sample.txt')
     println sample.countLines()
 
 
-Files whose name ends with the ``.gz`` suffix are expected to be GZIP compressed and
-automatically uncompressed.
+名称以 ``.gz`` 后缀结尾的文件将被认为是GZIP压缩格式, 并自动解压。
 
 countFasta
 ^^^^^^^^^^
 
-The ``countFasta`` method counts the number of records in `FASTA <https://en.wikipedia.org/wiki/FASTA_format>`_
-formatted file.
+``countFasta`` 方法计算  `FASTA <https://en.wikipedia.org/wiki/FASTA_format>`_ 格式文件中的记录数。
+
 ::
 
     def sample = file('/data/sample.fasta')
     println sample.countFasta()
 
-Files whose name ends with the ``.gz`` suffix are expected to be GZIP compressed and
-automatically uncompressed.
+名称以 ``.gz`` 后缀结尾的文件将被认为是GZIP压缩格式, 并自动解压。
 
 countFastq
 ^^^^^^^^^^
 
-The ``countFastq`` method counts the number of records in a `FASTQ <https://en.wikipedia.org/wiki/FASTQ_format>`_
-formatted file.
+``countFastq`` 方法计算 `FASTQ <https://en.wikipedia.org/wiki/FASTQ_format>`_ 格式文件中的记录数。
+
 ::
 
     def sample = file('/data/sample.fastq')
     println sample.countFastq()
 
-Files whose name ends with the ``.gz`` suffix are expected to be GZIP compressed and
-automatically uncompressed.
+名称以 ``.gz`` 后缀结尾的文件将被认为是GZIP压缩格式, 并自动解压。
 
 
