@@ -7,27 +7,21 @@ FAQ
 如何并行处理多个输入文件?
 --------------------------------------------------
 
-Q: *I have a collection of input files (e.g. carrots.fa, onions.fa, broccoli.fa). How can I specify that a process is performed on each input file in a parallel manner?*
+Q: *我有一组输入文件(e.g. carrots.fa, onions.fa, broccoli.fa). 如何指定每个输入文件以并行方式执行流程?*
 
-A: The idea here is to create a ``channel`` that will trigger a process
-execution for each of your files. First define a parameter that specifies where
-the input files are:
+A:  这里的想法是创建一个 ``channel`` ，它将触发每个文件的进程执行。首先定义一个参数，指定输入文件的位置:
 
 ::
 
     params.input = "data/*.fa"
 
-Each of the files in the data directory can be made into a channel with:
+数据目录中的每一个文件都可以被做成一个通道:
 
 ::
 
     vegetable_datasets = Channel.fromPath(params.input)
 
-From here, each time the variable ``vegetable_datasets`` is called as an
-input to a process, the process will be performed on each of the files
-in the vegetable datasets. For example, each input file may contain a
-collection of unaligned sequences. We can specify a process to align
-them as follows:
+从这里开始，每当将变量 ``vegetable_dataset`` 作为process的输入调用时，该process将对vegetable datasets中的每个文件执行。例如，每个输入文件可能包含一组未对齐的序列。我们可以指定一个process来对它们进行对齐, 如下:
 
 ::
 
@@ -44,26 +38,23 @@ them as follows:
         """
     }
 
-This would result in the alignment of the three vegetable fasta files
-into ``carrots.aln``, ``onions.aln`` and ``broccoli.aln``.
+这里将生成三个vegetable fasta files的对齐结果文件 ``carrots.aln``, ``onions.aln`` 和 ``broccoli.aln``.
 
-These aligned files are now in the channel ``vegetable_alns`` and can be
-used as input for a further process.
+这些对齐的文件现在位于channel ``vegetable_alns`` 中，可以用作进一步process的输入。
+
 
 如何根据文件名获得唯一的ID ?
 ------------------------------------------------
 
-*Q: How do I get a unique identifier based on a dataset file names (e.g. broccoli from broccoli.fa) and have the results going to a specific folder (e.g. results/broccoli/)?*
+*Q: 如何获得基于数据集文件名(e.g. broccoli from broccoli.fa)的唯一标识符，并将结果保存到特定文件夹(e.g. results/broccoli/)?*
 
-A: First we can specify a results directory as shown below:
+A: 首先，我们可以指定一个结果目录如下所示:
 
 ::
 
     results_path = $PWD/results
 
-The best way to manage this is to have the channel emit a tuple
-containing both the file base name (``broccoli``) and the full file path
-(``data/broccoli.fa``):
+最好的实现方法是让 ``channel`` 发出一个元组，其中包含文件名( ``broccoli`` )和完整的文件路径( ``data/broccoli.fa`` ):
 
 ::
 
@@ -71,8 +62,7 @@ containing both the file base name (``broccoli``) and the full file path
                     .fromPath(params.input)
                     .map { file -> tuple(file.baseName, file) }
 
-And in the process we can then reference these variables (``datasetID``
-and ``datasetFile``):
+在这个process中我们可以引用这些变量( ``datasetID`` 和 ``datasetFile`` ):
 
 ::
 
@@ -101,24 +91,24 @@ If the input file has multiple extensions (e.g. ``brocolli.tar.gz``), you will w
 如何多次使用同一 ``channel`` ?
 ---------------------------------------------
 
-*Q: Can a channel be used in two input statements? For example, I want carrots.fa to be aligned by both ClustalW and T-Coffee.*
+*Q: 一个channel可以在两个输入语句中使用吗? 例如, 我想同时使用ClustalW and T-Coffee 来对carrots.fa做比对.*
 
 
-A: A channel can be consumed only by one process or operator (except if channel only ever contains one item). You must
-duplicate a channel before calling it as an input in different processes.
-First we create the channel emitting the input files:
+A: 一个channel只能由一个process或operator使用(除非channel只包含一个项)。在将channel调用为不同processes的输入之前，必须复制该channel。
+
+首先创建输入文件的channel:
 
 ::
 
     vegetable_datasets = Channel.fromPath(params.input)
 
-Next we can split it into two channels by using the :ref:`operator-into` operator:
+接下来，我们可以使用 :ref:`operator-into` 操作符将其分成两个channels:
 
 ::
 
     vegetable_datasets.into { datasets_clustalw; datasets_tcoffee }
 
-Then we can define a process for aligning the datasets with *ClustalW*:
+然后我们可以定义一个用 *ClustalW* 对齐数据集的process:
 
 ::
 
@@ -135,7 +125,7 @@ Then we can define a process for aligning the datasets with *ClustalW*:
         """
     }
 
-And a process for aligning the datasets with *T-Coffee*:
+和一个用 *T-Coffee* 对齐数据集的process:
 
 ::
 
@@ -152,29 +142,20 @@ And a process for aligning the datasets with *T-Coffee*:
         """
     }
 
-The upside of splitting the channels is that given our three unaligned
-fasta files (``broccoli.fa``, ``onion.fa`` and ``carrots.fa``) six
-alignment processes (three x ClustalW) + (three x T-Coffee) will be
-executed as parallel processes.
+分割通道的好处是，给定我们的三个未对齐的fasta文件(``broccoli.fa``, ``onion.fa`` and ``carrots.fa``)，六个对齐processes (three x ClustalW) + (three x T-Coffee) 将作为并行进程执行。
 
 
 如何调用自定义脚本和工具?
 -----------------------------------------
 
-*Q: I have executables in my code, how should I call them in Nextflow?*
+*Q: 我的代码中有可执行程序，我应该如何在Nextflow中调用它们?*
 
-A: Nextflow will automatically add the directory ``bin`` into the ``PATH``
-environmental variable. So therefore any executable in the ``bin``
-folder of a Nextflow pipeline can be called without the need to
-reference the full path.
+A: Nextflow将自动将目录 ``bin`` 添加到 ``PATH`` 环境变量中。因此，Nextflow pipeline可以调用 ``bin`` 文件夹中的任何可执行文件，而不需要引用完整的路径。
 
-For example, we may wish to reformat our *ClustalW* alignments from
-Question 3 into *PHYLIP* format. We will use the handy tool
-``esl-reformat`` for this task.
 
-First we place copy (or create a symlink to) the ``esl-reformat``
-executable to the project's bin folder. From above we see the *ClustalW*
-alignments are in the channel ``clustalw_alns``:
+例如，我们可能希望将问题3中的 *ClustalW* 对齐结果重新转换为 *PHYLIP* 格式。我们将使用工具 ``esl-reformat`` 来完成这项任务。
+
+首先，我们将esl-reformat可执行文件复制(或创建符号链接)到项目的bin文件夹。从上面我们可以看到ClustalW对齐结果在channel ``clustalw_alns`` 中:
 
 ::
 
@@ -207,8 +188,7 @@ alignments are in the channel ``clustalw_alns``:
 我如何在一个进程上迭代n次?
 -----------------------------------------
 
-To perform a process *n* times, we can specify the input to be
-``each x from y..z``. For example:
+要执行一个进程n次，我们可以指定input为 ``each x from y..z`` ,例如:
 
 ::
 
@@ -237,13 +217,11 @@ To perform a process *n* times, we can specify the input to be
 如何从进程中迭代n个文件?
 ------------------------------------------------------
 
-*Q: For example, I have 100 files emitted by a channel. I wish to perform one process where I iterate over each file inside the process.*
+*Q:  例如，我有100个文件, 都由一个channel发出。我希望执行一个process，在这个process中迭代每个文件。*
 
-A: The idea here to transform a channel emitting multiple items into a channel
-that will collect all files into a list object and produce that list as a single emission. We do this using the ``collect()`` operator. The process script would then be able to iterate over
-the files by using a simple for-loop.
+A:  这里的想法是将一个发送多个项(items)的channel转换为另一个channel，该通道将收集所有文件到一个列表对象中，并将该列表作为一个单独的发送(emission)。我们使用 ``collect()`` 操作符进行此操作。然后，process脚本可以使用简单的for循环遍历文件。
 
-This is also useful if all the items of a channel are required to be in the work directory.
+如果通道的所有项都需要位于work目录中，那么这也很有用。
 
 ::
 
@@ -270,9 +248,9 @@ This is also useful if all the items of a channel are required to be in the work
 如何使用Nextflow的特定版本?
 ------------------------------------------------------
 
-*Q: I need to specify a version of Nextflow to use, or I need to pull a snapshot release.*
+*Q:  我需要指定要使用的Nextflow版本，或者我需要拉出一个快照版本。*
 
-A: Sometimes it is necessary to use a different version of Nextflow for a specific feature or testing purposes. Nextflow is able to automatically pull versions when the ``NXF_VER`` environment variable is defined on the commandline. 
+A: 有时，为了特定的特性或测试目的，需要使用不同版本的Nextflow。当NXF_VER环境变量被定义在commandline上时，Nextflow可以自动进行转换。
 
 ::
 

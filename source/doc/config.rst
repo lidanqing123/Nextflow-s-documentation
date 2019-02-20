@@ -7,40 +7,30 @@
 配置文件
 ==================
 
-When a pipeline script is launched Nextflow looks for a file named ``nextflow.config`` in the current directory and
-in the script base directory (if it is not the same as the current directory). Finally it checks for the file
-``$HOME/.nextflow/config``.
+当启动pipeline脚本时，Nextflow在当前目录和脚本根目录(如果与当前目录不同)中查找名为 ``nextflow.config`` 的文件。最后,检查文件 ``$HOME/.nextflow/config`` 。
 
-When more than one on the above files exist they are merged, so that the settings in the first override the same ones
-that may appear in the second one, and so on.
+在上面的文件中，有多于一个的存在，就会被合并，所以第一个文件中的的设置会覆盖可能出现在第二个文件中的设置，以此类推。
 
-The default config file search mechanism can be extended proving an extra configuration file by using the command line
-option ``-c <config file>``.
+默认配置文件搜索机制可以通过使用命令行选项 ``-c <config file>`` 来扩展额外的配置文件。
 
-.. note:: It's worth noting that by doing this, the files ``nextflow.config`` and ``$HOME/.nextflow/config`` are not
-  ignored and they are merged as explained above.
+.. note::  值得注意的是，通过这样做，文件 ``nextflow.config`` 和 ``$HOME/.nextflow/config`` 不会被忽略，而是像上面解释的那样合并。
 
-.. tip:: If you want to ignore any default configuration files and use only the custom one use the command line option
-  ``-C <config file>``.
+.. tip::  如果您想忽略任何默认配置文件，只使用自定义配置文件，请使用命令行选项  ``-C <config file>``.
 
-Config syntax
+配置语法
 --------------
 
-A Nextflow configuration file is a simple text file containing a set of properties defined using the syntax::
+Nextflow配置文件是一个简单的文本文件，包含一组使用以下语法定义的属性::
 
   name = value
 
-Please note, string values need to be wrapped in quotation characters while numbers and boolean values (``true``, ``false``) do not.
-Also note that values are typed, meaning for example that, ``1`` is different from ``'1'``, since the first is interpreted
-as the number one, while the latter is interpreted as a string value.
+请注意，字符串值需要用引号括起来，而数字和布尔值( ``true`` 、 ``false`` )则不需要。还请注意，值是类型化的，这意味着，例如， ``1`` 不同于 ``'1'`` ，因为第一个值被解释为数字1，而后者被解释为字符串值。
 
 
-Config Variables
+配置变量
 ----------------
 
-Configuration properties can be used as variables in the configuration file itself, by using the usual
-``$propertyName`` or ``${expression}`` syntax.
-
+通过使用通常的 ``$propertyName`` 或 ``${expression}`` 语法，可以将配置属性用作配置文件本身中的变量.
 
 For example::
 
@@ -48,26 +38,20 @@ For example::
      anotherProp = "Hello $propertyOne"
      customPath = "$PATH:/my/app/folder"
 
-Please note, the usual rules for :ref:`string-interpolation` are applied, thus a string containing a variable
-reference must be wrapped in double-quote chars instead of single-quote chars.
+请注意, :ref:`string-interpolation` 的一般规则是适用的，因此包含变量引用的字符串必须用双引号括起来，而不是单引号。
 
-The same mechanism allows you to access environment variables defined in the hosting system. Any variable whose name is
-not defined in the Nextflow configuration file(s) is supposed to be a reference to an environment variable with that name.
-So, in the above example the property ``customPath`` is defined as the current system ``PATH`` to which
-the string ``/my/app/folder`` is appended.
+同样的机制可以让你访问在主机系统中定义的环境变量。在Nextflow配置文件中没有定义名称的一些变量都可能是对具有该名称的环境变量的引用。因此，在上面的示例中，属性 ``customPath`` 被定义为字符串 ``/my/app/folder`` 追加到当前系统的 ``PATH`` 上 。
 
-
-Config comments
+配置的注释
 ------------------
 
-Configuration files use the same conventions for comments used by the Groovy or Java programming languages. Thus, use ``//`` to comment
-a single line or ``/*`` .. ``*/`` to comment a block on multiple lines.
+配置文件和Groovy或Java编程语言使用的注释有相同的约定。因此，使用 ``//`` 注释一行或 ``/*`` .. ``*/`` 在多行注释一个块。
 
 
-Config include
+配置文件导入
 --------------
 
-A configuration file can include one or more configuration files using the keyword ``includeConfig``. For example::
+一个配置文件可以使用关键字 ``includeConfig`` 导入一个或多个配置文件。例如::
 
     process.executor = 'sge'
     process.queue = 'long'
@@ -75,15 +59,13 @@ A configuration file can include one or more configuration files using the keywo
 
     includeConfig 'path/foo.config'
 
-When a relative path is used, it is resolved against the actual location of the including file.
+当使用相对路径时，它根据包含文件的实际位置进行解析。
 
 
-Config scopes
-=============
+配置文件作用域
+===============
 
-Configuration settings can be organized in different scopes by dot prefixing the property names with a scope
-identifier or grouping the properties in the same scope using the curly brackets notation. This is shown in the
-following example::
+配置设置可以在不同的作用域中组织，方法是用点( ``.`` )连接作用域标识符前缀和属性名，或者使用花括号符号将相同作用域中的属性分组。如下例所示::
 
    alpha.x  = 1
    alpha.y  = 'string value..'
@@ -95,13 +77,12 @@ following example::
 
 
 
-Scope `env`
+`env` 域
 -----------
 
-The ``env`` scope allows the definition one or more variable that will be exported in the environment where the
-workflow tasks will be executed.
+``env`` 作用域允许定义一个或多个变量，这些变量将在执行workflow任务的环境中导出。
 
-Simply prefix your variable names with the ``env`` scope or surround them by curly brackets, as shown below::
+只需在变量名前面加上 ``env`` 作用域前缀或用大括号括起来，如下所示::
 
    env.ALPHA = 'some value'
    env.BETA = "$HOME/some/path"
@@ -112,11 +93,10 @@ Simply prefix your variable names with the ``env`` scope or surround them by cur
    }
 
 
-Scope `params`
+`params` 域
 --------------
 
-The ``params`` scope allows you to define parameters that will be accessible in the pipeline script. Simply prefix the
-parameter names with the ``params`` scope or surround them by curly brackets, as shown below::
+``params`` 作用域允许您定义在pipeline脚本中可访问的参数。只需在参数名前面加上 ``params`` 作用域前缀或用大括号括起来，如下所示::
 
      params.custom_param = 123
      params.another_param = 'string value .. '
@@ -132,13 +112,12 @@ parameter names with the ``params`` scope or surround them by curly brackets, as
 
 .. _config-process:
 
-Scope `process`
+`process` 域
 ---------------
 
-The ``process`` configuration scope allows you to provide the default configuration for the processes in your pipeline.
+``process`` 配置作用域允许您为pipeline中的process提供默认配置。
 
-You can specify here any property described in the :ref:`process directive<process-directives>` and the executor sections.
-For examples::
+您可以在这里指定  :ref:`process directive<process-directives>` 和executor部分中描述的任何属性。例子::
 
   process {
     executor='sge'
@@ -146,17 +125,15 @@ For examples::
     clusterOptions = '-pe smp 10 -l virtual_free=64G,h_rt=30:00:00'
   }
 
+通过使用此配置，pipeline中的所有process都将按指定的设置, 通过SGE集群执行。
 
-By using this configuration all processes in your pipeline will be executed through the SGE cluster, with the specified
-settings.
 
 .. _config-process-selectors:
 
-Process selectors
+Process选择器
 ^^^^^^^^^^^^^^^^^
 
-The ``withLabel`` selectors allow the configuration of all processes annotated with a :ref:`process-label` directive as
-shown below::
+``withLabel`` 选择器允许带有此标签( :ref:`process-label` )指令注释的所有进程使用此配置，如下所示::
 
     process {
         withLabel: big_mem {
@@ -166,11 +143,11 @@ shown below::
         }
     }
 
-The above configuration example assigns 16 cpus, 64 Gb of memory and the ``long`` queue to all processes annotated
-with the ``big_mem`` label.
+
+上面的配置示例为使用 ``big_mem`` 标签标注的所有进程分配了16个cpu、64 Gb内存和 ``long`` 队列。
 
 
-In the same manner, the ``withName`` selector allows the configuration of a specific process in your pipeline by its name.
+以同样的方式， ``withName`` 选择器允许通过名称配置pipeline中的特定process。
 For example::
 
     process {
@@ -181,17 +158,14 @@ For example::
         }
     }
 
-.. tip:: Either label and process names do not need to be enclosed with quote characters, provided the name
-  does include special characters (e.g. ``-``, ``!``, etc) or it's not a keyword or a built-in type identifier.
-  In case of doubt, you can enclose the label names or the process names with single or double quote characters.
+.. tip::  标签和进程名都不需要用引号括起来，前提是名称包含特殊字符(例如: ``-`` 、``!`` 等)，或者它不是关键字或内置类型标识符。如果有疑问，可以用单引号或双引号括起标签名或进程名。
 
 .. _config-selector-expressions:
 
-Selector expressions
+选择器表达式
 ^^^^^^^^^^^^^^^^^^^^
 
-Both label and process name selectors allow the use of a regular expression in order to apply the same configuration
-to all processes matching the specified pattern condition. For example::
+标签和进程名称选择器都允许使用正则表达式，以便对匹配指定模式条件的所有进程应用相同的配置。例如::
 
     process {
         withLabel: 'foo|bar' {
@@ -200,10 +174,9 @@ to all processes matching the specified pattern condition. For example::
         }
     }
 
-The above configuration snippet sets 2 cpus and 4 GB of memory to the processes annotated with with a label ``foo``
-and ``bar``.
+上面的配置片段为带有标签 ``foo`` 和 ``bar`` 注释的process设置了2个cpu和4 GB内存。
 
-A process selector can be negated prefixing it with the special character ``!``. For example::
+进程选择器可以用特殊字符 ``!`` 作为前缀进行否定。例如::
 
     process {
         withLabel: 'foo' { cpus = 2 }
@@ -211,21 +184,19 @@ A process selector can be negated prefixing it with the special character ``!``.
         withName: '!align.*' { queue = 'long' }
     }
 
-The above configuration snippet sets 2 cpus for the processes annotated with the ``foo`` label and 4 cpus to all processes
-*not* annotated with that label. Finally it sets the use of ``long`` queue to all process whose name does *not* start
-with ``align``.
+上面的配置片段为使用 ``foo`` 标签注释的process设置了2个cpu，为未使用该标签注释的所有process设置了4个cpu。最后, 它将不以 ``align`` 开头的所有process设置使用 ``long`` 队列.
+
 
 .. _config-selectors-priority:
 
-Selectors priority
+选择器的优先级
 ^^^^^^^^^^^^^^^^^^
 
-When mixing generic process configuration and selectors the following priority rules are applied (from lower to higher):
-
-1. Process generic configuration.
-2. Process specific directive defined in the workflow script.
-3. ``withLabel`` selector definition.
-4. ``withName`` selector definition.
+当混合通用流程配置和选择器时，应用以下优先级规则(从低到高):
+1. process通用配置。
+2. workflow脚本中定义的process特定指令。
+3. ``withLabel`` 选择器定义。
+4. ``withName`` 选择器定义。
 
 For example::
 
@@ -235,38 +206,36 @@ For example::
         withName: bar { cpus = 32 }
     }
 
-Using the above configuration snippet, all workflow processes use 4 cpus if not otherwise specified in the workflow
-script. Moreover processes annotated with the ``foo`` label use 8 cpus. Finally the process named ``bar``
-uses 32 cpus.
+使用上面的配置片段，如果workflow脚本中没有另外指定，那么所有workflow process都使用4个cpu。此外，用foo标签注释的process使用8个cpu。最后，名为bar的process使用32个cpu。
 
 
 .. _config-executor:
 
-Scope `executor`
+`executor` 域
 ----------------
 
-The ``executor`` configuration scope allows you to set the optional executor settings, listed in the following table.
+``executor`` 配置作用域允许您设置可选的executor设置，如下表所示。
 
 ===================== =====================
 Name                  Description
 ===================== =====================
-name                  The name of the executor to be used e.g. ``local``, ``sge``, etc.
-queueSize             The number of tasks the executor will handle in a parallel manner (default: ``100``).
-pollInterval          Determines how often a poll occurs to check for a process termination.
-dumpInterval          Determines how often the executor status is written in the application log file (default: ``5min``).
-queueStatInterval     Determines how often the queue status is fetched from the cluster system. This setting is used only by grid executors (default: ``1min``).
-exitReadTimeout       Determines how long the executor waits before return an error status when a process is terminated but the `exit` file does not exist or it is empty. This setting is used only by grid executors (default: ``270 sec``).
-killBatchSize         Determines the number of jobs that can be `killed` in a single command execution (default: ``100``).
-submitRateLimit       Determines the max rate of jobs that can be executed per time unit, for example ``'10 sec'`` eg. max 10 jobs per second (default: `unlimited`).
-perJobMemLimit        Specifies Platform LSF *per-job* memory limit mode. See :ref:`lsf-executor`.
-jobName               Determines the name of jobs submitted to the underlying cluster executor e.g. ``executor.jobName = { "$task.name - $task.hash" }`` .
-cpus                  The maximum number of CPUs made available by the underlying system (only used by the ``local`` executor).
-memory                The maximum amount of memory made available by the underlying system (only used by the ``local`` executor).
+name                  要使用的 executor 名字 e.g. ``local``, ``sge``, etc.
+queueSize              ``executor`` 将以并行方式处理的任务数量 (default: ``100``).
+pollInterval          确定为检查进程终止而进行轮询的频率。
+dumpInterval          确定executor状态在应用程序日志文件中写入的频率(默认值:5min)(default: ``5min``).
+queueStatInterval     确定从集群系统获取队列状态的频率。此设置仅供 grid executors 使用(默认值: ``1min``).
+exitReadTimeout       确定当进程终止但退出文件不存在或为空时，执行程序在返回错误状态之前等待多长时间。此设置仅供 grid executors 使用(默认值: ``270`` 秒).
+killBatchSize         确定在单个命令执行中可以杀死的作业的数量 (default: ``100``).
+submitRateLimit       确定每个时间单元可以执行的作业的最大速率. 例如: ``'10 sec'`` eg. 每秒最多10个作业(默认: ``unlimited``).
+perJobMemLimit        指定平台LSF的 *per-job* 内存限制模式. See :ref:`lsf-executor`.
+jobName               确定提交给底层集群执行程序的作业的名称 e.g. ``executor.jobName = { "$task.name - $task.hash" }`` .
+cpus                  底层系统提供的最大cpu数量(仅供 ``local`` executor使用).
+memory                底层系统提供的最大内存量(only used by the ``local`` executor).
 ===================== =====================
 
 
 
-The executor settings can be defined as shown below::
+``executor`` 设置可定义如下:::
 
     executor {
         name = 'sge'
@@ -275,8 +244,7 @@ The executor settings can be defined as shown below::
     }
 
 
-When using two (or more) different executors in your pipeline, you can specify their settings separately by prefixing
-the executor name with the symbol ``$`` and using it as special scope identifier. For example::
+在pipeline中使用两个(或多个)不同的executor时，可以通过在executor名称前面加上符号 ``$`` 并将其用作特殊的作用域标识符来分别指定它们的设置。例如::
 
   executor {
     $sge {
@@ -290,7 +258,7 @@ the executor name with the symbol ``$`` and using it as special scope identifier
     }
   }
 
-The above configuration example can be rewritten using the dot notation as shown below::
+上面的配置例子可以用点 ``.`` 表示法重写, 如下::
 
     executor.$sge.queueSize = 100
     executor.$sge.pollInterval = '30sec'
@@ -299,12 +267,12 @@ The above configuration example can be rewritten using the dot notation as shown
 
 .. _config-docker:
 
-Scope `docker`
+`docker` 域
 --------------
 
-The ``docker`` configuration scope controls how `Docker <http://www.docker.io>`_ containers are executed by Nextflow.
+``docker`` 配置作用域控制Nextflow如何执行 `docker <http://www.docker.io>`_ 容器。
 
-The following settings are available:
+以下设置是可用的:
 
 ================== ================
 Name                Description
@@ -323,8 +291,7 @@ engineOptions       This attribute can be used to provide any option supported b
 mountFlags          Add the specified flags to the volume mounts e.g. `mountFlags = 'ro,Z'`
 ================== ================
 
-The above options can be used by prefixing them with the ``docker`` scope or surrounding them by curly
-brackets, as shown below::
+上面的选项可以用 ``docker`` 作用域作为前缀，也可以用花括号括起来，如下所示::
 
     process.container = 'nextflow/examples'
 
@@ -365,10 +332,10 @@ Read :ref:`singularity-page` page to lean more how use Singularity containers wi
 
 .. _config-manifest:
 
-Scope `manifest`
+`manifest` 域
 ----------------
 
-The ``manifest`` configuration scope allows you to define some meta-data information needed when publishing your pipeline project on GitHub, BitBucket or GitLab, or when running your pipeline.
+``manifest`` 配置作用域允许您在GitHub、BitBucket或GitLab上发布pipeline项目或运行pipeline时定义所需的一些meta-data信息。
 
 The following settings are available:
 
@@ -385,8 +352,7 @@ nextflowVersion     Minimum required Nextflow version.
 version             Project version number.
 ================== ================
 
-The above options can be used by prefixing them with the ``manifest`` scope or surrounding them by curly
-brackets. For example::
+上面的选项可以通过在它们前面加上 ``manifest`` 作用域或在它们周围加上花括号来使用。例如::
 
     manifest {
         homePage = 'http://foo.com'
@@ -399,11 +365,11 @@ brackets. For example::
 To learn how to publish your pipeline on GitHub, BitBucket or GitLab code repositories read :ref:`sharing-page`
 documentation page.
 
-Nextflow version
+Nextflow 版本
 ^^^^^^^^^^^^^^^^
 
-The ``nextflowVersion`` setting allows you to specify a minimum required version to run the pipeline.
-This may be useful to ensure that a specific version is used::
+``nextflowVersion`` 设置允许您指定运行pipeline所需的最小版本。
+下面的命令可能有助于您确保使用特定的版本::
 
     nextflowVersion = '1.2.3'        // exact match
     nextflowVersion = '1.2+'         // 1.2 or later (excluding 2 and later)
@@ -415,25 +381,24 @@ This may be useful to ensure that a specific version is used::
 
 .. _config-trace:
 
-Scope `trace`
+`trace` 域
 -------------
 
-The ``trace`` scope allows you to control the layout of the execution trace file generated by Nextflow.
+``trace`` 作用域允许您控制由Nextflow生成的执行跟踪文件的布局。
 
-The following settings are available:
+可用的设置包括:
 
 ================== ================
 Name                Description
 ================== ================
-enabled             When ``true`` turns on the generation of the execution trace report file (default: ``false``).
-fields              Comma separated list of fields to be included in the report. The available fields are listed at :ref:`this page <trace-fields>`
-file                Trace file name (default: ``trace.txt``).
-sep                 Character used to separate values in each row (default: ``\t``).
-raw                 When ``true`` turns on raw number report generation i.e. date and time are reported as milliseconds and memory as number of bytes
+enabled             当为 ``true`` 时，生成执行跟踪报告文件 (default: ``false``).
+fields              报告中要包含的字段的逗号分隔列表。可用字段列在 :ref:`this page <trace-fields>`
+file                跟踪文件的名字 (default: ``trace.txt``).
+sep                 用于分隔每行中的值的字符 (default: ``\t``).
+raw                 当为 ``true``, 报告生成时使用原始数字，即日期和时间报告为毫秒，内存报告为字节数
 ================== ================
 
-The above options can be used by prefixing them with the ``trace`` scope or surrounding them by curly
-brackets. For example::
+上面的选项可以通过在它们前面加上 ``trace`` 作用域或在它们周围加上花括号来使用。例如::
 
     trace {
         enabled = true
@@ -550,19 +515,18 @@ spotPrice                   Price bid for spot/preemptive instances launched whi
 
 .. _config-conda:
 
-Scope `conda`
+`conda` 域
 -------------
 
-The ``conda`` scope allows for the definition of the configuration settings that control the creation of a Conda environment
-by the Conda package manager.
+``conda`` 作用域允许定义由conda包管理器控制conda环境创建的配置设置。
 
-The following settings are available:
+以下设置是可用的:
 
 ================== ================
 Name                Description
 ================== ================
-cacheDir            Defines the path where Conda environments are stored. When using a compute cluster make sure to provide a shared file system path accessible from all computing nodes.
-createTimeout       Defines the amount of time the Conda environment creation can last. The creation process is terminated when the timeout is exceeded (default: ``20 min``).
+cacheDir            定义存储Conda环境的路径。在使用计算集群时，请确保提供可从所有计算节点访问的共享文件系统路径。
+createTimeout       定义Conda环境创建可以持续的时间。当超过超时时，创建过程将终止(默认值: ``20min``).
 ================== ================
 
 
@@ -599,10 +563,10 @@ See the :ref:`k8s-page` documentation for more details.
 
 .. _config-timeline:
 
-Scope `timeline`
+`timeline` 域
 ----------------
 
-The ``timeline`` scope allows you to enable/disable the processes execution timeline report generated by Nextflow.
+``timeline`` 作用域允许您启用/禁用Nextflow生成的流程执行timeline报告。
 
 The following settings are available:
 
@@ -653,11 +617,10 @@ For example, the following snippet shows how to configure Nextflow to send email
 
 .. _config-notification:
 
-Scope `notification`
+`notification` 域
 --------------------
 
-The ``notification`` scope allows you to define the automatic sending of a notification email message
-when the workflow execution terminates.
+``notification`` 作用域允许您在工作流执行结束时定义自动发送通知电子邮件消息。
 
 ================== ================
 Name                Description
@@ -710,11 +673,9 @@ url                The url where to send HTTP POST requests (default: ``http:loc
 Config profiles
 ===============
 
-Configuration files can contain the definition of one or more *profiles*. A profile is a set of configuration attributes
-that can be activated/chosen when launching a pipeline execution by using the ``-profile`` command line option.
+配置文件可以包含一个或多个概要文件(profile)的定义。概要文件(profile)是一组配置属性，当使用 ``-profile`` 命令行选项启动pipeline执行时，可以 激活/选择 这些配置属性。
 
-Configuration profiles are defined by using the special scope ``profiles`` which group the attributes that belong
-to the same profile using a common prefix. For example::
+配置profile是通过使用特殊的作用域 ``profiles`` 定义的，这些profiles使用公共前缀将属于同一profile的属性分组。例如::
 
     profiles {
 
@@ -737,20 +698,20 @@ to the same profile using a common prefix. For example::
     }
 
 
-This configuration defines three different profiles: ``standard``, ``cluster`` and ``cloud`` that set different process
-configuration strategies depending on the target runtime platform. By convention the ``standard`` profile is implicitly used
-when no other profile is specified by the user.
+此配置定义了三个不同的profile: ``standard``, ``cluster`` 和 ``cloud``, 它们根据目标运行时平台设置不同的process配置策略。
 
-.. tip:: Two or more configuration profiles can be specified by separating the profile names
-    with a comma character, for example::
+.. tip::  可以通过用逗号分隔profile名称来指定两个或多个profiles，例如:
+   :: 
+           
+      nextflow run <your script> -profile standard,cloud
 
-        nextflow run <your script> -profile standard,cloud
 
 The above feature requires version 0.28.x or higher.
 
-Environment variables
+环境变量
 =====================
 
+以下环境变量控制Nextflow运行时的配置及其使用的Java虚拟机。
 The following environment variables control the configuration of the Nextflow runtime and
 the Java virtual machine used by it.
 

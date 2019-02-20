@@ -93,42 +93,42 @@
 <li class="toctree-l1"><a class="reference internal" href="executor.html">Executors</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">配置</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id2">配置文件</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#config-syntax">Config syntax</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#config-variables">Config Variables</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#config-comments">Config comments</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#config-include">Config include</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">配置语法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">配置变量</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">配置的注释</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">配置文件导入</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#config-scopes">Config scopes</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#scope-env">Scope <cite>env</cite></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#scope-params">Scope <cite>params</cite></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#scope-process">Scope <cite>process</cite></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#process-selectors">Process selectors</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#selector-expressions">Selector expressions</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#selectors-priority">Selectors priority</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">配置文件作用域</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#env"><cite>env</cite> 域</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#params"><cite>params</cite> 域</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#process"><cite>process</cite> 域</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#config-process-selectors">Process选择器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#config-selector-expressions">选择器表达式</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#config-selectors-priority">选择器的优先级</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#scope-executor">Scope <cite>executor</cite></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#scope-docker">Scope <cite>docker</cite></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#executor"><cite>executor</cite> 域</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#docker"><cite>docker</cite> 域</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scope-singularity">Scope <cite>singularity</cite></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#scope-manifest">Scope <cite>manifest</cite></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#nextflow-version">Nextflow version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#manifest"><cite>manifest</cite> 域</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nextflow">Nextflow 版本</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#scope-trace">Scope <cite>trace</cite></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#trace"><cite>trace</cite> 域</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scope-aws">Scope <cite>aws</cite></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scope-cloud">Scope <cite>cloud</cite></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#scope-conda">Scope <cite>conda</cite></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#conda"><cite>conda</cite> 域</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scope-k8s">Scope <cite>k8s</cite></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#scope-timeline">Scope <cite>timeline</cite></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#timeline"><cite>timeline</cite> 域</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scope-mail">Scope <cite>mail</cite></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#scope-notification">Scope <cite>notification</cite></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#notification"><cite>notification</cite> 域</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scope-report">Scope <cite>report</cite></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scope-weblog">Scope <cite>weblog</cite></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#config-profiles">Config profiles</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#environment-variables">Environment variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id13">环境变量</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="awscloud.html">Amazon Cloud</a></li>
@@ -213,58 +213,44 @@
 <span id="id1"></span><h1>配置<a class="headerlink" href="#config-page" title="永久链接至标题">¶</a></h1>
 <div class="section" id="id2">
 <h2>配置文件<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
-<p>When a pipeline script is launched Nextflow looks for a file named <code class="docutils literal notranslate"><span class="pre">nextflow.config</span></code> in the current directory and
-in the script base directory (if it is not the same as the current directory). Finally it checks for the file
-<code class="docutils literal notranslate"><span class="pre">$HOME/.nextflow/config</span></code>.</p>
-<p>When more than one on the above files exist they are merged, so that the settings in the first override the same ones
-that may appear in the second one, and so on.</p>
-<p>The default config file search mechanism can be extended proving an extra configuration file by using the command line
-option <code class="docutils literal notranslate"><span class="pre">-c</span> <span class="pre">&lt;config</span> <span class="pre">file&gt;</span></code>.</p>
+<p>当启动pipeline脚本时，Nextflow在当前目录和脚本根目录(如果与当前目录不同)中查找名为 <code class="docutils literal notranslate"><span class="pre">nextflow.config</span></code> 的文件。最后,检查文件 <code class="docutils literal notranslate"><span class="pre">$HOME/.nextflow/config</span></code> 。</p>
+<p>在上面的文件中，有多于一个的存在，就会被合并，所以第一个文件中的的设置会覆盖可能出现在第二个文件中的设置，以此类推。</p>
+<p>默认配置文件搜索机制可以通过使用命令行选项 <code class="docutils literal notranslate"><span class="pre">-c</span> <span class="pre">&lt;config</span> <span class="pre">file&gt;</span></code> 来扩展额外的配置文件。</p>
 <div class="admonition note">
 <p class="first admonition-title">注解</p>
-<p class="last">It’s worth noting that by doing this, the files <code class="docutils literal notranslate"><span class="pre">nextflow.config</span></code> and <code class="docutils literal notranslate"><span class="pre">$HOME/.nextflow/config</span></code> are not
-ignored and they are merged as explained above.</p>
+<p class="last">值得注意的是，通过这样做，文件 <code class="docutils literal notranslate"><span class="pre">nextflow.config</span></code> 和 <code class="docutils literal notranslate"><span class="pre">$HOME/.nextflow/config</span></code> 不会被忽略，而是像上面解释的那样合并。</p>
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">小技巧</p>
-<p class="last">If you want to ignore any default configuration files and use only the custom one use the command line option
-<code class="docutils literal notranslate"><span class="pre">-C</span> <span class="pre">&lt;config</span> <span class="pre">file&gt;</span></code>.</p>
+<p class="last">如果您想忽略任何默认配置文件，只使用自定义配置文件，请使用命令行选项  <code class="docutils literal notranslate"><span class="pre">-C</span> <span class="pre">&lt;config</span> <span class="pre">file&gt;</span></code>.</p>
 </div>
-<div class="section" id="config-syntax">
-<h3>Config syntax<a class="headerlink" href="#config-syntax" title="永久链接至标题">¶</a></h3>
-<p>A Nextflow configuration file is a simple text file containing a set of properties defined using the syntax:</p>
+<div class="section" id="id3">
+<h3>配置语法<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>Nextflow配置文件是一个简单的文本文件，包含一组使用以下语法定义的属性:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="n">value</span>
 </pre></div>
 </div>
-<p>Please note, string values need to be wrapped in quotation characters while numbers and boolean values (<code class="docutils literal notranslate"><span class="pre">true</span></code>, <code class="docutils literal notranslate"><span class="pre">false</span></code>) do not.
-Also note that values are typed, meaning for example that, <code class="docutils literal notranslate"><span class="pre">1</span></code> is different from <code class="docutils literal notranslate"><span class="pre">'1'</span></code>, since the first is interpreted
-as the number one, while the latter is interpreted as a string value.</p>
+<p>请注意，字符串值需要用引号括起来，而数字和布尔值( <code class="docutils literal notranslate"><span class="pre">true</span></code> 、 <code class="docutils literal notranslate"><span class="pre">false</span></code> )则不需要。还请注意，值是类型化的，这意味着，例如， <code class="docutils literal notranslate"><span class="pre">1</span></code> 不同于 <code class="docutils literal notranslate"><span class="pre">'1'</span></code> ，因为第一个值被解释为数字1，而后者被解释为字符串值。</p>
 </div>
-<div class="section" id="config-variables">
-<h3>Config Variables<a class="headerlink" href="#config-variables" title="永久链接至标题">¶</a></h3>
-<p>Configuration properties can be used as variables in the configuration file itself, by using the usual
-<code class="docutils literal notranslate"><span class="pre">$propertyName</span></code> or <code class="docutils literal notranslate"><span class="pre">${expression}</span></code> syntax.</p>
+<div class="section" id="id4">
+<h3>配置变量<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>通过使用通常的 <code class="docutils literal notranslate"><span class="pre">$propertyName</span></code> 或 <code class="docutils literal notranslate"><span class="pre">${expression}</span></code> 语法，可以将配置属性用作配置文件本身中的变量.</p>
 <p>For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">propertyOne</span> <span class="o">=</span> <span class="s1">&#39;world&#39;</span>
 <span class="n">anotherProp</span> <span class="o">=</span> <span class="s2">&quot;Hello $propertyOne&quot;</span>
 <span class="n">customPath</span> <span class="o">=</span> <span class="s2">&quot;$PATH:/my/app/folder&quot;</span>
 </pre></div>
 </div>
-<p>Please note, the usual rules for <a class="reference internal" href="script.html#string-interpolation"><span class="std std-ref">字符串插值</span></a> are applied, thus a string containing a variable
-reference must be wrapped in double-quote chars instead of single-quote chars.</p>
-<p>The same mechanism allows you to access environment variables defined in the hosting system. Any variable whose name is
-not defined in the Nextflow configuration file(s) is supposed to be a reference to an environment variable with that name.
-So, in the above example the property <code class="docutils literal notranslate"><span class="pre">customPath</span></code> is defined as the current system <code class="docutils literal notranslate"><span class="pre">PATH</span></code> to which
-the string <code class="docutils literal notranslate"><span class="pre">/my/app/folder</span></code> is appended.</p>
+<p>请注意, <a class="reference internal" href="script.html#string-interpolation"><span class="std std-ref">字符串插值</span></a> 的一般规则是适用的，因此包含变量引用的字符串必须用双引号括起来，而不是单引号。</p>
+<p>同样的机制可以让你访问在主机系统中定义的环境变量。在Nextflow配置文件中没有定义名称的一些变量都可能是对具有该名称的环境变量的引用。因此，在上面的示例中，属性 <code class="docutils literal notranslate"><span class="pre">customPath</span></code> 被定义为字符串 <code class="docutils literal notranslate"><span class="pre">/my/app/folder</span></code> 追加到当前系统的 <code class="docutils literal notranslate"><span class="pre">PATH</span></code> 上 。</p>
 </div>
-<div class="section" id="config-comments">
-<h3>Config comments<a class="headerlink" href="#config-comments" title="永久链接至标题">¶</a></h3>
-<p>Configuration files use the same conventions for comments used by the Groovy or Java programming languages. Thus, use <code class="docutils literal notranslate"><span class="pre">//</span></code> to comment
-a single line or <code class="docutils literal notranslate"><span class="pre">/*</span></code> .. <code class="docutils literal notranslate"><span class="pre">*/</span></code> to comment a block on multiple lines.</p>
+<div class="section" id="id5">
+<h3>配置的注释<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>配置文件和Groovy或Java编程语言使用的注释有相同的约定。因此，使用 <code class="docutils literal notranslate"><span class="pre">//</span></code> 注释一行或 <code class="docutils literal notranslate"><span class="pre">/*</span></code> .. <code class="docutils literal notranslate"><span class="pre">*/</span></code> 在多行注释一个块。</p>
 </div>
-<div class="section" id="config-include">
-<h3>Config include<a class="headerlink" href="#config-include" title="永久链接至标题">¶</a></h3>
-<p>A configuration file can include one or more configuration files using the keyword <code class="docutils literal notranslate"><span class="pre">includeConfig</span></code>. For example:</p>
+<div class="section" id="id6">
+<h3>配置文件导入<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>一个配置文件可以使用关键字 <code class="docutils literal notranslate"><span class="pre">includeConfig</span></code> 导入一个或多个配置文件。例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span><span class="o">.</span><span class="n">executor</span> <span class="o">=</span> <span class="s1">&#39;sge&#39;</span>
 <span class="n">process</span><span class="o">.</span><span class="n">queue</span> <span class="o">=</span> <span class="s1">&#39;long&#39;</span>
 <span class="n">process</span><span class="o">.</span><span class="n">memory</span> <span class="o">=</span> <span class="s1">&#39;10G&#39;</span>
@@ -272,14 +258,12 @@ a single line or <code class="docutils literal notranslate"><span class="pre">/*
 <span class="n">includeConfig</span> <span class="s1">&#39;path/foo.config&#39;</span>
 </pre></div>
 </div>
-<p>When a relative path is used, it is resolved against the actual location of the including file.</p>
+<p>当使用相对路径时，它根据包含文件的实际位置进行解析。</p>
 </div>
 </div>
-<div class="section" id="config-scopes">
-<h2>Config scopes<a class="headerlink" href="#config-scopes" title="永久链接至标题">¶</a></h2>
-<p>Configuration settings can be organized in different scopes by dot prefixing the property names with a scope
-identifier or grouping the properties in the same scope using the curly brackets notation. This is shown in the
-following example:</p>
+<div class="section" id="id7">
+<h2>配置文件作用域<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<p>配置设置可以在不同的作用域中组织，方法是用点( <code class="docutils literal notranslate"><span class="pre">.</span></code> )连接作用域标识符前缀和属性名，或者使用花括号符号将相同作用域中的属性分组。如下例所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">alpha</span><span class="o">.</span><span class="n">x</span>  <span class="o">=</span> <span class="mi">1</span>
 <span class="n">alpha</span><span class="o">.</span><span class="n">y</span>  <span class="o">=</span> <span class="s1">&#39;string value..&#39;</span>
 
@@ -289,11 +273,10 @@ following example:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<div class="section" id="scope-env">
-<h3>Scope <cite>env</cite><a class="headerlink" href="#scope-env" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">env</span></code> scope allows the definition one or more variable that will be exported in the environment where the
-workflow tasks will be executed.</p>
-<p>Simply prefix your variable names with the <code class="docutils literal notranslate"><span class="pre">env</span></code> scope or surround them by curly brackets, as shown below:</p>
+<div class="section" id="env">
+<h3><cite>env</cite> 域<a class="headerlink" href="#env" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">env</span></code> 作用域允许定义一个或多个变量，这些变量将在执行workflow任务的环境中导出。</p>
+<p>只需在变量名前面加上 <code class="docutils literal notranslate"><span class="pre">env</span></code> 作用域前缀或用大括号括起来，如下所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">env</span><span class="o">.</span><span class="n">ALPHA</span> <span class="o">=</span> <span class="s1">&#39;some value&#39;</span>
 <span class="n">env</span><span class="o">.</span><span class="n">BETA</span> <span class="o">=</span> <span class="s2">&quot;$HOME/some/path&quot;</span>
 
@@ -304,10 +287,9 @@ workflow tasks will be executed.</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="scope-params">
-<h3>Scope <cite>params</cite><a class="headerlink" href="#scope-params" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">params</span></code> scope allows you to define parameters that will be accessible in the pipeline script. Simply prefix the
-parameter names with the <code class="docutils literal notranslate"><span class="pre">params</span></code> scope or surround them by curly brackets, as shown below:</p>
+<div class="section" id="params">
+<h3><cite>params</cite> 域<a class="headerlink" href="#params" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">params</span></code> 作用域允许您定义在pipeline脚本中可访问的参数。只需在参数名前面加上 <code class="docutils literal notranslate"><span class="pre">params</span></code> 作用域前缀或用大括号括起来，如下所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">params</span><span class="o">.</span><span class="n">custom_param</span> <span class="o">=</span> <span class="mi">123</span>
 <span class="n">params</span><span class="o">.</span><span class="n">another_param</span> <span class="o">=</span> <span class="s1">&#39;string value .. &#39;</span>
 
@@ -320,11 +302,10 @@ parameter names with the <code class="docutils literal notranslate"><span class=
 </pre></div>
 </div>
 </div>
-<div class="section" id="scope-process">
-<span id="config-process"></span><h3>Scope <cite>process</cite><a class="headerlink" href="#scope-process" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">process</span></code> configuration scope allows you to provide the default configuration for the processes in your pipeline.</p>
-<p>You can specify here any property described in the <a class="reference internal" href="process.html#process-directives"><span class="std std-ref">process directive</span></a> and the executor sections.
-For examples:</p>
+<div class="section" id="process">
+<span id="config-process"></span><h3><cite>process</cite> 域<a class="headerlink" href="#process" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">process</span></code> 配置作用域允许您为pipeline中的process提供默认配置。</p>
+<p>您可以在这里指定  <a class="reference internal" href="process.html#process-directives"><span class="std std-ref">process directive</span></a> 和executor部分中描述的任何属性。例子:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="p">{</span>
   <span class="n">executor</span><span class="o">=</span><span class="s1">&#39;sge&#39;</span>
   <span class="n">queue</span><span class="o">=</span><span class="s1">&#39;long&#39;</span>
@@ -332,12 +313,10 @@ For examples:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>By using this configuration all processes in your pipeline will be executed through the SGE cluster, with the specified
-settings.</p>
-<div class="section" id="process-selectors">
-<span id="config-process-selectors"></span><h4>Process selectors<a class="headerlink" href="#process-selectors" title="永久链接至标题">¶</a></h4>
-<p>The <code class="docutils literal notranslate"><span class="pre">withLabel</span></code> selectors allow the configuration of all processes annotated with a <a class="reference internal" href="process.html#process-label"><span class="std std-ref">label</span></a> directive as
-shown below:</p>
+<p>通过使用此配置，pipeline中的所有process都将按指定的设置, 通过SGE集群执行。</p>
+<div class="section" id="config-process-selectors">
+<span id="id8"></span><h4>Process选择器<a class="headerlink" href="#config-process-selectors" title="永久链接至标题">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">withLabel</span></code> 选择器允许带有此标签( <a class="reference internal" href="process.html#process-label"><span class="std std-ref">label</span></a> )指令注释的所有进程使用此配置，如下所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="p">{</span>
     <span class="n">withLabel</span><span class="p">:</span> <span class="n">big_mem</span> <span class="p">{</span>
         <span class="n">cpus</span> <span class="o">=</span> <span class="mi">16</span>
@@ -347,9 +326,8 @@ shown below:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The above configuration example assigns 16 cpus, 64 Gb of memory and the <code class="docutils literal notranslate"><span class="pre">long</span></code> queue to all processes annotated
-with the <code class="docutils literal notranslate"><span class="pre">big_mem</span></code> label.</p>
-<p>In the same manner, the <code class="docutils literal notranslate"><span class="pre">withName</span></code> selector allows the configuration of a specific process in your pipeline by its name.
+<p>上面的配置示例为使用 <code class="docutils literal notranslate"><span class="pre">big_mem</span></code> 标签标注的所有进程分配了16个cpu、64 Gb内存和 <code class="docutils literal notranslate"><span class="pre">long</span></code> 队列。</p>
+<p>以同样的方式， <code class="docutils literal notranslate"><span class="pre">withName</span></code> 选择器允许通过名称配置pipeline中的特定process。
 For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="p">{</span>
     <span class="n">withName</span><span class="p">:</span> <span class="n">hello</span> <span class="p">{</span>
@@ -362,15 +340,12 @@ For example:</p>
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">小技巧</p>
-<p class="last">Either label and process names do not need to be enclosed with quote characters, provided the name
-does include special characters (e.g. <code class="docutils literal notranslate"><span class="pre">-</span></code>, <code class="docutils literal notranslate"><span class="pre">!</span></code>, etc) or it’s not a keyword or a built-in type identifier.
-In case of doubt, you can enclose the label names or the process names with single or double quote characters.</p>
+<p class="last">标签和进程名都不需要用引号括起来，前提是名称包含特殊字符(例如: <code class="docutils literal notranslate"><span class="pre">-</span></code> 、<code class="docutils literal notranslate"><span class="pre">!</span></code> 等)，或者它不是关键字或内置类型标识符。如果有疑问，可以用单引号或双引号括起标签名或进程名。</p>
 </div>
 </div>
-<div class="section" id="selector-expressions">
-<span id="config-selector-expressions"></span><h4>Selector expressions<a class="headerlink" href="#selector-expressions" title="永久链接至标题">¶</a></h4>
-<p>Both label and process name selectors allow the use of a regular expression in order to apply the same configuration
-to all processes matching the specified pattern condition. For example:</p>
+<div class="section" id="config-selector-expressions">
+<span id="id9"></span><h4>选择器表达式<a class="headerlink" href="#config-selector-expressions" title="永久链接至标题">¶</a></h4>
+<p>标签和进程名称选择器都允许使用正则表达式，以便对匹配指定模式条件的所有进程应用相同的配置。例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="p">{</span>
     <span class="n">withLabel</span><span class="p">:</span> <span class="s1">&#39;foo|bar&#39;</span> <span class="p">{</span>
         <span class="n">cpus</span> <span class="o">=</span> <span class="mi">2</span>
@@ -379,9 +354,8 @@ to all processes matching the specified pattern condition. For example:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The above configuration snippet sets 2 cpus and 4 GB of memory to the processes annotated with with a label <code class="docutils literal notranslate"><span class="pre">foo</span></code>
-and <code class="docutils literal notranslate"><span class="pre">bar</span></code>.</p>
-<p>A process selector can be negated prefixing it with the special character <code class="docutils literal notranslate"><span class="pre">!</span></code>. For example:</p>
+<p>上面的配置片段为带有标签 <code class="docutils literal notranslate"><span class="pre">foo</span></code> 和 <code class="docutils literal notranslate"><span class="pre">bar</span></code> 注释的process设置了2个cpu和4 GB内存。</p>
+<p>进程选择器可以用特殊字符 <code class="docutils literal notranslate"><span class="pre">!</span></code> 作为前缀进行否定。例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="p">{</span>
     <span class="n">withLabel</span><span class="p">:</span> <span class="s1">&#39;foo&#39;</span> <span class="p">{</span> <span class="n">cpus</span> <span class="o">=</span> <span class="mi">2</span> <span class="p">}</span>
     <span class="n">withLabel</span><span class="p">:</span> <span class="s1">&#39;!foo&#39;</span> <span class="p">{</span> <span class="n">cpus</span> <span class="o">=</span> <span class="mi">4</span> <span class="p">}</span>
@@ -389,19 +363,15 @@ and <code class="docutils literal notranslate"><span class="pre">bar</span></cod
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The above configuration snippet sets 2 cpus for the processes annotated with the <code class="docutils literal notranslate"><span class="pre">foo</span></code> label and 4 cpus to all processes
-<em>not</em> annotated with that label. Finally it sets the use of <code class="docutils literal notranslate"><span class="pre">long</span></code> queue to all process whose name does <em>not</em> start
-with <code class="docutils literal notranslate"><span class="pre">align</span></code>.</p>
+<p>上面的配置片段为使用 <code class="docutils literal notranslate"><span class="pre">foo</span></code> 标签注释的process设置了2个cpu，为未使用该标签注释的所有process设置了4个cpu。最后, 它将不以 <code class="docutils literal notranslate"><span class="pre">align</span></code> 开头的所有process设置使用 <code class="docutils literal notranslate"><span class="pre">long</span></code> 队列.</p>
 </div>
-<div class="section" id="selectors-priority">
-<span id="config-selectors-priority"></span><h4>Selectors priority<a class="headerlink" href="#selectors-priority" title="永久链接至标题">¶</a></h4>
-<p>When mixing generic process configuration and selectors the following priority rules are applied (from lower to higher):</p>
-<ol class="arabic simple">
-<li>Process generic configuration.</li>
-<li>Process specific directive defined in the workflow script.</li>
-<li><code class="docutils literal notranslate"><span class="pre">withLabel</span></code> selector definition.</li>
-<li><code class="docutils literal notranslate"><span class="pre">withName</span></code> selector definition.</li>
-</ol>
+<div class="section" id="config-selectors-priority">
+<span id="id10"></span><h4>选择器的优先级<a class="headerlink" href="#config-selectors-priority" title="永久链接至标题">¶</a></h4>
+<p>当混合通用流程配置和选择器时，应用以下优先级规则(从低到高):
+1. process通用配置。
+2. workflow脚本中定义的process特定指令。
+3. <code class="docutils literal notranslate"><span class="pre">withLabel</span></code> 选择器定义。
+4. <code class="docutils literal notranslate"><span class="pre">withName</span></code> 选择器定义。</p>
 <p>For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="p">{</span>
     <span class="n">cpus</span> <span class="o">=</span> <span class="mi">4</span>
@@ -410,18 +380,16 @@ with <code class="docutils literal notranslate"><span class="pre">align</span></
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Using the above configuration snippet, all workflow processes use 4 cpus if not otherwise specified in the workflow
-script. Moreover processes annotated with the <code class="docutils literal notranslate"><span class="pre">foo</span></code> label use 8 cpus. Finally the process named <code class="docutils literal notranslate"><span class="pre">bar</span></code>
-uses 32 cpus.</p>
+<p>使用上面的配置片段，如果workflow脚本中没有另外指定，那么所有workflow process都使用4个cpu。此外，用foo标签注释的process使用8个cpu。最后，名为bar的process使用32个cpu。</p>
 </div>
 </div>
-<div class="section" id="scope-executor">
-<span id="config-executor"></span><h3>Scope <cite>executor</cite><a class="headerlink" href="#scope-executor" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">executor</span></code> configuration scope allows you to set the optional executor settings, listed in the following table.</p>
+<div class="section" id="executor">
+<span id="config-executor"></span><h3><cite>executor</cite> 域<a class="headerlink" href="#executor" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">executor</span></code> 配置作用域允许您设置可选的executor设置，如下表所示。</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="9%" />
-<col width="91%" />
+<col width="14%" />
+<col width="86%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Name</th>
@@ -430,44 +398,44 @@ uses 32 cpus.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>name</td>
-<td>The name of the executor to be used e.g. <code class="docutils literal notranslate"><span class="pre">local</span></code>, <code class="docutils literal notranslate"><span class="pre">sge</span></code>, etc.</td>
+<td>要使用的 executor 名字 e.g. <code class="docutils literal notranslate"><span class="pre">local</span></code>, <code class="docutils literal notranslate"><span class="pre">sge</span></code>, etc.</td>
 </tr>
 <tr class="row-odd"><td>queueSize</td>
-<td>The number of tasks the executor will handle in a parallel manner (default: <code class="docutils literal notranslate"><span class="pre">100</span></code>).</td>
+<td><code class="docutils literal notranslate"><span class="pre">executor</span></code> 将以并行方式处理的任务数量 (default: <code class="docutils literal notranslate"><span class="pre">100</span></code>).</td>
 </tr>
 <tr class="row-even"><td>pollInterval</td>
-<td>Determines how often a poll occurs to check for a process termination.</td>
+<td>确定为检查进程终止而进行轮询的频率。</td>
 </tr>
 <tr class="row-odd"><td>dumpInterval</td>
-<td>Determines how often the executor status is written in the application log file (default: <code class="docutils literal notranslate"><span class="pre">5min</span></code>).</td>
+<td>确定executor状态在应用程序日志文件中写入的频率(默认值:5min)(default: <code class="docutils literal notranslate"><span class="pre">5min</span></code>).</td>
 </tr>
 <tr class="row-even"><td>queueStatInterval</td>
-<td>Determines how often the queue status is fetched from the cluster system. This setting is used only by grid executors (default: <code class="docutils literal notranslate"><span class="pre">1min</span></code>).</td>
+<td>确定从集群系统获取队列状态的频率。此设置仅供 grid executors 使用(默认值: <code class="docutils literal notranslate"><span class="pre">1min</span></code>).</td>
 </tr>
 <tr class="row-odd"><td>exitReadTimeout</td>
-<td>Determines how long the executor waits before return an error status when a process is terminated but the <cite>exit</cite> file does not exist or it is empty. This setting is used only by grid executors (default: <code class="docutils literal notranslate"><span class="pre">270</span> <span class="pre">sec</span></code>).</td>
+<td>确定当进程终止但退出文件不存在或为空时，执行程序在返回错误状态之前等待多长时间。此设置仅供 grid executors 使用(默认值: <code class="docutils literal notranslate"><span class="pre">270</span></code> 秒).</td>
 </tr>
 <tr class="row-even"><td>killBatchSize</td>
-<td>Determines the number of jobs that can be <cite>killed</cite> in a single command execution (default: <code class="docutils literal notranslate"><span class="pre">100</span></code>).</td>
+<td>确定在单个命令执行中可以杀死的作业的数量 (default: <code class="docutils literal notranslate"><span class="pre">100</span></code>).</td>
 </tr>
 <tr class="row-odd"><td>submitRateLimit</td>
-<td>Determines the max rate of jobs that can be executed per time unit, for example <code class="docutils literal notranslate"><span class="pre">'10</span> <span class="pre">sec'</span></code> eg. max 10 jobs per second (default: <cite>unlimited</cite>).</td>
+<td>确定每个时间单元可以执行的作业的最大速率. 例如: <code class="docutils literal notranslate"><span class="pre">'10</span> <span class="pre">sec'</span></code> eg. 每秒最多10个作业(默认: <code class="docutils literal notranslate"><span class="pre">unlimited</span></code>).</td>
 </tr>
 <tr class="row-even"><td>perJobMemLimit</td>
-<td>Specifies Platform LSF <em>per-job</em> memory limit mode. See <a class="reference internal" href="executor.html#lsf-executor"><span class="std std-ref">LSF</span></a>.</td>
+<td>指定平台LSF的 <em>per-job</em> 内存限制模式. See <a class="reference internal" href="executor.html#lsf-executor"><span class="std std-ref">LSF</span></a>.</td>
 </tr>
 <tr class="row-odd"><td>jobName</td>
-<td>Determines the name of jobs submitted to the underlying cluster executor e.g. <code class="docutils literal notranslate"><span class="pre">executor.jobName</span> <span class="pre">=</span> <span class="pre">{</span> <span class="pre">&quot;$task.name</span> <span class="pre">-</span> <span class="pre">$task.hash&quot;</span> <span class="pre">}</span></code> .</td>
+<td>确定提交给底层集群执行程序的作业的名称 e.g. <code class="docutils literal notranslate"><span class="pre">executor.jobName</span> <span class="pre">=</span> <span class="pre">{</span> <span class="pre">&quot;$task.name</span> <span class="pre">-</span> <span class="pre">$task.hash&quot;</span> <span class="pre">}</span></code> .</td>
 </tr>
 <tr class="row-even"><td>cpus</td>
-<td>The maximum number of CPUs made available by the underlying system (only used by the <code class="docutils literal notranslate"><span class="pre">local</span></code> executor).</td>
+<td>底层系统提供的最大cpu数量(仅供 <code class="docutils literal notranslate"><span class="pre">local</span></code> executor使用).</td>
 </tr>
 <tr class="row-odd"><td>memory</td>
-<td>The maximum amount of memory made available by the underlying system (only used by the <code class="docutils literal notranslate"><span class="pre">local</span></code> executor).</td>
+<td>底层系统提供的最大内存量(only used by the <code class="docutils literal notranslate"><span class="pre">local</span></code> executor).</td>
 </tr>
 </tbody>
 </table>
-<p>The executor settings can be defined as shown below:</p>
+<p><code class="docutils literal notranslate"><span class="pre">executor</span></code> 设置可定义如下::</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">executor</span> <span class="p">{</span>
     <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;sge&#39;</span>
     <span class="n">queueSize</span> <span class="o">=</span> <span class="mi">200</span>
@@ -475,8 +443,7 @@ uses 32 cpus.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>When using two (or more) different executors in your pipeline, you can specify their settings separately by prefixing
-the executor name with the symbol <code class="docutils literal notranslate"><span class="pre">$</span></code> and using it as special scope identifier. For example:</p>
+<p>在pipeline中使用两个(或多个)不同的executor时，可以通过在executor名称前面加上符号 <code class="docutils literal notranslate"><span class="pre">$</span></code> 并将其用作特殊的作用域标识符来分别指定它们的设置。例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>executor {
   $sge {
       queueSize = 100
@@ -490,7 +457,7 @@ the executor name with the symbol <code class="docutils literal notranslate"><sp
 }
 </pre></div>
 </div>
-<p>The above configuration example can be rewritten using the dot notation as shown below:</p>
+<p>上面的配置例子可以用点 <code class="docutils literal notranslate"><span class="pre">.</span></code> 表示法重写, 如下:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>executor.$sge.queueSize = 100
 executor.$sge.pollInterval = &#39;30sec&#39;
 executor.$local.cpus = 8
@@ -498,10 +465,10 @@ executor.$local.memory = &#39;32 GB&#39;
 </pre></div>
 </div>
 </div>
-<div class="section" id="scope-docker">
-<span id="config-docker"></span><h3>Scope <cite>docker</cite><a class="headerlink" href="#scope-docker" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">docker</span></code> configuration scope controls how <a class="reference external" href="http://www.docker.io">Docker</a> containers are executed by Nextflow.</p>
-<p>The following settings are available:</p>
+<div class="section" id="docker">
+<span id="config-docker"></span><h3><cite>docker</cite> 域<a class="headerlink" href="#docker" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">docker</span></code> 配置作用域控制Nextflow如何执行 <a class="reference external" href="http://www.docker.io">docker</a> 容器。</p>
+<p>以下设置是可用的:</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="9%" />
@@ -551,8 +518,7 @@ executor.$local.memory = &#39;32 GB&#39;
 </tr>
 </tbody>
 </table>
-<p>The above options can be used by prefixing them with the <code class="docutils literal notranslate"><span class="pre">docker</span></code> scope or surrounding them by curly
-brackets, as shown below:</p>
+<p>上面的选项可以用 <code class="docutils literal notranslate"><span class="pre">docker</span></code> 作用域作为前缀，也可以用花括号括起来，如下所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span><span class="o">.</span><span class="n">container</span> <span class="o">=</span> <span class="s1">&#39;nextflow/examples&#39;</span>
 
 <span class="n">docker</span> <span class="p">{</span>
@@ -604,9 +570,9 @@ by Nextflow.</p>
 </table>
 <p>Read <a class="reference internal" href="singularity.html#singularity-page"><span class="std std-ref">Singularity containers</span></a> page to lean more how use Singularity containers with Nextflow.</p>
 </div>
-<div class="section" id="scope-manifest">
-<span id="config-manifest"></span><h3>Scope <cite>manifest</cite><a class="headerlink" href="#scope-manifest" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">manifest</span></code> configuration scope allows you to define some meta-data information needed when publishing your pipeline project on GitHub, BitBucket or GitLab, or when running your pipeline.</p>
+<div class="section" id="manifest">
+<span id="config-manifest"></span><h3><cite>manifest</cite> 域<a class="headerlink" href="#manifest" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">manifest</span></code> 配置作用域允许您在GitHub、BitBucket或GitLab上发布pipeline项目或运行pipeline时定义所需的一些meta-data信息。</p>
 <p>The following settings are available:</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -645,8 +611,7 @@ by Nextflow.</p>
 </tr>
 </tbody>
 </table>
-<p>The above options can be used by prefixing them with the <code class="docutils literal notranslate"><span class="pre">manifest</span></code> scope or surrounding them by curly
-brackets. For example:</p>
+<p>上面的选项可以通过在它们前面加上 <code class="docutils literal notranslate"><span class="pre">manifest</span></code> 作用域或在它们周围加上花括号来使用。例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">manifest</span> <span class="p">{</span>
     <span class="n">homePage</span> <span class="o">=</span> <span class="s1">&#39;http://foo.com&#39;</span>
     <span class="n">description</span> <span class="o">=</span> <span class="s1">&#39;Pipeline does this and that&#39;</span>
@@ -657,10 +622,10 @@ brackets. For example:</p>
 </div>
 <p>To learn how to publish your pipeline on GitHub, BitBucket or GitLab code repositories read <a class="reference internal" href="sharing.html#sharing-page"><span class="std std-ref">Pipeline sharing</span></a>
 documentation page.</p>
-<div class="section" id="nextflow-version">
-<h4>Nextflow version<a class="headerlink" href="#nextflow-version" title="永久链接至标题">¶</a></h4>
-<p>The <code class="docutils literal notranslate"><span class="pre">nextflowVersion</span></code> setting allows you to specify a minimum required version to run the pipeline.
-This may be useful to ensure that a specific version is used:</p>
+<div class="section" id="nextflow">
+<h4>Nextflow 版本<a class="headerlink" href="#nextflow" title="永久链接至标题">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">nextflowVersion</span></code> 设置允许您指定运行pipeline所需的最小版本。
+下面的命令可能有助于您确保使用特定的版本:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>nextflowVersion = &#39;1.2.3&#39;        // exact match
 nextflowVersion = &#39;1.2+&#39;         // 1.2 or later (excluding 2 and later)
 nextflowVersion = &#39;&gt;=1.2&#39;        // 1.2 or later
@@ -671,14 +636,14 @@ nextflowVersion = &#39;!&gt;=1.2&#39;       // with ! prefix, stop execution if 
 </div>
 </div>
 </div>
-<div class="section" id="scope-trace">
-<span id="config-trace"></span><h3>Scope <cite>trace</cite><a class="headerlink" href="#scope-trace" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">trace</span></code> scope allows you to control the layout of the execution trace file generated by Nextflow.</p>
-<p>The following settings are available:</p>
+<div class="section" id="trace">
+<span id="config-trace"></span><h3><cite>trace</cite> 域<a class="headerlink" href="#trace" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">trace</span></code> 作用域允许您控制由Nextflow生成的执行跟踪文件的布局。</p>
+<p>可用的设置包括:</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="12%" />
-<col width="88%" />
+<col width="18%" />
+<col width="82%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Name</th>
@@ -687,24 +652,23 @@ nextflowVersion = &#39;!&gt;=1.2&#39;       // with ! prefix, stop execution if 
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>enabled</td>
-<td>When <code class="docutils literal notranslate"><span class="pre">true</span></code> turns on the generation of the execution trace report file (default: <code class="docutils literal notranslate"><span class="pre">false</span></code>).</td>
+<td>当为 <code class="docutils literal notranslate"><span class="pre">true</span></code> 时，生成执行跟踪报告文件 (default: <code class="docutils literal notranslate"><span class="pre">false</span></code>).</td>
 </tr>
 <tr class="row-odd"><td>fields</td>
-<td>Comma separated list of fields to be included in the report. The available fields are listed at <a class="reference internal" href="tracing.html#trace-fields"><span class="std std-ref">this page</span></a></td>
+<td>报告中要包含的字段的逗号分隔列表。可用字段列在 <a class="reference internal" href="tracing.html#trace-fields"><span class="std std-ref">this page</span></a></td>
 </tr>
 <tr class="row-even"><td>file</td>
-<td>Trace file name (default: <code class="docutils literal notranslate"><span class="pre">trace.txt</span></code>).</td>
+<td>跟踪文件的名字 (default: <code class="docutils literal notranslate"><span class="pre">trace.txt</span></code>).</td>
 </tr>
 <tr class="row-odd"><td>sep</td>
-<td>Character used to separate values in each row (default: <code class="docutils literal notranslate"><span class="pre">\t</span></code>).</td>
+<td>用于分隔每行中的值的字符 (default: <code class="docutils literal notranslate"><span class="pre">\t</span></code>).</td>
 </tr>
 <tr class="row-even"><td>raw</td>
-<td>When <code class="docutils literal notranslate"><span class="pre">true</span></code> turns on raw number report generation i.e. date and time are reported as milliseconds and memory as number of bytes</td>
+<td>当为 <code class="docutils literal notranslate"><span class="pre">true</span></code>, 报告生成时使用原始数字，即日期和时间报告为毫秒，内存报告为字节数</td>
 </tr>
 </tbody>
 </table>
-<p>The above options can be used by prefixing them with the <code class="docutils literal notranslate"><span class="pre">trace</span></code> scope or surrounding them by curly
-brackets. For example:</p>
+<p>上面的选项可以通过在它们前面加上 <code class="docutils literal notranslate"><span class="pre">trace</span></code> 作用域或在它们周围加上花括号来使用。例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">trace</span> <span class="p">{</span>
     <span class="n">enabled</span> <span class="o">=</span> <span class="n">true</span>
     <span class="n">file</span> <span class="o">=</span> <span class="s1">&#39;pipeline_trace.txt&#39;</span>
@@ -921,15 +885,14 @@ When specifying an IAM role no access/security keys are installed in the cluster
 </tbody>
 </table>
 </div>
-<div class="section" id="scope-conda">
-<span id="config-conda"></span><h3>Scope <cite>conda</cite><a class="headerlink" href="#scope-conda" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">conda</span></code> scope allows for the definition of the configuration settings that control the creation of a Conda environment
-by the Conda package manager.</p>
-<p>The following settings are available:</p>
+<div class="section" id="conda">
+<span id="config-conda"></span><h3><cite>conda</cite> 域<a class="headerlink" href="#conda" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">conda</span></code> 作用域允许定义由conda包管理器控制conda环境创建的配置设置。</p>
+<p>以下设置是可用的:</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="10%" />
-<col width="90%" />
+<col width="16%" />
+<col width="84%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Name</th>
@@ -938,10 +901,10 @@ by the Conda package manager.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>cacheDir</td>
-<td>Defines the path where Conda environments are stored. When using a compute cluster make sure to provide a shared file system path accessible from all computing nodes.</td>
+<td>定义存储Conda环境的路径。在使用计算集群时，请确保提供可从所有计算节点访问的共享文件系统路径。</td>
 </tr>
 <tr class="row-odd"><td>createTimeout</td>
-<td>Defines the amount of time the Conda environment creation can last. The creation process is terminated when the timeout is exceeded (default: <code class="docutils literal notranslate"><span class="pre">20</span> <span class="pre">min</span></code>).</td>
+<td>定义Conda环境创建可以持续的时间。当超过超时时，创建过程将终止(默认值: <code class="docutils literal notranslate"><span class="pre">20min</span></code>).</td>
 </tr>
 </tbody>
 </table>
@@ -1008,9 +971,9 @@ workflow applications in a Kubernetes cluster.</p>
 </table>
 <p>See the <a class="reference internal" href="kubernetes.html#k8s-page"><span class="std std-ref">Kubernetes</span></a> documentation for more details.</p>
 </div>
-<div class="section" id="scope-timeline">
-<span id="config-timeline"></span><h3>Scope <cite>timeline</cite><a class="headerlink" href="#scope-timeline" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">timeline</span></code> scope allows you to enable/disable the processes execution timeline report generated by Nextflow.</p>
+<div class="section" id="timeline">
+<span id="config-timeline"></span><h3><cite>timeline</cite> 域<a class="headerlink" href="#timeline" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">timeline</span></code> 作用域允许您启用/禁用Nextflow生成的流程执行timeline报告。</p>
 <p>The following settings are available:</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -1095,10 +1058,9 @@ See the <a class="reference external" href="https://javaee.github.io/javamail/do
 </pre></div>
 </div>
 </div>
-<div class="section" id="scope-notification">
-<span id="config-notification"></span><h3>Scope <cite>notification</cite><a class="headerlink" href="#scope-notification" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">notification</span></code> scope allows you to define the automatic sending of a notification email message
-when the workflow execution terminates.</p>
+<div class="section" id="notification">
+<span id="config-notification"></span><h3><cite>notification</cite> 域<a class="headerlink" href="#notification" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">notification</span></code> 作用域允许您在工作流执行结束时定义自动发送通知电子邮件消息。</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="14%" />
@@ -1180,11 +1142,9 @@ eventually provided by the underlying system (eg. <code class="docutils literal 
 </div>
 </div>
 <div class="section" id="config-profiles">
-<span id="id3"></span><h2>Config profiles<a class="headerlink" href="#config-profiles" title="永久链接至标题">¶</a></h2>
-<p>Configuration files can contain the definition of one or more <em>profiles</em>. A profile is a set of configuration attributes
-that can be activated/chosen when launching a pipeline execution by using the <code class="docutils literal notranslate"><span class="pre">-profile</span></code> command line option.</p>
-<p>Configuration profiles are defined by using the special scope <code class="docutils literal notranslate"><span class="pre">profiles</span></code> which group the attributes that belong
-to the same profile using a common prefix. For example:</p>
+<span id="id12"></span><h2>Config profiles<a class="headerlink" href="#config-profiles" title="永久链接至标题">¶</a></h2>
+<p>配置文件可以包含一个或多个概要文件(profile)的定义。概要文件(profile)是一组配置属性，当使用 <code class="docutils literal notranslate"><span class="pre">-profile</span></code> 命令行选项启动pipeline执行时，可以 激活/选择 这些配置属性。</p>
+<p>配置profile是通过使用特殊的作用域 <code class="docutils literal notranslate"><span class="pre">profiles</span></code> 定义的，这些profiles使用公共前缀将属于同一profile的属性分组。例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">profiles</span> <span class="p">{</span>
 
     <span class="n">standard</span> <span class="p">{</span>
@@ -1206,22 +1166,20 @@ to the same profile using a common prefix. For example:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>This configuration defines three different profiles: <code class="docutils literal notranslate"><span class="pre">standard</span></code>, <code class="docutils literal notranslate"><span class="pre">cluster</span></code> and <code class="docutils literal notranslate"><span class="pre">cloud</span></code> that set different process
-configuration strategies depending on the target runtime platform. By convention the <code class="docutils literal notranslate"><span class="pre">standard</span></code> profile is implicitly used
-when no other profile is specified by the user.</p>
+<p>此配置定义了三个不同的profile: <code class="docutils literal notranslate"><span class="pre">standard</span></code>, <code class="docutils literal notranslate"><span class="pre">cluster</span></code> 和 <code class="docutils literal notranslate"><span class="pre">cloud</span></code>, 它们根据目标运行时平台设置不同的process配置策略。</p>
 <div class="admonition tip">
 <p class="first admonition-title">小技巧</p>
-<p>Two or more configuration profiles can be specified by separating the profile names
-with a comma character, for example:</p>
+<p>可以通过用逗号分隔profile名称来指定两个或多个profiles，例如:</p>
 <div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span> <span class="n">run</span> <span class="o">&lt;</span><span class="n">your</span> <span class="n">script</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">profile</span> <span class="n">standard</span><span class="p">,</span><span class="n">cloud</span>
 </pre></div>
 </div>
 </div>
 <p>The above feature requires version 0.28.x or higher.</p>
 </div>
-<div class="section" id="environment-variables">
-<h2>Environment variables<a class="headerlink" href="#environment-variables" title="永久链接至标题">¶</a></h2>
-<p>The following environment variables control the configuration of the Nextflow runtime and
+<div class="section" id="id13">
+<h2>环境变量<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h2>
+<p>以下环境变量控制Nextflow运行时的配置及其使用的Java虚拟机。
+The following environment variables control the configuration of the Nextflow runtime and
 the Java virtual machine used by it.</p>
 <table border="1" class="docutils">
 <colgroup>

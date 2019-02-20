@@ -473,7 +473,7 @@ specified by separating them with a comma e.g. <code class="docutils literal not
 <div class="admonition note">
 <p class="first admonition-title">注解</p>
 <p class="last">A container image must be specified to deploy the process execution. You can use a different Docker image for
-each process using one or more <a class="reference internal" href="config.html#config-process-selectors"><span class="std std-ref">Process selectors</span></a>.</p>
+each process using one or more <a class="reference internal" href="config.html#config-process-selectors"><span class="std std-ref">Process选择器</span></a>.</p>
 </div>
 </div>
 <div class="section" id="id6">
@@ -496,7 +496,7 @@ pipeline work bucket. Use this feature with caution being careful to avoid unnec
 <p>Nextflow allows the use of multiple executors in the same workflow application. This feature enables the deployment
 of hybrid workloads in which some jobs are executed in the local computer or local computing cluster and
 some other jobs are offloaded to Google Pipelines service.</p>
-<p>To enable this feature use one or more <a class="reference internal" href="config.html#config-process-selectors"><span class="std std-ref">Process selectors</span></a> in your Nextflow configuration file to apply
+<p>To enable this feature use one or more <a class="reference internal" href="config.html#config-process-selectors"><span class="std std-ref">Process选择器</span></a> in your Nextflow configuration file to apply
 the Google Pipelines <em>executor</em> only to a subset of processes in your workflow.
 For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="p">{</span>
