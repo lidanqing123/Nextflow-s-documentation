@@ -13,18 +13,6 @@ the prefix ``seq_``.
 
 The process that follows, receives these files and it simply `reverses` their content by using the ``rev`` command line tool.
 
-.. raw:: html
-
-    <style type='text/css'>
-    .gist {font-size:13px;line-height:18px;margin-bottom:20px;width:100%}
-    .gist pre {font-family:Menlo,Monaco,'Bitstream Vera Sans Mono','Courier New',monospace !important}
-    .gist-meta {font-family:Helvetica,Arial,sans-serif;font-size:13px !important}
-    .gist-meta a {color:#26a !important;text-decoration:none}
-    .gist-meta a:hover{color:#0e4071 !important}
-    .gist .file-data { background-color: white; }
-    </style>
-    <script src="https://gist.github.com/pditommaso/92fea4525cd66c286904.js"></script>
-
 
 In more detail:
 

@@ -4,26 +4,24 @@
 Executors
 ***********
 
-In the Nextflow framework architecture, the `executor` is the component that determines the system where a pipeline
-process is run and supervises its execution.
+在Nextflow框架体系结构中， ``executor`` 是设定管道流程运行的系统并监督其执行的组件。
 
-The `executor` provides an abstraction between the pipeline processes and the underlying execution system. This
-allows you to write the pipeline functional logic independently from the actual processing platform.
 
-In other words you can write your pipeline script once and have it running on your computer, a cluster resource manager
-or the cloud by simply changing the executor definition in the Nextflow configuration file.
+``executor`` 提供管道流程和底层执行系统之间的抽象。这允许您独立于实际的处理平台编写管道功能逻辑。
+
+
+换句话说，您只需要编写管道流程脚本一次, 可以通过简单地改变Nextflow配置文件中的executor定义，来让它运行在您的计算机、集群资源管理器或云上。
+
 
 .. _local-executor:
 
 Local
 =====
 
-The `local` executor is used by default. It runs the pipeline processes in the computer where Nextflow
-is launched. The processes are parallelised by spawning multiple `threads` and by taking advantage of multi-cores
-architecture provided by the CPU.
+默认情况下使用本地执行程序。它在启动Nextflow的计算机中运行管道流程。管道流程的并行化, 是通过生成多个线程和利用CPU提供的多核架构实现.
 
-In a common usage scenario, the `local` executor can be useful to develop and test your pipeline script in your computer,
-switching to a cluster facility when you need to run it on production data.
+
+在一个常见的使用场景中，本地执行程序对于在计算机中开发和测试管道脚本非常有用，当您需要在生产数据时运行管道脚本时，可以切换到集群工具。
 
 
 .. _sge-executor:
@@ -31,17 +29,16 @@ switching to a cluster facility when you need to run it on production data.
 SGE
 ===
 
-The `SGE` executor allows you to run your pipeline script by using a `Sun Grid Engine <http://en.wikipedia.org/wiki/Oracle_Grid_Engine>`_
-cluster or a compatible platform (`Open Grid Engine <http://gridscheduler.sourceforge.net/>`_, `Univa Grid Engine <http://www.univa.com/products/grid-engine.php>`_, etc).
+``SGE`` 执行程序允许您使用 `Sun Grid Engine <http://en.wikipedia.org/wiki/Oracle_Grid_Engine>`_
+集群或兼容的平台(`Open Grid Engine <http://gridscheduler.sourceforge.net/>`_, `Univa Grid Engine <http://www.univa.com/products/grid-engine.php>`_, etc) 运行管道流程脚本.
 
-Nextflow manages each process as a separate grid job that is submitted to the cluster by using the ``qsub`` command.
+Nextflow使用 ``qsub`` 命令将每个 ``process`` 作为一个单独的网格任务处理, 将它提交到集群中。
 
-Being so, the pipeline must be launched from a node where the ``qsub`` command is available, that is, in a common usage
-scenario, the cluster `head` node.
+因此, 在常见的使用场景中, ``pipeline`` 必须从 ``qsub`` 命令的可用节点启动.
 
-To enable the SGE executor simply set to ``process.executor`` property to ``sge`` value in the ``nextflow.config`` file.
+要启用SGE执行程序，只需要简单的在 ``nextflow.config`` 文件中, 将 ``process.executor`` 属性的值设置为 ``sge``
 
-The amount of resources requested by each job submission is defined by the following process directives:
+每个作业提交请求的资源数量由以下流程指令定义:
 
 * :ref:`process-cpus`
 * :ref:`process-queue`
@@ -208,10 +205,10 @@ Ignite cluster in your infrastructure.
 Kubernetes
 ==========
 
-Nextflow provides an experimental support for `Kubernetes <http://kubernetes.io/>`_ clustering technology. It allows
-you to deploy and transparently run a Nextflow pipeline in a Kubernetes cluster.
 
-The following directives can be used to define the amount of computing resources needed and the container(s) to use:
+Nextflow为 `Kubernetes <http://kubernetes.io/>`_  集群技术提供了实验支持。它允许您在Kubernetes集群中部署和运行Nextflow管道流程。
+
+以下指令可用于定义所需的计算资源数量和要使用的容器:
 
 * :ref:`process-cpus`
 * :ref:`process-memory`

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Configuration &mdash; Nextflow-ZH-documentation 0.0.1 文档</title>
+  <title>配置 &mdash; Nextflow-ZH-documentation 0.0.1 文档</title>
   
 
   
@@ -91,8 +91,8 @@
 <li class="toctree-l1"><a class="reference internal" href="channel.html">Channels</a></li>
 <li class="toctree-l1"><a class="reference internal" href="operator.html">Operators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="executor.html">Executors</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#configuration-file">Configuration file</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">配置</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">配置文件</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#config-syntax">Config syntax</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#config-variables">Config Variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#config-comments">Config comments</a></li>
@@ -190,7 +190,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Configuration</li>
+      <li>配置</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -209,10 +209,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="configuration">
-<span id="config-page"></span><h1>Configuration<a class="headerlink" href="#configuration" title="永久链接至标题">¶</a></h1>
-<div class="section" id="configuration-file">
-<h2>Configuration file<a class="headerlink" href="#configuration-file" title="永久链接至标题">¶</a></h2>
+  <div class="section" id="config-page">
+<span id="id1"></span><h1>配置<a class="headerlink" href="#config-page" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2>配置文件<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
 <p>When a pipeline script is launched Nextflow looks for a file named <code class="docutils literal notranslate"><span class="pre">nextflow.config</span></code> in the current directory and
 in the script base directory (if it is not the same as the current directory). Finally it checks for the file
 <code class="docutils literal notranslate"><span class="pre">$HOME/.nextflow/config</span></code>.</p>
@@ -1180,7 +1180,7 @@ eventually provided by the underlying system (eg. <code class="docutils literal 
 </div>
 </div>
 <div class="section" id="config-profiles">
-<span id="id1"></span><h2>Config profiles<a class="headerlink" href="#config-profiles" title="永久链接至标题">¶</a></h2>
+<span id="id3"></span><h2>Config profiles<a class="headerlink" href="#config-profiles" title="永久链接至标题">¶</a></h2>
 <p>Configuration files can contain the definition of one or more <em>profiles</em>. A profile is a set of configuration attributes
 that can be activated/chosen when launching a pipeline execution by using the <code class="docutils literal notranslate"><span class="pre">-profile</span></code> command line option.</p>
 <p>Configuration profiles are defined by using the special scope <code class="docutils literal notranslate"><span class="pre">profiles</span></code> which group the attributes that belong

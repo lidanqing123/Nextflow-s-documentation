@@ -1,10 +1,10 @@
 .. _config-page:
 
 *************
-Configuration
+配置
 *************
 
-Configuration file
+配置文件
 ==================
 
 When a pipeline script is launched Nextflow looks for a file named ``nextflow.config`` in the current directory and

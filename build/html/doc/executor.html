@@ -37,7 +37,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="Configuration" href="config.html" />
+    <link rel="next" title="配置" href="config.html" />
     <link rel="prev" title="Operators" href="operator.html" /> 
 </head>
 
@@ -105,7 +105,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#ga4gh-tes">GA4GH TES</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">配置</a></li>
 <li class="toctree-l1"><a class="reference internal" href="awscloud.html">Amazon Cloud</a></li>
 <li class="toctree-l1"><a class="reference internal" href="amazons3.html">Amazon S3 storage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="google.html">Google Cloud</a></li>
@@ -186,29 +186,22 @@
             
   <div class="section" id="executors">
 <span id="executor-page"></span><h1>Executors<a class="headerlink" href="#executors" title="永久链接至标题">¶</a></h1>
-<p>In the Nextflow framework architecture, the <cite>executor</cite> is the component that determines the system where a pipeline
-process is run and supervises its execution.</p>
-<p>The <cite>executor</cite> provides an abstraction between the pipeline processes and the underlying execution system. This
-allows you to write the pipeline functional logic independently from the actual processing platform.</p>
-<p>In other words you can write your pipeline script once and have it running on your computer, a cluster resource manager
-or the cloud by simply changing the executor definition in the Nextflow configuration file.</p>
+<p>在Nextflow框架体系结构中， <code class="docutils literal notranslate"><span class="pre">executor</span></code> 是设定管道流程运行的系统并监督其执行的组件。</p>
+<p><code class="docutils literal notranslate"><span class="pre">executor</span></code> 提供管道流程和底层执行系统之间的抽象。这允许您独立于实际的处理平台编写管道功能逻辑。</p>
+<p>换句话说，您只需要编写管道流程脚本一次, 可以通过简单地改变Nextflow配置文件中的executor定义，来让它运行在您的计算机、集群资源管理器或云上。</p>
 <div class="section" id="local">
 <span id="local-executor"></span><h2>Local<a class="headerlink" href="#local" title="永久链接至标题">¶</a></h2>
-<p>The <cite>local</cite> executor is used by default. It runs the pipeline processes in the computer where Nextflow
-is launched. The processes are parallelised by spawning multiple <cite>threads</cite> and by taking advantage of multi-cores
-architecture provided by the CPU.</p>
-<p>In a common usage scenario, the <cite>local</cite> executor can be useful to develop and test your pipeline script in your computer,
-switching to a cluster facility when you need to run it on production data.</p>
+<p>默认情况下使用本地执行程序。它在启动Nextflow的计算机中运行管道流程。管道流程的并行化, 是通过生成多个线程和利用CPU提供的多核架构实现.</p>
+<p>在一个常见的使用场景中，本地执行程序对于在计算机中开发和测试管道脚本非常有用，当您需要在生产数据时运行管道脚本时，可以切换到集群工具。</p>
 </div>
 <div class="section" id="sge">
 <span id="sge-executor"></span><h2>SGE<a class="headerlink" href="#sge" title="永久链接至标题">¶</a></h2>
-<p>The <cite>SGE</cite> executor allows you to run your pipeline script by using a <a class="reference external" href="http://en.wikipedia.org/wiki/Oracle_Grid_Engine">Sun Grid Engine</a>
-cluster or a compatible platform (<a class="reference external" href="http://gridscheduler.sourceforge.net/">Open Grid Engine</a>, <a class="reference external" href="http://www.univa.com/products/grid-engine.php">Univa Grid Engine</a>, etc).</p>
-<p>Nextflow manages each process as a separate grid job that is submitted to the cluster by using the <code class="docutils literal notranslate"><span class="pre">qsub</span></code> command.</p>
-<p>Being so, the pipeline must be launched from a node where the <code class="docutils literal notranslate"><span class="pre">qsub</span></code> command is available, that is, in a common usage
-scenario, the cluster <cite>head</cite> node.</p>
-<p>To enable the SGE executor simply set to <code class="docutils literal notranslate"><span class="pre">process.executor</span></code> property to <code class="docutils literal notranslate"><span class="pre">sge</span></code> value in the <code class="docutils literal notranslate"><span class="pre">nextflow.config</span></code> file.</p>
-<p>The amount of resources requested by each job submission is defined by the following process directives:</p>
+<p><code class="docutils literal notranslate"><span class="pre">SGE</span></code> 执行程序允许您使用 <a class="reference external" href="http://en.wikipedia.org/wiki/Oracle_Grid_Engine">Sun Grid Engine</a>
+集群或兼容的平台(<a class="reference external" href="http://gridscheduler.sourceforge.net/">Open Grid Engine</a>, <a class="reference external" href="http://www.univa.com/products/grid-engine.php">Univa Grid Engine</a>, etc) 运行管道流程脚本.</p>
+<p>Nextflow使用 <code class="docutils literal notranslate"><span class="pre">qsub</span></code> 命令将每个 <code class="docutils literal notranslate"><span class="pre">process</span></code> 作为一个单独的网格任务处理, 将它提交到集群中。</p>
+<p>因此, 在常见的使用场景中, <code class="docutils literal notranslate"><span class="pre">pipeline</span></code> 必须从 <code class="docutils literal notranslate"><span class="pre">qsub</span></code> 命令的可用节点启动.</p>
+<p>要启用SGE执行程序，只需要简单的在 <code class="docutils literal notranslate"><span class="pre">nextflow.config</span></code> 文件中, 将 <code class="docutils literal notranslate"><span class="pre">process.executor</span></code> 属性的值设置为 <code class="docutils literal notranslate"><span class="pre">sge</span></code></p>
+<p>每个作业提交请求的资源数量由以下流程指令定义:</p>
 <ul class="simple">
 <li><a class="reference internal" href="process.html#process-cpus"><span class="std std-ref">cpus</span></a></li>
 <li><a class="reference internal" href="process.html#process-queue"><span class="std std-ref">queue</span></a></li>
@@ -339,9 +332,8 @@ Ignite cluster in your infrastructure.</p>
 </div>
 <div class="section" id="kubernetes">
 <span id="k8s-executor"></span><h2>Kubernetes<a class="headerlink" href="#kubernetes" title="永久链接至标题">¶</a></h2>
-<p>Nextflow provides an experimental support for <a class="reference external" href="http://kubernetes.io/">Kubernetes</a> clustering technology. It allows
-you to deploy and transparently run a Nextflow pipeline in a Kubernetes cluster.</p>
-<p>The following directives can be used to define the amount of computing resources needed and the container(s) to use:</p>
+<p>Nextflow为 <a class="reference external" href="http://kubernetes.io/">Kubernetes</a>  集群技术提供了实验支持。它允许您在Kubernetes集群中部署和运行Nextflow管道流程。</p>
+<p>以下指令可用于定义所需的计算资源数量和要使用的容器:</p>
 <ul class="simple">
 <li><a class="reference internal" href="process.html#process-cpus"><span class="std std-ref">cpus</span></a></li>
 <li><a class="reference internal" href="process.html#process-memory"><span class="std std-ref">memory</span></a></li>
@@ -430,7 +422,7 @@ data is exchanged using a local or shared file system.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="config.html" class="btn btn-neutral float-right" title="Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="config.html" class="btn btn-neutral float-right" title="配置" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="operator.html" class="btn btn-neutral float-left" title="Operators" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

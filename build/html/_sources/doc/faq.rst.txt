@@ -4,7 +4,7 @@
 FAQ
 ***
 
-How do I process multiple input files in parallel?
+如何并行处理多个输入文件?
 --------------------------------------------------
 
 Q: *I have a collection of input files (e.g. carrots.fa, onions.fa, broccoli.fa). How can I specify that a process is performed on each input file in a parallel manner?*
@@ -50,7 +50,7 @@ into ``carrots.aln``, ``onions.aln`` and ``broccoli.aln``.
 These aligned files are now in the channel ``vegetable_alns`` and can be
 used as input for a further process.
 
-How do I get a unique ID based on the file name?
+如何根据文件名获得唯一的ID ?
 ------------------------------------------------
 
 *Q: How do I get a unique identifier based on a dataset file names (e.g. broccoli from broccoli.fa) and have the results going to a specific folder (e.g. results/broccoli/)?*
@@ -98,7 +98,7 @@ If the input file has multiple extensions (e.g. ``brocolli.tar.gz``), you will w
 ``file.simpleName`` instead, to strip all of them (available since Nextflow 0.25+).
 
 
-How do I use the same channel multiple times?
+如何多次使用同一 ``channel`` ?
 ---------------------------------------------
 
 *Q: Can a channel be used in two input statements? For example, I want carrots.fa to be aligned by both ClustalW and T-Coffee.*
@@ -158,7 +158,7 @@ alignment processes (three x ClustalW) + (three x T-Coffee) will be
 executed as parallel processes.
 
 
-How do I invoke custom scripts and tools?
+如何调用自定义脚本和工具?
 -----------------------------------------
 
 *Q: I have executables in my code, how should I call them in Nextflow?*
@@ -204,7 +204,7 @@ alignments are in the channel ``clustalw_alns``:
         """
     }
 
-How do I iterate over a process n times?
+我如何在一个进程上迭代n次?
 -----------------------------------------
 
 To perform a process *n* times, we can specify the input to be
@@ -234,7 +234,7 @@ To perform a process *n* times, we can specify the input to be
     }
 
 
-How do I iterate over nth files from within a process?
+如何从进程中迭代n个文件?
 ------------------------------------------------------
 
 *Q: For example, I have 100 files emitted by a channel. I wish to perform one process where I iterate over each file inside the process.*
@@ -267,7 +267,7 @@ This is also useful if all the items of a channel are required to be in the work
         """
     }
 
-How do I use a specific version of Nextflow?
+如何使用Nextflow的特定版本?
 ------------------------------------------------------
 
 *Q: I need to specify a version of Nextflow to use, or I need to pull a snapshot release.*
