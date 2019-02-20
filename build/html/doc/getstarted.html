@@ -26,6 +26,7 @@
         <script type="text/javascript" src="../_static/doctools.js"></script>
         <script type="text/javascript" src="../_static/language_data.js"></script>
         <script type="text/javascript" src="../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -84,9 +85,9 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">开始</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id2">所需环境</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">安装</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">第一个脚本</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#getstart-requirement">所需环境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getstart-install">安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getstart-first">第一个脚本</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#modify-and-resume">Modify and resume</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#pipeline-parameters">Pipeline parameters</a></li>
 </ul>
@@ -178,13 +179,18 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="id1">
-<h1>开始<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
-<div class="section" id="id2">
-<h2>所需环境<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+  <div class="section" id="getstart-page">
+<span id="id1"></span><h1>开始<a class="headerlink" href="#getstart-page" title="永久链接至标题">¶</a></h1>
+<div class="section" id="getstart-requirement">
+<span id="id2"></span><h2>所需环境<a class="headerlink" href="#getstart-requirement" title="永久链接至标题">¶</a></h2>
+<p><cite>Nextflow</cite> can be used on any POSIX compatible system (Linux, OS X, etc).
+It requires Bash 3.2 (or later) and <a class="reference external" href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java 8 (or later)</a> to be installed.</p>
+<p>Windows systems may be supported using a POSIX compatibility layer like <a class="reference external" href="http://www.cygwin.com">Cygwin</a> (unverified) or,
+alternatively, installing it into a Linux VM using virtualization software like <a class="reference external" href="http://www.virtualbox.org">VirtualBox</a>
+or <a class="reference external" href="http://www.vmware.com/">VMware</a>.</p>
 </div>
-<div class="section" id="id3">
-<h2>安装<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<div class="section" id="getstart-install">
+<span id="id3"></span><h2>安装<a class="headerlink" href="#getstart-install" title="永久链接至标题">¶</a></h2>
 <p>Nextflow是一个独立的可执行包, 这意味着它不需要特殊的安装过程.</p>
 <p>它仅仅简单的两步:</p>
 <ol class="arabic simple">
@@ -196,8 +202,8 @@
 <p class="last">在你没有安装 <code class="docutils literal notranslate"><span class="pre">wget</span></code> 的情况下, 你可以使用 <code class="docutils literal notranslate"><span class="pre">curl</span></code> 来代替, 在命令行中输入后面的命令: <code class="docutils literal notranslate"><span class="pre">curl</span> <span class="pre">-s</span> <span class="pre">https://get.nextflow.io</span> <span class="pre">|</span> <span class="pre">bash</span></code>.</p>
 </div>
 </div>
-<div class="section" id="id4">
-<h2>第一个脚本<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<div class="section" id="getstart-first">
+<span id="id4"></span><h2>第一个脚本<a class="headerlink" href="#getstart-first" title="永久链接至标题">¶</a></h2>
 <p>将下面的例子复制到你习惯的文本编辑器中, 然后保存到名字为 <code class="docutils literal notranslate"><span class="pre">tutorial.nf</span></code> 的文件中.</p>
 <blockquote>
 <div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env nextflow</span>
@@ -251,11 +257,83 @@ HELLO
 </pre></div>
 </div>
 <p>可以看到,第一个process执行了一次,而第二个执行了两次. 最后, 结果字符串被打印出来.</p>
+<p>It’s worth noting that the process <code class="docutils literal notranslate"><span class="pre">convertToUpper</span></code> is executed in parallel, so there’s no guarantee that the instance
+processing the first split (the chunk <cite>Hello</cite>) will be executed before before the one processing the second split (the chunk <cite>world!</cite>).</p>
+<p>Thus, it is perfectly possible that you will get the final result printed out in a different order:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>WORLD!
+HELLO
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">小技巧</p>
+<p class="last">The hexadecimal numbers, like <code class="docutils literal notranslate"><span class="pre">22/7548fa</span></code>, identify the unique process execution. These numbers are
+also the prefix of the directories where each process is executed. You can inspect the files produced by them
+changing to the directory <code class="docutils literal notranslate"><span class="pre">$PWD/work</span></code> and using these numbers to find the process-specific execution path.</p>
+</div>
 <div class="section" id="modify-and-resume">
-<h3>Modify and resume<a class="headerlink" href="#modify-and-resume" title="永久链接至标题">¶</a></h3>
+<span id="getstart-resume"></span><h3>Modify and resume<a class="headerlink" href="#modify-and-resume" title="永久链接至标题">¶</a></h3>
+<p>Nextflow keeps track of all the processes executed in your pipeline. If you modify some parts of your script,
+only the processes that are actually changed will be re-executed. The execution of the processes that are not changed
+will be skipped and the cached result used instead.</p>
+<p>This helps a lot when testing or modifying part of your pipeline without having to re-execute it from scratch.</p>
+<p>For the sake of this tutorial, modify the <code class="docutils literal notranslate"><span class="pre">convertToUpper</span></code> process in the previous example, replacing the
+process script with the string <code class="docutils literal notranslate"><span class="pre">rev</span> <span class="pre">$x</span></code>, so that the process looks like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">convertToUpper</span> <span class="p">{</span>
+
+    <span class="nb">input</span><span class="p">:</span>
+    <span class="n">file</span> <span class="n">x</span> <span class="kn">from</span> <span class="nn">letters</span>
+
+    <span class="n">output</span><span class="p">:</span>
+    <span class="n">stdout</span> <span class="n">result</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    rev $x</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Then save the file with the same name, and execute it by adding the <code class="docutils literal notranslate"><span class="pre">-resume</span></code> option to the command line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span> <span class="n">run</span> <span class="n">tutorial</span><span class="o">.</span><span class="n">nf</span> <span class="o">-</span><span class="n">resume</span>
+</pre></div>
+</div>
+<p>It will print output similar to this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>N E X T F L O W  ~  version 18.10.1
+[warm up] executor &gt; local
+[22/7548fa] Cached process &gt; splitLetters (1)
+[d0/7b79a3] Submitted process &gt; convertToUpper (1)
+[b0/c99ef9] Submitted process &gt; convertToUpper (2)
+olleH
+!dlrow
+</pre></div>
+</div>
+<p>You will see that the execution of the process <code class="docutils literal notranslate"><span class="pre">splitLetters</span></code> is actually skipped (the process ID is the same), and
+its results are retrieved from the cache. The second process is executed as expected, printing the reversed strings.</p>
+<div class="admonition tip">
+<p class="first admonition-title">小技巧</p>
+<p class="last">The pipeline results are cached by default in the directory <code class="docutils literal notranslate"><span class="pre">$PWD/work</span></code>. Depending on your script, this folder
+can take of lot of disk space. If your are sure you won’t resume your pipeline execution, clean this folder periodically.</p>
+</div>
 </div>
 <div class="section" id="pipeline-parameters">
-<h3>Pipeline parameters<a class="headerlink" href="#pipeline-parameters" title="永久链接至标题">¶</a></h3>
+<span id="getstart-params"></span><h3>Pipeline parameters<a class="headerlink" href="#pipeline-parameters" title="永久链接至标题">¶</a></h3>
+<p>Pipeline parameters are simply declared by prepending to a variable name the prefix <code class="docutils literal notranslate"><span class="pre">params</span></code>, separated by dot character.
+Their value can be specified on the command line by prefixing the parameter name with a double <cite>dash</cite> character, i.e. <code class="docutils literal notranslate"><span class="pre">--paramName</span></code></p>
+<p>For the sake of this tutorial, you can try to execute the previous example specifying a different input
+string parameter, as shown below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span> <span class="n">run</span> <span class="n">tutorial</span><span class="o">.</span><span class="n">nf</span> <span class="o">--</span><span class="nb">str</span> <span class="s1">&#39;Hola mundo&#39;</span>
+</pre></div>
+</div>
+<p>The string specified on the command line will override the default value of the parameter. The output
+will look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="n">E</span> <span class="n">X</span> <span class="n">T</span> <span class="n">F</span> <span class="n">L</span> <span class="n">O</span> <span class="n">W</span>  <span class="o">~</span>  <span class="n">version</span> <span class="mf">18.10</span><span class="o">.</span><span class="mi">1</span>
+<span class="p">[</span><span class="n">warm</span> <span class="n">up</span><span class="p">]</span> <span class="n">executor</span> <span class="o">&gt;</span> <span class="n">local</span>
+<span class="p">[</span><span class="mi">6</span><span class="n">d</span><span class="o">/</span><span class="mi">54</span><span class="n">ab39</span><span class="p">]</span> <span class="n">Submitted</span> <span class="n">process</span> <span class="o">&gt;</span> <span class="n">splitLetters</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">[</span><span class="n">a1</span><span class="o">/</span><span class="mi">88716</span><span class="n">d</span><span class="p">]</span> <span class="n">Submitted</span> <span class="n">process</span> <span class="o">&gt;</span> <span class="n">convertToUpper</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">7</span><span class="n">d</span><span class="o">/</span><span class="mi">3561</span><span class="n">b6</span><span class="p">]</span> <span class="n">Submitted</span> <span class="n">process</span> <span class="o">&gt;</span> <span class="n">convertToUpper</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">odnu</span>
+<span class="n">m</span> <span class="n">aloH</span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>
