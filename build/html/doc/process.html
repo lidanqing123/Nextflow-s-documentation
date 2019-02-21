@@ -88,34 +88,34 @@
 <li class="toctree-l1"><a class="reference internal" href="basic.html">基本理念</a></li>
 <li class="toctree-l1"><a class="reference internal" href="script.html">Nextflow 脚本语言</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Processes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#script">Script</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#scripts-a-la-carte">Scripts <cite>à la carte</cite></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#conditional-scripts">Conditional scripts</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#template">Template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#process-script">脚本</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">脚本语言</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">条件脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#process-template">模板</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#shell">Shell</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#native-execution">Native execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#process-native">本地执行</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#inputs">Inputs</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#input-of-generic-values">Input of generic values</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#input-of-files">Input of files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#multiple-input-files">Multiple input files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#dynamic-input-file-names">Dynamic input file names</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#input-of-type-stdin">Input of type ‘stdin’</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#input-of-type-env">Input of type ‘env’</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#input-of-type-set">Input of type ‘set’</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#input-repeaters">Input repeaters</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#understand-how-multiple-input-channels-work">Understand how multiple input channels work</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">输入通用值</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">输入文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">多个输入文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">动态输入文件名</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdin">输入’stdin’类型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#env">输入’env’类型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set">输入’set’类型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">重复输入</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#channels">了解多个输入channels的工作原理</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#outputs">Outputs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id11">输出</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#output-values">Output values</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#output-files">Output files</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#multiple-output-files">Multiple output files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#dynamic-output-file-names">Dynamic output file names</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#output-stdout-special-file">Output ‘stdout’ special file</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#output-set-of-values">Output ‘set’ of values</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#optional-output">Optional Output</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#process-dynoutname">动态输出文件名</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stdout">输出 ‘stdout’ 特殊文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#process-set">输出’set’值</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">可选输出</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#when">When</a></li>
@@ -241,21 +241,18 @@
             
   <div class="section" id="processes">
 <span id="process-page"></span><h1>Processes<a class="headerlink" href="#processes" title="永久链接至标题">¶</a></h1>
-<p>In Nextflow a <cite>process</cite> is the basic processing <cite>primitive</cite> to execute a user script.</p>
-<p>The process definition starts with keyword the <code class="docutils literal notranslate"><span class="pre">process</span></code>, followed by process name and finally the process <cite>body</cite>
-delimited by curly brackets. The process body must contain a string which represents the command or, more generally,
-a script that is executed by it. A basic process looks like the following example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">sayHello</span> <span class="p">{</span>
-
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    echo &#39;Hello world!&#39; &gt; file</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>A process may contain five definition blocks, respectively: directives,
-inputs, outputs, when clause and finally the process script. The syntax is defined as follows:</p>
+<p>在Nextflow中，<code class="docutils literal notranslate"><span class="pre">process</span></code> 是执行用户脚本的基本处理进程。</p>
+<dl class="docutils">
+<dt>process定义以关键字 <code class="docutils literal notranslate"><span class="pre">process</span></code> 开始，后跟process名称，最后由大括号分隔的process代码块。 <code class="docutils literal notranslate"><span class="pre">process</span></code> 正文必须包含表示命令的字符串，或者更一般地说，包含由其执行的脚本。 一个基本 <code class="docutils literal notranslate"><span class="pre">process</span></code> 如下例所示::</dt>
+<dd><p class="first">process sayHello {</p>
+<blockquote>
+<div>“””
+echo ‘Hello world!’ &gt; file
+“”“</div></blockquote>
+<p class="last">}</p>
+</dd>
+</dl>
+<p>一个process可以分别包含五个定义块, 分别是：指令(directives)，输入(inputs)，输出(outputs)，when子句和最后的process脚本。 语法定义如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="o">&lt;</span> <span class="n">name</span> <span class="o">&gt;</span> <span class="p">{</span>
 
    <span class="p">[</span> <span class="n">directives</span> <span class="p">]</span>
@@ -275,18 +272,13 @@ inputs, outputs, when clause and finally the process script. The syntax is defin
 <span class="p">}</span>
 </pre></div>
 </div>
-<div class="section" id="script">
-<span id="process-script"></span><h2>Script<a class="headerlink" href="#script" title="永久链接至标题">¶</a></h2>
-<p>The <cite>script</cite> block is a string statement that defines the command that is executed by the process to carry out its task.</p>
-<p>A process contains one and only one script block, and it must be the last statement when the process contains
-input and output declarations.</p>
-<p>The entered string is executed as a <a class="reference external" href="http://en.wikipedia.org/wiki/Bash_(Unix_shell)">Bash</a> script in the
-<cite>host</cite> system. It can be any command, script or combination of them, that you would normally use in terminal shell
-or in a common Bash script.</p>
-<p>The only limitation to the commands that can be used in the script statement is given by the availability of those
-programs in the target execution system.</p>
-<p>The script block can be a simple string or multi-line string. The latter simplifies the writing of non trivial scripts
-composed by multiple commands spanning over multiple lines. For example:</p>
+<div class="section" id="process-script">
+<span id="id1"></span><h2>脚本<a class="headerlink" href="#process-script" title="永久链接至标题">¶</a></h2>
+<p>脚本块是一个字符串语句，用于定义process执行其执行任务的命令。</p>
+<p>process包含一个且只有一个脚本块，当process包含输入和输出声明时，它必须是最后一个语句。</p>
+<p>输入的字符串在主机系统中作为`Bash &lt;<a class="reference external" href="http://en.wikipedia.org/wiki/Bash_(Unix_shell)">http://en.wikipedia.org/wiki/Bash_(Unix_shell)</a>&gt;`_ 脚本执行。 它可以是您通常在终端shell或常见的Bash脚本中使用的任何命令，脚本或它们的组合。</p>
+<p>脚本语句中使用的命令的唯一限制是在目标执行系统中那些实用性程序。</p>
+<p>脚本块可以是简单的字符串或多行字符串。 后者简化了由跨越多行的多个命令组成的非平凡脚本的编写。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">doMoreThings</span> <span class="p">{</span>
 
   <span class="sd">&quot;&quot;&quot;</span>
@@ -298,19 +290,14 @@ composed by multiple commands spanning over multiple lines. For example:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>As explained in the script tutorial section, strings can be defined by using a single-quote
-or a double-quote, and multi-line strings are defined by three single-quote or three double-quote characters.</p>
-<p>There is a subtle but important difference between them. Like in Bash, strings delimited by a <code class="docutils literal notranslate"><span class="pre">&quot;</span></code> character support
-variable substitutions, while strings delimited by <code class="docutils literal notranslate"><span class="pre">'</span></code> do not.</p>
-<p>In the above code fragment the <code class="docutils literal notranslate"><span class="pre">$db</span></code> variable is replaced by the actual value defined somewhere in the
-pipeline script.</p>
+<p>如脚本教程部分所述，可以使用单引号或双引号定义字符串，多行字符串由三个单引号或三个双引号字符定义。</p>
+<p>它们之间存在微妙但重要的区别。 就像在Bash中一样，双引号 <code class="docutils literal notranslate"><span class="pre">&quot;</span></code> 的字符串支持变量替换，而单引号 <code class="docutils literal notranslate"><span class="pre">'</span></code> 的字符串则不行。</p>
+<p>在上面的代码片段中， <code class="docutils literal notranslate"><span class="pre">$db</span></code> 变量被流程脚本中某处定义的实际值替换。</p>
 <div class="admonition warning">
 <p class="first admonition-title">警告</p>
-<p class="last">Since Nextflow uses the same Bash syntax for variable substitutions in strings, you need to manage them
-carefully depending on if you want to evaluate a variable in the Nextflow context - or - in the Bash environment execution.</p>
+<p class="last">由于Nextflow对字符串中的变量替换使用相同的Bash语法，因此您需要仔细管理它们，具体取决于您是否要在Nextflow上下文中评估变量 - 或者 - 在Bash环境执行中。</p>
 </div>
-<p>When you need to access a system environment variable  in your script you have two options. The first choice is as
-easy as defining your script block by using a single-quote string. For example:</p>
+<p>当您需要在脚本中访问系统环境变量时，您有两个选择。 第一种选择就像使用单引号字符串定义脚本块一样简单。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">printPath</span> <span class="p">{</span>
 
    <span class="sd">&#39;&#39;&#39;</span>
@@ -320,10 +307,8 @@ easy as defining your script block by using a single-quote string. For example:<
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The drawback of this solution is that you will not able to access variables defined in the pipeline script context,
-in your script block.</p>
-<p>To fix this, define your script by using a double-quote string and <cite>escape</cite> the system environment variables by
-prefixing them with a back-slash <code class="docutils literal notranslate"><span class="pre">\</span></code> character, as shown in the following example:</p>
+<p>此解决方案的缺点是您将无法在脚本块中访问流程脚本上下文中定义的变量。</p>
+<p>要解决此问题，请使用双引号字符串定义脚本，并通过在前面添加反斜杠( <code class="docutils literal notranslate"><span class="pre">\</span></code> )字符来转义(<cite>escape</cite> )系统环境变量，如以下示例所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">doOtherThings</span> <span class="p">{</span>
 
   <span class="sd">&quot;&quot;&quot;</span>
@@ -335,23 +320,17 @@ prefixing them with a back-slash <code class="docutils literal notranslate"><spa
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>In this example the <code class="docutils literal notranslate"><span class="pre">$MAX</span></code> variable has to be defined somewhere before, in the pipeline script.
-<cite>Nextflow</cite> replaces it with the actual value before executing the script. Instead, the <code class="docutils literal notranslate"><span class="pre">$DB</span></code> variable
-must exist in the script execution environment and the Bash interpreter will replace it with the actual value.</p>
+<p>在此示例中，必须在流程脚本之前的某处定义 <code class="docutils literal notranslate"><span class="pre">$MAX</span></code> 变量。 在执行脚本之前，Nextflow会将其替换为实际值。 相反，<code class="docutils literal notranslate"><span class="pre">$DB</span></code> 变量必须存在于脚本执行环境中，Bash解释器将用实际值替换它。</p>
 <div class="admonition tip">
 <p class="first admonition-title">小技巧</p>
-<p class="last">Alternatively you can use the <a class="reference internal" href="#process-shell"><span class="std std-ref">Shell</span></a> block definition which allows a script to contain both
-Bash and Nextflow variables without having to escape the first.</p>
+<p class="last">或者，您可以使用 <a class="reference internal" href="#process-shell"><span class="std std-ref">Shell</span></a> 块定义，该定义允许脚本包含Bash和Nextflow变量，而不必转义第一个。</p>
 </div>
-<div class="section" id="scripts-a-la-carte">
-<h3>Scripts <cite>à la carte</cite><a class="headerlink" href="#scripts-a-la-carte" title="永久链接至标题">¶</a></h3>
-<p>The process script is interpreted by Nextflow as a Bash script by default, but you are not limited to it.</p>
-<p>You can use your favourite scripting language (e.g. Perl, Python, Ruby, R, etc), or even mix them in the same pipeline.</p>
-<p>A pipeline may be composed by processes that execute very different tasks. Using <cite>Nextflow</cite> you can choose the scripting
-language that better fits the task carried out by a specified process. For example for some processes <cite>R</cite> could be
-more useful than <cite>Perl</cite>, in other you may need to use <cite>Python</cite> because it provides better access to a library or an API, etc.</p>
-<p>To use a scripting other than Bash, simply start your process script with the corresponding
-<a class="reference external" href="http://en.wikipedia.org/wiki/Shebang_(Unix)">shebang</a> declaration. For example:</p>
+<div class="section" id="id2">
+<h3>脚本语言<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>默认情况下，Nextflow Process将流程脚本解释为Bash脚本，但您不必受限于此。</p>
+<p>您可以使用自己喜欢的脚本语言（例如Perl，Python，Ruby，R等），甚至可以将它们混合在同一个流程中。</p>
+<p>流程可以由执行非常不同的任务的进程组成。 使用Nextflow，您可以选择更适合指定进程执行的任务的脚本语言。 例如，对于某些进程，R可能比Perl更有用，在其他情况下，您可能需要使用Python，因为它可以更好地访问一个库或一个API等。</p>
+<p>要使用Bash以外的脚本，只需使用相应的 <a class="reference external" href="http://en.wikipedia.org/wiki/Shebang_(Unix)">shebang</a> 声明启动您的流程脚本。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">perlStuff</span> <span class="p">{</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
@@ -377,20 +356,14 @@ more useful than <cite>Perl</cite>, in other you may need to use <cite>Python</c
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">小技巧</p>
-<p class="last">Since the actual location of the interpreter binary file can change across platforms, to make your scripts
-more portable it is wise to use the <code class="docutils literal notranslate"><span class="pre">env</span></code> shell command followed by the interpreter’s name, instead of the absolute
-path of it. Thus, the <cite>shebang</cite> declaration for a Perl script, for example,
-would look like: <code class="docutils literal notranslate"><span class="pre">#!/usr/bin/env</span> <span class="pre">perl</span></code> instead of the one in the above pipeline fragment.</p>
+<p class="last">由于解释器二进制文件的实际位置可以跨平台更改，为了使脚本更具可移植性，最好使用 <code class="docutils literal notranslate"><span class="pre">env</span></code> shell命令后跟解释器的名称，而不是它的绝对路径。 因此，例如，Perl脚本的shebang声明看起来像： <code class="docutils literal notranslate"><span class="pre">#!/usr/bin/env</span> <span class="pre">perl</span></code> 而不是上面流程片段中的那个。</p>
 </div>
 </div>
-<div class="section" id="conditional-scripts">
-<h3>Conditional scripts<a class="headerlink" href="#conditional-scripts" title="永久链接至标题">¶</a></h3>
-<p>Complex process scripts may need to evaluate conditions on the input parameters or use traditional flow control
-statements (i.e. <code class="docutils literal notranslate"><span class="pre">if</span></code>, <code class="docutils literal notranslate"><span class="pre">switch</span></code>, etc) in order to execute specific script commands, depending on the current
-inputs configuration.</p>
-<p>Process scripts can contain conditional statements by simply prefixing the script block with the keyword <code class="docutils literal notranslate"><span class="pre">script:</span></code>.
-By doing that the interpreter will evaluate all the following statements as a code block that must return the
-script string to be executed. It’s much easier to use than to explain, for example:</p>
+<div class="section" id="id3">
+<h3>条件脚本<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>复杂的process脚本可能需要评估输入参数的条件或使用传统的数据流控制语句（即 <code class="docutils literal notranslate"><span class="pre">if</span></code>, <code class="docutils literal notranslate"><span class="pre">switch</span></code>,等）以执行特定的脚本命令，具体取决于当前的输入配置.</p>
+<p><code class="docutils literal notranslate"><span class="pre">process</span></code> 脚本可以通过在脚本块前面加上关键字 <code class="docutils literal notranslate"><span class="pre">mode</span></code> 前缀来包含条件语句. 通过这样做，解释器将所有以下语句评估为必须返回要执行的脚本字符串的代码块.
+它比使用解释更容易, 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">seq_to_align</span> <span class="o">=</span> <span class="o">...</span>
 <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;tcoffee&#39;</span>
 
@@ -420,16 +393,12 @@ script string to be executed. It’s much easier to use than to explain, for exa
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>In the above example the process will execute the script fragment depending on the value of the <code class="docutils literal notranslate"><span class="pre">mode</span></code> parameter.
-By default it will execute the <code class="docutils literal notranslate"><span class="pre">tcoffee</span></code> command, changing the <code class="docutils literal notranslate"><span class="pre">mode</span></code> variable to <code class="docutils literal notranslate"><span class="pre">mafft</span></code> or <code class="docutils literal notranslate"><span class="pre">clustalo</span></code> value,
-the other branches will be executed.</p>
+<p>在上面的示例中，process将根据 <code class="docutils literal notranslate"><span class="pre">mode</span></code> 参数的值执行脚本片段。 默认情况下，它将执行  <code class="docutils literal notranslate"><span class="pre">tcoffee</span></code>  命令，将 <code class="docutils literal notranslate"><span class="pre">mode</span></code> 变量更改为 <code class="docutils literal notranslate"><span class="pre">mafft</span></code> 或 <code class="docutils literal notranslate"><span class="pre">clustalo</span></code> 值，其他分支将被执行。</p>
 </div>
-<div class="section" id="template">
-<span id="process-template"></span><h3>Template<a class="headerlink" href="#template" title="永久链接至标题">¶</a></h3>
-<p>Process script can be externalised by using <em>template</em> files which can be reused across different processes and tested
-independently by the overall pipeline execution.</p>
-<p>A template is simply a shell script file that Nextflow is able to execute by using the <code class="docutils literal notranslate"><span class="pre">template</span></code> function
-as shown below:</p>
+<div class="section" id="process-template">
+<span id="id4"></span><h3>模板<a class="headerlink" href="#process-template" title="永久链接至标题">¶</a></h3>
+<p>process脚本可以通过使用 <em>template</em> 文件进行外部化，模板文件可以在不同的process中重复使用，并由整个流程执行独立测试。</p>
+<p>模板只是一个shell脚本文件，Nextflow可以使用 <code class="docutils literal notranslate"><span class="pre">template</span></code> 函数执行，如下所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">template_example</span> <span class="p">{</span>
 
     <span class="nb">input</span><span class="p">:</span>
@@ -441,9 +410,8 @@ as shown below:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Nextflow looks for the <code class="docutils literal notranslate"><span class="pre">my_script.sh</span></code> template file in the directory <code class="docutils literal notranslate"><span class="pre">templates</span></code> that must exist in the same folder
-where the Nextflow script file is located (any other location can be provided by using an absolute template path).</p>
-<p>The template script can contain any piece of code that can be executed by the underlying system. For example:</p>
+<p>Nextflow在 <code class="docutils literal notranslate"><span class="pre">templates</span></code> 目录中查找 <code class="docutils literal notranslate"><span class="pre">my_script.sh</span></code> 模板文件，该模板必须存在于Nextflow脚本文件所在的同一文件夹中（可以使用绝对模板路径提供任何其他位置）。</p>
+<p>模板脚本可以包含可由底层系统执行的任何代码段。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
 echo &quot;process started at `date`&quot;
 echo $STR
@@ -453,24 +421,17 @@ echo &quot;process completed&quot;
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">小技巧</p>
-<p class="last">Note that the dollar character (<code class="docutils literal notranslate"><span class="pre">$</span></code>) is interpreted as a Nextflow variable placeholder, when the script is run as a
-Nextflow template, while it is evaluated as a Bash variable when it is run alone. This can be very useful to test
-your script autonomously, i.e. independently from Nextflow execution. You only need to provide a Bash environment
-variable for each the Nextflow variable existing in your script. For example, it would be possible to execute the above
-script entering the following command in the shell terminal: <code class="docutils literal notranslate"><span class="pre">STR='foo'</span> <span class="pre">bash</span> <span class="pre">templates/my_script.sh</span></code></p>
+<p class="last">请注意，当脚本作为Nextflow模板运行时，美元字符（<code class="docutils literal notranslate"><span class="pre">$</span></code>）将被解释为Nextflow变量占位符，而当单独运行时，它将被计算为Bash变量。 这对于自主测试脚本非常有用，即独立于Nextflow执行。 您只需为脚本中存在的每个Nextflow变量提供Bash环境变量。 例如，可以执行以上脚本在shell终端中输入以下命令：<code class="docutils literal notranslate"><span class="pre">STR='foo'</span> <span class="pre">bash</span> <span class="pre">templates/my_script.sh</span></code></p>
 </div>
 </div>
 <div class="section" id="shell">
 <span id="process-shell"></span><h3>Shell<a class="headerlink" href="#shell" title="永久链接至标题">¶</a></h3>
 <div class="admonition warning">
 <p class="first admonition-title">警告</p>
-<p class="last">This is an incubating feature. It may change in future Nextflow releases.</p>
+<p>这是一个孵化功能。 它可能会在将来的Nextflow版本中发生变化。</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">shell</span></code> 块是一个字符串语句，它定义process执行的shell命令以执行其任务。 它是 <a class="reference internal" href="#process-script"><span class="std std-ref">脚本</span></a> 定义的替代品，具有重要的区别，它使用感叹号``!`` 字符作为Nextflow变量的变量占位符，代替通常的美元字符。</p>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">shell</span></code> block is a string statement that defines the <em>shell</em> command executed by the process to carry out its task.
-It is an alternative to the <a class="reference internal" href="#process-script"><span class="std std-ref">Script</span></a> definition with an important difference, it uses
-the exclamation mark <code class="docutils literal notranslate"><span class="pre">!</span></code> character as the variable placeholder for Nextflow variables in place of the usual dollar character.</p>
-<p>In this way it is possible to use both Nextflow and Bash variables in the same piece of code without having to escape
-the latter and making process scripts more readable and easy to maintain. For example:</p>
+<p>通过这种方式，可以在同一段代码中同时使用Nextflow和Bash变量，而不必逃避后者并使流程脚本更易读和易于维护。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">myTask</span> <span class="p">{</span>
 
     <span class="nb">input</span><span class="p">:</span>
@@ -484,26 +445,18 @@ the latter and making process scripts more readable and easy to maintain. For ex
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>In the above trivial example the <code class="docutils literal notranslate"><span class="pre">$USER</span></code> variable is managed by the Bash interpreter, while <code class="docutils literal notranslate"><span class="pre">!{str}</span></code> is handled
-as a process input variable managed by Nextflow.</p>
+<p>在上面的简单示例中，<code class="docutils literal notranslate"><span class="pre">$USER</span></code> 变量由Bash解释器管理，而``!{str}``作为由Nextflow管理的process输入变量处理。</p>
 <div class="admonition note">
 <p class="first admonition-title">注解</p>
-<ul class="last simple">
-<li>Shell script definition requires the use of single-quote <code class="docutils literal notranslate"><span class="pre">'</span></code> delimited strings. When using double-quote <code class="docutils literal notranslate"><span class="pre">&quot;</span></code>
-delimited strings, dollar variables are interpreted as Nextflow variables as usual. See <a class="reference internal" href="script.html#string-interpolation"><span class="std std-ref">字符串插值</span></a>.</li>
-<li>Exclamation mark prefixed variables always need to be enclosed in curly brackets i.e. <code class="docutils literal notranslate"><span class="pre">!{str}</span></code> is a valid
-variable while <code class="docutils literal notranslate"><span class="pre">!str</span></code> is ignored.</li>
-<li>Shell script supports the use of the file <a class="reference internal" href="#process-template"><span class="std std-ref">Template</span></a> mechanism. The same rules are applied to the variables
-defined in the script template.</li>
-</ul>
+<p class="last">-Shell脚本定义需要使用单引号 <code class="docutils literal notranslate"><span class="pre">'</span></code> 分隔字符串。 当使用双引号 <code class="docutils literal notranslate"><span class="pre">&quot;</span></code> 分隔字符串时，美元变量像往常一样被解释为Nextflow变量。请参阅 <a class="reference internal" href="script.html#string-interpolation"><span class="std std-ref">字符串插值</span></a> 。
+-感叹号前缀变量总是需要用大括号括起来，即 <code class="docutils literal notranslate"><span class="pre">!{str}</span></code> 是有效变量，而 <code class="docutils literal notranslate"><span class="pre">!str</span></code> 被忽略。
+-Shell脚本支持使用 <a class="reference internal" href="#process-template"><span class="std std-ref">模板</span></a> 文件机制。 相同的规则适用于脚本模板中定义的变量。</p>
 </div>
 </div>
-<div class="section" id="native-execution">
-<span id="process-native"></span><h3>Native execution<a class="headerlink" href="#native-execution" title="永久链接至标题">¶</a></h3>
-<p>Nextflow processes can execute native code other than system scripts as shown in the previous paragraphs.</p>
-<p>This means that instead of specifying the process command to be executed as a string script, you can
-define it by providing one or more language statements, as you would do in the rest of the pipeline script.
-Simply starting the script definition block with the <code class="docutils literal notranslate"><span class="pre">exec:</span></code> keyword, for example:</p>
+<div class="section" id="process-native">
+<span id="id5"></span><h3>本地执行<a class="headerlink" href="#process-native" title="永久链接至标题">¶</a></h3>
+<p>Nextflow process可以执行除系统脚本之外的本机代码，如前面段落所示。</p>
+<p>这意味着您可以通过提供一个或多个语言语句来定义它，而不是将process命令指定为字符串脚本，而不是像在流程脚本的其余部分中那样。 只需使用 <code class="docutils literal notranslate"><span class="pre">exec:</span></code> 关键字启动脚本定义块，例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">Channel</span><span class="o">.</span><span class="n">from</span><span class="p">(</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">)</span>
 
 <span class="n">process</span> <span class="n">simpleSum</span> <span class="p">{</span>
@@ -525,24 +478,20 @@ Simply starting the script definition block with the <code class="docutils liter
 </div>
 <div class="section" id="inputs">
 <span id="process-input"></span><h2>Inputs<a class="headerlink" href="#inputs" title="永久链接至标题">¶</a></h2>
-<p>Nextflow processes are isolated from each other but can communicate between themselves sending values through channels.</p>
-<p>The <cite>input</cite> block defines which channels the process is expecting to receive inputs data from. You can only define one
-input block at a time and it must contain one or more inputs declarations.</p>
-<p>The input block follows the syntax shown below:</p>
+<p>Nextflow process彼此隔离，但可以在它们之间通过channels发送值进行通信。</p>
+<p><code class="docutils literal notranslate"><span class="pre">input</span></code> 块定义了process期望从哪些channels接收输入数据。 您一次只能定义一个输入块，并且必须包含一个或多个输入声明。</p>
+<p>input块遵循以下语法:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">input</span><span class="p">:</span>
   <span class="o">&lt;</span><span class="nb">input</span> <span class="n">qualifier</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="nb">input</span> <span class="n">name</span><span class="o">&gt;</span> <span class="p">[</span><span class="kn">from</span> <span class="o">&lt;</span><span class="n">source</span> <span class="n">channel</span><span class="o">&gt;</span><span class="p">]</span> <span class="p">[</span><span class="n">attributes</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>An input definition starts with an input <cite>qualifier</cite> and the input <cite>name</cite>, followed by the keyword <code class="docutils literal notranslate"><span class="pre">from</span></code> and
-the actual channel over which inputs are received. Finally some input optional attributes can be specified.</p>
+<p>input定义以输入限定符(input <cite>qualifier</cite>)和输入名称(input <cite>name</cite>)开头，后跟关键字 <code class="docutils literal notranslate"><span class="pre">from</span></code> 和接收输入的实际通道。 最后，可以指定一些输入可选属性。</p>
 <div class="admonition note">
 <p class="first admonition-title">注解</p>
-<p class="last">When the input name is the same as the channel name, the <code class="docutils literal notranslate"><span class="pre">from</span></code> part of the declaration can be omitted.</p>
+<p class="last">当输入名称与channel名称相同时，可以省略声明的 <code class="docutils literal notranslate"><span class="pre">from</span></code> 部分。</p>
 </div>
-<p>The input qualifier declares the <cite>type</cite> of data to be received. This information is used by Nextflow to apply the
-semantic rules associated to each qualifier and handle it properly depending on the target execution platform
-(grid, cloud, etc).</p>
-<p>The qualifiers available are the ones listed in the following table:</p>
+<p>输入限定符声明要接收的数据类型。 Nextflow使用此信息来应用与每个限定符关联的语义规则，并根据目标执行平台（grid, cloud, etc）正确处理它。</p>
+<p>可用的限定符是下表中列出的限定符：</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="11%" />
@@ -575,10 +524,9 @@ as the specified input name.</td>
 </tr>
 </tbody>
 </table>
-<div class="section" id="input-of-generic-values">
-<h3>Input of generic values<a class="headerlink" href="#input-of-generic-values" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">val</span></code> qualifier allows you to receive data of any type as input. It can be accessed in the process script
-by using the specified input name, as shown in the following example:</p>
+<div class="section" id="id6">
+<h3>输入通用值<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">val</span></code> 限定符允许您接收任何类型的数据作为输入。 可以使用指定的输入名称在进程脚本中访问它，如以下示例所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">num</span> <span class="o">=</span> <span class="n">Channel</span><span class="o">.</span><span class="n">from</span><span class="p">(</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span> <span class="p">)</span>
 
 <span class="n">process</span> <span class="n">basicExample</span> <span class="p">{</span>
@@ -590,8 +538,7 @@ by using the specified input name, as shown in the following example:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>In the above example the process is executed three times, each time a value is received from the channel <code class="docutils literal notranslate"><span class="pre">num</span></code>
-and used to process the script. Thus, it results in an output similar to the one shown below:</p>
+<p>在上面的例子中，每次从 channel <code class="docutils literal notranslate"><span class="pre">num</span></code> 接收一个值并用于处理脚本时，该过程执行三次。 因此，它产生类似于下图所示的输出:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">job</span> <span class="mi">3</span>
 <span class="n">process</span> <span class="n">job</span> <span class="mi">1</span>
 <span class="n">process</span> <span class="n">job</span> <span class="mi">2</span>
@@ -599,12 +546,9 @@ and used to process the script. Thus, it results in an output similar to the one
 </div>
 <div class="admonition note">
 <p class="first admonition-title">注解</p>
-<p class="last">The <cite>channel</cite> guarantees that items are delivered in the same order as they have been sent - but -
-since the process is executed in a parallel manner, there is no guarantee that they are processed in the
-same order as they are received. In fact, in the above example, value <code class="docutils literal notranslate"><span class="pre">3</span></code> is processed before the others.</p>
+<p class="last">channel保证项目(items)的发送顺序与被发送顺序相同 - 但是 - 由于该过程以并行方式执行，因此无法保证按照接收顺序处理它们。 实际上，在上面的例子中，值 <code class="docutils literal notranslate"><span class="pre">3</span></code> 在其他之前被处理。</p>
 </div>
-<p>When the <code class="docutils literal notranslate"><span class="pre">val</span></code> has the same name as the channel from where the data is received, the <code class="docutils literal notranslate"><span class="pre">from</span></code> part can be omitted.
-Thus the above example can be written as shown below:</p>
+<p>当 <code class="docutils literal notranslate"><span class="pre">val</span></code> 与接收数据的channel同名时，可以省略 <code class="docutils literal notranslate"><span class="pre">from</span></code> 部分。 因此，上面的例子可以写成如下所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">num</span> <span class="o">=</span> <span class="n">Channel</span><span class="o">.</span><span class="n">from</span><span class="p">(</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span> <span class="p">)</span>
 
 <span class="n">process</span> <span class="n">basicExample</span> <span class="p">{</span>
@@ -617,11 +561,9 @@ Thus the above example can be written as shown below:</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="input-of-files">
-<h3>Input of files<a class="headerlink" href="#input-of-files" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">file</span></code> qualifier allows the handling of file values in the process execution context. This means that
-Nextflow will stage it in the process execution directory, and it can be access in the script by using the name
-specified in the input declaration. For example:</p>
+<div class="section" id="id7">
+<h3>输入文件<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">file</span></code> 限定符允许在process执行上下文中处理文件。 这意味着Nextflow将在process执行目录中将其暂存，并且可以使用输入声明中指定的名称在脚本中进行访问。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">proteins</span> <span class="o">=</span> <span class="n">Channel</span><span class="o">.</span><span class="n">fromPath</span><span class="p">(</span> <span class="s1">&#39;/some/path/*.fa&#39;</span> <span class="p">)</span>
 
 <span class="n">process</span> <span class="n">blastThemAll</span> <span class="p">{</span>
@@ -633,10 +575,8 @@ specified in the input declaration. For example:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>In the above example all the files ending with the suffix <code class="docutils literal notranslate"><span class="pre">.fa</span></code> are sent over the channel <code class="docutils literal notranslate"><span class="pre">proteins</span></code>.
-Then, these files are received by the process which will execute a <cite>BLAST</cite> query on each of them.</p>
-<p>When the file input name is the same as the channel name, the <code class="docutils literal notranslate"><span class="pre">from</span></code> part of the input declaration can be omitted.
-Thus, the above example could be written as shown below:</p>
+<p>在上面的例子中，所有以后缀 <code class="docutils literal notranslate"><span class="pre">.fa</span></code> 结尾的文件都是通过channel <code class="docutils literal notranslate"><span class="pre">proteins</span></code> 发送的。 然后，process将接收这些文件，这些文件将对每个文件执行BLAST比对。</p>
+<p>当文件输入名称与channel名称相同时，可以省略输入声明的 <code class="docutils literal notranslate"><span class="pre">from</span></code> 部分。 因此，上面的例子可以写成如下所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">proteins</span> <span class="o">=</span> <span class="n">Channel</span><span class="o">.</span><span class="n">fromPath</span><span class="p">(</span> <span class="s1">&#39;/some/path/*.fa&#39;</span> <span class="p">)</span>
 
 <span class="n">process</span> <span class="n">blastThemAll</span> <span class="p">{</span>
@@ -648,22 +588,18 @@ Thus, the above example could be written as shown below:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>It’s worth noting that in the above examples, the name of the file in the file-system is not touched, you can
-access the file even without knowing its name because you can reference it in the process script by using the
-variable whose name is specified in the input file parameter declaration.</p>
-<p>There may be cases where your task needs to use a file whose name is fixed, it does not have to change along
-with the actual provided file. In this case you can specify its name by specifying the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute in the
-input file parameter declaration, as shown in the following example:</p>
+<p>值得注意的是，在上面的示例中，未触及文件系统中文件的名称，即使不知道其名称也可以访问该文件，因为您可以使用指定名称的变量在process脚本中引用它,在输入文件参数中声明。</p>
+<p>在某些情况下，您的任务需要使用名称已修复的文件，而不必随实际提供的文件一起更改。 在这种情况下，您可以通过在输入文件参数声明中指定 <code class="docutils literal notranslate"><span class="pre">name</span></code> 属性来指定其名称，如以下示例所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">input</span><span class="p">:</span>
     <span class="n">file</span> <span class="n">query_file</span> <span class="n">name</span> <span class="s1">&#39;query.fa&#39;</span> <span class="kn">from</span> <span class="nn">proteins</span>
 </pre></div>
 </div>
-<p>Or alternatively using a shorter syntax:</p>
+<p>或者使用更短的语法:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">input</span><span class="p">:</span>
     <span class="n">file</span> <span class="s1">&#39;query.fa&#39;</span> <span class="kn">from</span> <span class="nn">proteins</span>
 </pre></div>
 </div>
-<p>Using this, the previous example can be re-written as shown below:</p>
+<p>使用它，可以重写前面的示例，如下所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">proteins</span> <span class="o">=</span> <span class="n">Channel</span><span class="o">.</span><span class="n">fromPath</span><span class="p">(</span> <span class="s1">&#39;/some/path/*.fa&#39;</span> <span class="p">)</span>
 
 <span class="n">process</span> <span class="n">blastThemAll</span> <span class="p">{</span>
@@ -675,25 +611,17 @@ input file parameter declaration, as shown in the following example:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>What happens in this example is that each file, that the process receives, is staged with the name <code class="docutils literal notranslate"><span class="pre">query.fa</span></code>
-in a different execution context (i.e. the folder where the job is executed) and an independent process
-execution is launched.</p>
+<p>在此示例中发生的情况是，process接收的每个文件在不同的执行上下文（即执行作业的文件夹）中使用名称 <code class="docutils literal notranslate"><span class="pre">query.fa</span></code> 进行暂存，并启动独立的process执行。</p>
 <div class="admonition tip">
 <p class="first admonition-title">小技巧</p>
-<p class="last">This allows you to execute the process command various time without worrying the files names changing.
-In other words, <cite>Nextflow</cite> helps you write pipeline tasks that are self-contained and decoupled by the execution
-environment. This is also the reason why you should avoid whenever possible to use absolute or relative paths
-referencing files in your pipeline processes.</p>
+<p class="last">这允许您在不必担心文件名更改的情况下执行各种时间的process命令。 换句话说，Nextflow可帮助您编写由执行环境自包含和解耦的流程任务。 这也是您应该尽可能避免使用引用流程processes中的文件的绝对路径或相对路径的原因。</p>
 </div>
 </div>
-<div class="section" id="multiple-input-files">
-<h3>Multiple input files<a class="headerlink" href="#multiple-input-files" title="永久链接至标题">¶</a></h3>
-<p>A process can declare as input file a channel that emits a collection of values, instead of a simple value.</p>
-<p>In this case, the script variable defined by the input file parameter will hold a list of files. You can
-use it as shown before, referring to all the files in the list, or by accessing a specific entry using the
-usual square brackets notation.</p>
-<p>When a target file name is defined in the input parameter and a collection of files is received by the process,
-the file name will be appended by a numerical suffix representing its ordinal position in the list. For example:</p>
+<div class="section" id="id8">
+<h3>多个输入文件<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<p>process可以将声明为值集合的channel声明为输入文件，而不是简单值。</p>
+<p>在这种情况下，输入文件参数定义的脚本变量将包含文件列表。 您可以如前所示使用它，引用列表中的所有文件，或使用通常的方括号表示法访问特定条目。</p>
+<p>当在输入参数中定义目标文件名并且process接收到文件集合时，文件名将附加一个数字后缀，表示其在列表中的序号位置。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fasta</span> <span class="o">=</span> <span class="n">Channel</span><span class="o">.</span><span class="n">fromPath</span><span class="p">(</span> <span class="s2">&quot;/some/path/*.fa&quot;</span> <span class="p">)</span><span class="o">.</span><span class="n">buffer</span><span class="p">(</span><span class="n">size</span><span class="p">:</span><span class="mi">3</span><span class="p">)</span>
 
 <span class="n">process</span> <span class="n">blastThemAll</span> <span class="p">{</span>
@@ -711,9 +639,7 @@ the file name will be appended by a numerical suffix representing its ordinal po
 <span class="o">...</span>
 </pre></div>
 </div>
-<p>The target input file name can contain the <code class="docutils literal notranslate"><span class="pre">*</span></code> and <code class="docutils literal notranslate"><span class="pre">?</span></code> wildcards, that can be used
-to control the name of staged files. The following table shows how the wildcards are
-replaced depending on the cardinality of the received input collection.</p>
+<p>目标输入文件名可以包含 <code class="docutils literal notranslate"><span class="pre">*</span></code> 和 <code class="docutils literal notranslate"><span class="pre">?</span></code> 通配符，可用于控制暂存文件的名称。 下表显示了如何根据接收的输入集合的基数替换通配符。</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="9%" />
@@ -769,7 +695,7 @@ replaced depending on the cardinality of the received input collection.</p>
 </tr>
 </tbody>
 </table>
-<p>The following fragment shows how a wildcard can be used in the input file declaration:</p>
+<p>以下片段显示了如何在输入文件声明中使用通配符:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fasta</span> <span class="o">=</span> <span class="n">Channel</span><span class="o">.</span><span class="n">fromPath</span><span class="p">(</span> <span class="s2">&quot;/some/path/*.fa&quot;</span> <span class="p">)</span><span class="o">.</span><span class="n">buffer</span><span class="p">(</span><span class="n">size</span><span class="p">:</span><span class="mi">3</span><span class="p">)</span>
 
 <span class="n">process</span> <span class="n">blastThemAll</span> <span class="p">{</span>
@@ -783,16 +709,12 @@ replaced depending on the cardinality of the received input collection.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">注解</p>
-<p class="last">Rewriting input file names according to a named pattern is an extra feature and not at all obligatory.
-The normal file input constructs introduced in the <a class="reference internal" href="#input-of-files">Input of files</a> section are valid for collections of
-multiple files as well. To handle multiple input files preserving the original file names, use the <code class="docutils literal notranslate"><span class="pre">*</span></code> wildcard as
-name pattern or a variable identifier.</p>
+<p class="last">根据命名模式重写输入文件名是一项额外功能，完全没有义务。 “文件输入”部分中引入的普通文件输入结构也适用于多个文件的集合。 要处理保留原始文件名的多个输入文件，请使用 <code class="docutils literal notranslate"><span class="pre">*</span></code> 通配符作为名称模式或变量标识符。</p>
 </div>
 </div>
-<div class="section" id="dynamic-input-file-names">
-<h3>Dynamic input file names<a class="headerlink" href="#dynamic-input-file-names" title="永久链接至标题">¶</a></h3>
-<p>When the input file name is specified by using the <code class="docutils literal notranslate"><span class="pre">name</span></code> file clause or the short <cite>string</cite> notation, you
-are allowed to use other input values as variables in the file name string. For example:</p>
+<div class="section" id="id9">
+<h3>动态输入文件名<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<p>使用 <code class="docutils literal notranslate"><span class="pre">name</span></code>  文件子句或短字符串表示法指定输入文件名时，可以使用其他输入值作为文件名字符串中的变量。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">simpleCount</span> <span class="p">{</span>
   <span class="nb">input</span><span class="p">:</span>
   <span class="n">val</span> <span class="n">x</span> <span class="kn">from</span> <span class="nn">species</span>
@@ -804,21 +726,17 @@ are allowed to use other input values as variables in the file name string. For 
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>In the above example, the input file name is set by using the current value of the <code class="docutils literal notranslate"><span class="pre">x</span></code> input value.</p>
-<p>This allows the input files to be staged in the script working directory with a name that is coherent
-with the current execution context.</p>
+<p>在上面的示例中，使用 <code class="docutils literal notranslate"><span class="pre">x</span></code> 输入值的当前值设置输入文件名。</p>
+<p>这允许输入文件在脚本工作目录中暂存，其名称与当前执行上下文一致。</p>
 <div class="admonition tip">
 <p class="first admonition-title">小技巧</p>
-<p class="last">In most cases, you won’t need to use dynamic file names, because each process is executed in its
-own private temporary directory, and input files are automatically staged to this directory by Nextflow.
-This guarantees that input files with the same name won’t overwrite each other.</p>
+<p class="last">在大多数情况下，您不需要使用动态文件名，因为每个进程都在其自己的专用临时目录中执行，并且输入文件由Nextflow自动转移到此目录。 这可以保证具有相同名称的输入文件不会相互覆盖。</p>
 </div>
 </div>
-<div class="section" id="input-of-type-stdin">
-<h3>Input of type ‘stdin’<a class="headerlink" href="#input-of-type-stdin" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">stdin</span></code> input qualifier allows you the forwarding of the value received from a channel to the
-<a class="reference external" href="http://en.wikipedia.org/wiki/Standard_streams#Standard_input_.28stdin.29">standard input</a>
-of the command executed by the process. For example:</p>
+<div class="section" id="stdin">
+<h3>输入’stdin’类型<a class="headerlink" href="#stdin" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">stdin</span></code> 输入限定符允许您将从channel接收的值转发到process执行的命令的 <a class="reference external" href="http://en.wikipedia.org/wiki/Standard_streams#Standard_input_.28stdin.29">standard input</a> 。
+例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">str</span> <span class="o">=</span> <span class="n">Channel</span><span class="o">.</span><span class="n">from</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="s1">&#39;hola&#39;</span><span class="p">,</span> <span class="s1">&#39;bonjour&#39;</span><span class="p">,</span> <span class="s1">&#39;ciao&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">it</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="p">}</span>
 
 <span class="n">process</span> <span class="n">printAll</span> <span class="p">{</span>
@@ -840,10 +758,9 @@ of the command executed by the process. For example:</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="input-of-type-env">
-<h3>Input of type ‘env’<a class="headerlink" href="#input-of-type-env" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">env</span></code> qualifier allows you to define an environment variable in the process execution context based
-on the value received from the channel. For example:</p>
+<div class="section" id="env">
+<h3>输入’env’类型<a class="headerlink" href="#env" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">env</span></code> 限定符允许您根据从channel接收的值在process执行上下文中定义环境变量。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">str</span> <span class="o">=</span> <span class="n">Channel</span><span class="o">.</span><span class="n">from</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="s1">&#39;hola&#39;</span><span class="p">,</span> <span class="s1">&#39;bonjour&#39;</span><span class="p">,</span> <span class="s1">&#39;ciao&#39;</span><span class="p">)</span>
 
 <span class="n">process</span> <span class="n">printEnv</span> <span class="p">{</span>
@@ -865,11 +782,9 @@ hola world!
 </pre></div>
 </div>
 </div>
-<div class="section" id="input-of-type-set">
-<h3>Input of type ‘set’<a class="headerlink" href="#input-of-type-set" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">set</span></code> qualifier allows you to group multiple parameters in a single parameter definition. It can be useful
-when a process receives, in input, tuples of values that need to be handled separately. Each element in the tuple
-is associated to a corresponding element with the <code class="docutils literal notranslate"><span class="pre">set</span></code> definition. For example:</p>
+<div class="section" id="set">
+<h3>输入’set’类型<a class="headerlink" href="#set" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">set</span></code> 限定符允许您在单个参数定义中对多个参数进行分组。 当process在输入中接收需要单独处理的值的元组时，它会很有用。 元组中的每个元素都与具有 <code class="docutils literal notranslate"><span class="pre">set</span></code> 定义的对应元素相关联。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">tuple</span> <span class="o">=</span> <span class="n">Channel</span><span class="o">.</span><span class="n">from</span><span class="p">(</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;alpha&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;beta&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;delta&#39;</span><span class="p">]</span> <span class="p">)</span>
 
 <span class="n">process</span> <span class="n">setExample</span> <span class="p">{</span>
@@ -884,10 +799,10 @@ is associated to a corresponding element with the <code class="docutils literal 
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>In the above example the <code class="docutils literal notranslate"><span class="pre">set</span></code> parameter is used to define the value <code class="docutils literal notranslate"><span class="pre">x</span></code> and the file <code class="docutils literal notranslate"><span class="pre">latin.txt</span></code>,
-which will receive a value from the same channel.</p>
-<p>In the <code class="docutils literal notranslate"><span class="pre">set</span></code> declaration items can be defined by using the following qualifiers: <code class="docutils literal notranslate"><span class="pre">val</span></code>, <code class="docutils literal notranslate"><span class="pre">env</span></code>, <code class="docutils literal notranslate"><span class="pre">file</span></code> and <code class="docutils literal notranslate"><span class="pre">stdin</span></code>.</p>
-<p>A shorter notation can be used by applying the following substitution rules:</p>
+<p>在上面的示例中，<code class="docutils literal notranslate"><span class="pre">set</span></code> 参数用于定义值 <code class="docutils literal notranslate"><span class="pre">x</span></code> 和文件 <code class="docutils literal notranslate"><span class="pre">latin.txt</span></code>，后者将从同一channel中接收值。</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">set</span></code> declaration items can be defined by using the following qualifiers: <code class="docutils literal notranslate"><span class="pre">val</span></code>, <code class="docutils literal notranslate"><span class="pre">env</span></code>, <code class="docutils literal notranslate"><span class="pre">file</span></code> and <code class="docutils literal notranslate"><span class="pre">stdin</span></code>.
+在 <code class="docutils literal notranslate"><span class="pre">set</span></code> 声明中，可以使用以下限定符来定义项：<code class="docutils literal notranslate"><span class="pre">val</span></code>, <code class="docutils literal notranslate"><span class="pre">env</span></code>, <code class="docutils literal notranslate"><span class="pre">file</span></code> 和 <code class="docutils literal notranslate"><span class="pre">stdin</span></code></p>
+<p>通过应用以下替换规则可以使用更短的表示法：</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="47%" />
@@ -919,7 +834,7 @@ which will receive a value from the same channel.</p>
 </tr>
 </tbody>
 </table>
-<p>Thus the previous example could be rewritten as follows:</p>
+<p>因此，前面的示例可以重写如下:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">tuple</span> <span class="o">=</span> <span class="n">Channel</span><span class="o">.</span><span class="n">from</span><span class="p">(</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;alpha&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;beta&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;delta&#39;</span><span class="p">]</span> <span class="p">)</span>
 
 <span class="n">process</span> <span class="n">setExample</span> <span class="p">{</span>
@@ -934,12 +849,11 @@ which will receive a value from the same channel.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>File names can be defined in <em>dynamic</em> manner as explained in the <a class="reference internal" href="#dynamic-input-file-names">Dynamic input file names</a> section.</p>
+<p>文件名可以 <em>动态方式</em> 定义，如  <a class="reference internal" href="#id9">动态输入文件名</a>  部分所述。</p>
 </div>
-<div class="section" id="input-repeaters">
-<h3>Input repeaters<a class="headerlink" href="#input-repeaters" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">each</span></code> qualifier allows you to repeat the execution of a process for each item in a collection,
-every time a new data is received. For example:</p>
+<div class="section" id="id10">
+<h3>重复输入<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">each</span></code> 限定符允许您在每次收到新数据时为集合中的每个项重复执行过程。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sequences</span> <span class="o">=</span> <span class="n">Channel</span><span class="o">.</span><span class="n">fromPath</span><span class="p">(</span><span class="s1">&#39;*.fa&#39;</span><span class="p">)</span>
 <span class="n">methods</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;regular&#39;</span><span class="p">,</span> <span class="s1">&#39;expresso&#39;</span><span class="p">,</span> <span class="s1">&#39;psicoffee&#39;</span><span class="p">]</span>
 
@@ -954,10 +868,8 @@ every time a new data is received. For example:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>In the above example every time a file of sequences is received as input by the process,
-it executes <em>three</em> tasks running a T-coffee alignment with a different value for the <code class="docutils literal notranslate"><span class="pre">mode</span></code> parameter.
-This is useful when you need to <cite>repeat</cite> the same task for a given set of parameters.</p>
-<p>Since version 0.25+ input repeaters can be applied to files as well. For example:</p>
+<p>在上述示例中，每当过程接收到序列文件作为输入时，它执行三个任务，运行具有  <code class="docutils literal notranslate"><span class="pre">mode</span></code> 参数的不同值的T-coffee比对。 当您需要为给定的参数集重复相同的任务时，这非常有用。</p>
+<p>从版本0.25+开始，重复输入也可以应用于文件。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sequences</span> <span class="o">=</span> <span class="n">Channel</span><span class="o">.</span><span class="n">fromPath</span><span class="p">(</span><span class="s1">&#39;*.fa&#39;</span><span class="p">)</span>
 <span class="n">methods</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;regular&#39;</span><span class="p">,</span> <span class="s1">&#39;expresso&#39;</span><span class="p">]</span>
 <span class="n">libraries</span> <span class="o">=</span> <span class="p">[</span> <span class="n">file</span><span class="p">(</span><span class="s1">&#39;PQ001.lib&#39;</span><span class="p">),</span> <span class="n">file</span><span class="p">(</span><span class="s1">&#39;PQ002.lib&#39;</span><span class="p">),</span> <span class="n">file</span><span class="p">(</span><span class="s1">&#39;PQ003.lib&#39;</span><span class="p">)</span> <span class="p">]</span>
@@ -976,29 +888,21 @@ This is useful when you need to <cite>repeat</cite> the same task for a given se
 </div>
 <div class="admonition note">
 <p class="first admonition-title">注解</p>
-<p class="last">When multiple repeaters are declared, the process is executed for each <em>combination</em> of them.</p>
+<p class="last">当声明多个重复时，process将为它们的每个组合执行。</p>
 </div>
-<p>In the latter example for any sequence input file emitted by the <code class="docutils literal notranslate"><span class="pre">sequences</span></code> channel are executed 6 alignments,
-3 using the <code class="docutils literal notranslate"><span class="pre">regular</span></code> method against each library files, and other 3 by using the <code class="docutils literal notranslate"><span class="pre">expresso</span></code> method always
-against the same library files.</p>
+<p>在后一示例中，对于 <code class="docutils literal notranslate"><span class="pre">sequences</span></code> channel发出的任何序列输入文件，执行6个比对，3个使用 <code class="docutils literal notranslate"><span class="pre">regular</span></code> 方法对每个库文件执行，而其他3个通过使用 <code class="docutils literal notranslate"><span class="pre">expresso</span></code> 方法。</p>
 <div class="admonition hint">
 <p class="first admonition-title">提示</p>
-<p class="last">If you need to repeat the execution of a process over n-tuple of elements instead a simple values or files,
-create a channel combining the input values as needed to trigger the process execution multiple times.
-In this regard, see the <a class="reference internal" href="operator.html#operator-combine"><span class="std std-ref">combine</span></a>, <a class="reference internal" href="operator.html#operator-cross"><span class="std std-ref">cross</span></a> and <a class="reference internal" href="operator.html#operator-phase"><span class="std std-ref">phase</span></a> operators.</p>
+<p class="last">如果需要在n元组元素上重复执行进程而不是简单的值或文件，请根据需要创建一个组合输入值的channel，以多次触发process执行。 在这方面，请参阅 <a class="reference internal" href="operator.html#operator-combine"><span class="std std-ref">combine</span></a>, <a class="reference internal" href="operator.html#operator-cross"><span class="std std-ref">cross</span></a> 和 <a class="reference internal" href="operator.html#operator-phase"><span class="std std-ref">phase</span></a> 运算符。</p>
 </div>
 </div>
-<div class="section" id="understand-how-multiple-input-channels-work">
-<span id="process-understand-how-multiple-input-channels-work"></span><h3>Understand how multiple input channels work<a class="headerlink" href="#understand-how-multiple-input-channels-work" title="永久链接至标题">¶</a></h3>
-<p>A key feature of processes is the ability to handle inputs from multiple channels.</p>
-<p>When two or more channels are declared as process inputs, the process stops until
-there’s a complete input configuration ie. it receives an input value from all the channels declared
-as input.</p>
-<p>When this condition is verified, it consumes the input values coming from the respective channels,
-and spawns a task execution, then repeat the same logic until one or more channels have no more content.</p>
-<p>This means channel values are consumed serially one after another and the first empty channel
-cause the process execution to stop even if there are other values in other channels.</p>
-<p>For example:</p>
+<div class="section" id="channels">
+<span id="process-understand-how-multiple-input-channels-work"></span><h3>了解多个输入channels的工作原理<a class="headerlink" href="#channels" title="永久链接至标题">¶</a></h3>
+<p>processes的一个关键特性是能够处理来自多个channels的输入。</p>
+<p>当两个或多个channels被声明为process输入时，process将停止，直到有完整的输入配置，即它从声明为输入的所有channels接收输入值。</p>
+<p>当验证该条件时，它消耗来自各个channels的输入值，并产生任务执行，然后重复相同的逻辑，直到一个或多个channels不再有内容。</p>
+<p>这意味着channel一个接一个地串行消耗，第一个空channel导致进程执行停止，即使其他channels中还有其他值。</p>
+<p>例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">foo</span> <span class="p">{</span>
   <span class="n">echo</span> <span class="n">true</span>
   <span class="nb">input</span><span class="p">:</span>
@@ -1011,24 +915,19 @@ cause the process execution to stop even if there are other values in other chan
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The process <code class="docutils literal notranslate"><span class="pre">foo</span></code> is executed two times because the first input channel only provides two values and therefore
-the <code class="docutils literal notranslate"><span class="pre">c</span></code> element is discarded. It prints:</p>
+<p>process <code class="docutils literal notranslate"><span class="pre">foo</span></code> 执行两次，因为第一个输入channel只提供两个值，因此丢弃了 <code class="docutils literal notranslate"><span class="pre">c</span></code> 元素。 它打印:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span> <span class="ow">and</span> <span class="n">a</span>
 <span class="mi">2</span> <span class="ow">and</span> <span class="n">b</span>
 </pre></div>
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">警告</p>
-<p class="last">A different semantic is a applied when using <em>Value channel</em> a.k.a. <em>Singleton channel</em>.</p>
+<p class="last">在使用值通道(<em>Value channel</em>)时应用了另一种语义，即单例通道(<em>Singleton channel</em>)。</p>
 </div>
-<p>This kind of channel is created by the <a class="reference internal" href="channel.html#channel-value"><span class="std std-ref">Channel.value</span></a> factory method or implicitly
-when a process input specifies a simple value in the <code class="docutils literal notranslate"><span class="pre">from</span></code> clause.</p>
-<p>By definition, a <em>Value channel</em> is bound to a single value and it can be read unlimited times without
-consuming its content.</p>
-<p>These properties make that when mixing a <em>value channel</em> with one or more (queue) channels,
-it does not affect the process termination which only depends by the other channels and its
-content is applied repeatedly.</p>
-<p>To better understand this behavior compare the previous example with the following one:</p>
+<p>这种channel由 <a class="reference internal" href="channel.html#channel-value"><span class="std std-ref">Channel.value</span></a> factory方法创建，或者在process输入指定 <code class="docutils literal notranslate"><span class="pre">from</span></code> 子句中的简单值时隐式创建。</p>
+<p>根据定义， <em>Value channel</em> 绑定到单个值，可以无限次读取而不消耗其内容。</p>
+<p>这些属性使得在将value channel与一个或多个（队列）channels混合时，它不会影响仅仅依赖于其他channels并且其内容被重复应用的process终止。</p>
+<p>为了更好地理解此行为，请将前一个示例与以下示例进行比较:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">bar</span> <span class="p">{</span>
   <span class="n">echo</span> <span class="n">true</span>
   <span class="nb">input</span><span class="p">:</span>
@@ -1041,9 +940,7 @@ content is applied repeatedly.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The above snippet executes the <code class="docutils literal notranslate"><span class="pre">bar</span></code> process three times because the first input is a <em>value channel</em>, therefore
-its content can be read as many times as needed. The process termination is determined by the content of the second
-channel. It prints:</p>
+<p>上面的代码段执行 <code class="docutils literal notranslate"><span class="pre">bar</span></code>  process三次，因为第一个输入是一个value channel，因此可以根据需要多次读取其内容。 process终止由第二channel的内容确定。它打印:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span> <span class="ow">and</span> <span class="n">a</span>
 <span class="mi">1</span> <span class="ow">and</span> <span class="n">b</span>
 <span class="mi">1</span> <span class="ow">and</span> <span class="n">c</span>
@@ -1052,22 +949,20 @@ channel. It prints:</p>
 <p>See also: <a class="reference internal" href="channel.html#channel-types"><span class="std std-ref">Channel types</span></a>.</p>
 </div>
 </div>
-<div class="section" id="outputs">
-<h2>Outputs<a class="headerlink" href="#outputs" title="永久链接至标题">¶</a></h2>
-<p>The <cite>output</cite> declaration block allows to define the channels used by the process to send out the results produced.</p>
-<p>It can be defined at most one output block and it can contain one or more outputs declarations.
-The output block follows the syntax shown below:</p>
+<div class="section" id="id11">
+<h2>输出<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">output</span></code> 声明块允许定义process用于发送生成结果的channels。</p>
+<p>它最多可以定义一个输出块，它可以包含一个或多个输出声明。 输出块遵循以下语法:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">output</span><span class="p">:</span>
   <span class="o">&lt;</span><span class="n">output</span> <span class="n">qualifier</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">output</span> <span class="n">name</span><span class="o">&gt;</span> <span class="p">[</span><span class="n">into</span> <span class="o">&lt;</span><span class="n">target</span> <span class="n">channel</span><span class="o">&gt;</span><span class="p">[,</span><span class="n">channel</span><span class="p">,</span><span class="o">..</span><span class="p">]]</span> <span class="p">[</span><span class="n">attribute</span> <span class="p">[,</span><span class="o">..</span><span class="p">]]</span>
 </pre></div>
 </div>
-<p>Output definitions start by an output <cite>qualifier</cite> and the output <cite>name</cite>, followed by the keyword <code class="docutils literal notranslate"><span class="pre">into</span></code> and
-one or more channels over which outputs are sent. Finally some optional attributes can be specified.</p>
+<p>输出定义以输出限定符和输出名称开头，后跟关键字 <code class="docutils literal notranslate"><span class="pre">into</span></code> 以及发送输出的一个或多个channels。 最后，可以指定一些可选属性。</p>
 <div class="admonition note">
 <p class="first admonition-title">注解</p>
-<p class="last">When the output name is the same as the channel name, the <code class="docutils literal notranslate"><span class="pre">into</span></code> part of the declaration can be omitted.</p>
+<p class="last">当输出名称与channel名称相同时，可以省略 <code class="docutils literal notranslate"><span class="pre">into</span></code> 声明的部分内容。</p>
 </div>
-<p>The qualifiers that can be used in the output declaration block are the ones listed in the following table:</p>
+<p>可以在输出声明块中使用的限定符是下表中列出的限定符：</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="11%" />
@@ -1095,8 +990,7 @@ one or more channels over which outputs are sent. Finally some optional attribut
 </table>
 <div class="section" id="output-values">
 <h3>Output values<a class="headerlink" href="#output-values" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">val</span></code> qualifier allows to output a <cite>value</cite> defined in the script context. In a common usage scenario,
-this is a value which has been defined in the <cite>input</cite> declaration block, as shown in the following example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">val</span></code> 限定符允许输出脚本上下文中定义的值。 在常见的使用场景中，这是一个已在输入声明块中定义的值，如以下示例所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">methods</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;prot&#39;</span><span class="p">,</span><span class="s1">&#39;dna&#39;</span><span class="p">,</span> <span class="s1">&#39;rna&#39;</span><span class="p">]</span>
 
 <span class="n">process</span> <span class="n">foo</span> <span class="p">{</span>
@@ -1115,8 +1009,7 @@ this is a value which has been defined in the <cite>input</cite> declaration blo
 <span class="n">receiver</span><span class="o">.</span><span class="n">println</span> <span class="p">{</span> <span class="s2">&quot;Received: $it&quot;</span> <span class="p">}</span>
 </pre></div>
 </div>
-<p>Valid output values are value literals, input values identifiers, variables accessible in the process scope and
-value expressions. For example:</p>
+<p>有效输出值是文字，输入值标识符，进程范围和值表达式中可访问的变量。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">foo</span> <span class="p">{</span>
   <span class="nb">input</span><span class="p">:</span>
   <span class="n">file</span> <span class="n">fasta</span> <span class="kn">from</span> <span class="s1">&#39;dummy&#39;</span>
@@ -1137,8 +1030,7 @@ value expressions. For example:</p>
 </div>
 <div class="section" id="output-files">
 <h3>Output files<a class="headerlink" href="#output-files" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">file</span></code> qualifier allows to output one or more files, produced by the process, over the specified channel.
-For example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">file</span></code> 限定符允许通过指定的channel输出由process生成的一个或多个文件。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">randomNum</span> <span class="p">{</span>
 
    <span class="n">output</span><span class="p">:</span>
@@ -1153,20 +1045,15 @@ For example:</p>
 <span class="n">numbers</span><span class="o">.</span><span class="n">subscribe</span> <span class="p">{</span> <span class="n">println</span> <span class="s2">&quot;Received: &quot;</span> <span class="o">+</span> <span class="n">it</span><span class="o">.</span><span class="n">text</span> <span class="p">}</span>
 </pre></div>
 </div>
-<p>In the above example the process, when executed, creates a file named <code class="docutils literal notranslate"><span class="pre">result.txt</span></code> containing a random number.
-Since a file parameter using the same name is declared between the outputs, when the task is completed that
-file is sent over the <code class="docutils literal notranslate"><span class="pre">numbers</span></code> channel. A downstream <cite>process</cite> declaring the same channel as <cite>input</cite> will
-be able to receive it.</p>
+<p>在上面的示例中，该过程在执行时会创建一个名为 <code class="docutils literal notranslate"><span class="pre">result.txt</span></code> 的文件，其中包含一个随机数。 由于在输出之间声明了使用相同名称的文件参数，因此当任务完成时，该文件通过 <code class="docutils literal notranslate"><span class="pre">numbers</span></code>  channel发送。 声明与输入相同的channel的下游process将能够接收它。</p>
 <div class="admonition note">
 <p class="first admonition-title">注解</p>
-<p class="last">If the channel specified as output has not been previously declared in the pipeline script, it
-will implicitly created by the output declaration itself.</p>
+<p class="last">如果先前未在pipeline脚本中声明指定为输出的channel，则它将由输出声明本身隐式创建。</p>
 </div>
 </div>
 <div class="section" id="multiple-output-files">
 <h3>Multiple output files<a class="headerlink" href="#multiple-output-files" title="永久链接至标题">¶</a></h3>
-<p>When an output file name contains a <code class="docutils literal notranslate"><span class="pre">*</span></code> or <code class="docutils literal notranslate"><span class="pre">?</span></code> wildcard character it is interpreted as a <a class="reference external" href="http://docs.oracle.com/javase/tutorial/essential/io/fileOps.html#glob">glob</a> path matcher.
-This allows to <em>capture</em> multiple files into a list object and output them as a sole emission. For example:</p>
+<p>当输出文件名包含 <code class="docutils literal notranslate"><span class="pre">*</span></code> 或 <code class="docutils literal notranslate"><span class="pre">?</span></code> 时 通配符，它被解释为  <a class="reference external" href="http://docs.oracle.com/javase/tutorial/essential/io/fileOps.html#glob">glob</a>  路径匹配器。 这允许将多个文件捕获到列表对象中并将它们作为唯一的输出。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">splitLetters</span> <span class="p">{</span>
 
     <span class="n">output</span><span class="p">:</span>
@@ -1191,32 +1078,21 @@ This allows to <em>capture</em> multiple files into a list object and output the
 </div>
 <div class="admonition note">
 <p class="first admonition-title">注解</p>
-<p class="last">In the above example the operator <a class="reference internal" href="operator.html#operator-flatmap"><span class="std std-ref">flatMap</span></a> is used to transform the list of files emitted by
-the <code class="docutils literal notranslate"><span class="pre">letters</span></code> channel into a channel that emits each file object independently.</p>
+<p class="last">在上面的示例中，运算符 <a class="reference internal" href="operator.html#operator-flatmap"><span class="std std-ref">flatMap</span></a> 用于将 <code class="docutils literal notranslate"><span class="pre">letters</span></code> channel发出的文件列表转换为独立发送每个文件对象的channel。</p>
 </div>
-<p>Some caveats on glob pattern behavior:</p>
-<ul class="simple">
-<li>Input files are not included in the list of possible matches.</li>
-<li>Glob pattern matches against both files and directories path.</li>
-<li>When a two stars pattern <code class="docutils literal notranslate"><span class="pre">**</span></code> is used to recourse across directories, only file paths are matched
-i.e. directories are not included in the result list.</li>
-</ul>
+<p>关于glob模式行为的一些警告：
+* 输入文件不包含在可能的匹配列表中。
+* Glob模式匹配文件和目录路径。
+* 当两星模式 <code class="docutils literal notranslate"><span class="pre">**</span></code> 用于跨目录匹配时，只匹配文件路径，即目录不包括在结果列表中。</p>
 <div class="admonition warning">
 <p class="first admonition-title">警告</p>
-<p class="last">Although the input files matching a glob output declaration are not included in the
-resulting output channel, these files may still be transferred from the task scratch directory
-to the target task work directory. Therefore, to avoid unnecessary file copies it is recommended
-to avoid the usage of loose wildcards when defining output files e.g. <code class="docutils literal notranslate"><span class="pre">file</span> <span class="pre">'*'</span></code> .
-Instead, use a prefix or a postfix naming notation to restrict the set of matching files to
-only the expected ones e.g. <code class="docutils literal notranslate"><span class="pre">file</span> <span class="pre">'prefix_*.sorted.bam'</span></code>.</p>
+<p class="last">尽管与结果输出channel匹配的输入文件未包含在结果输出channel中，但这些文件仍可从任务暂存目录传输到目标任务工作目录。 因此，为避免不必要的文件复制，建议在定义输出文件时避免使用松散的通配符，例如 <code class="docutils literal notranslate"><span class="pre">file</span> <span class="pre">'*'</span></code> 。 相反，使用前缀或后缀命名符号将匹配文件集限制为仅预期的匹配文件，例如 <code class="docutils literal notranslate"><span class="pre">file</span> <span class="pre">'prefix_*.sorted.ba'</span></code>。</p>
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">小技巧</p>
-<p class="last">By default all the files matching the specified glob pattern are emitted by the channel as a sole (list) item.
-It is also possible to emit each file as a sole item by adding the <code class="docutils literal notranslate"><span class="pre">mode</span> <span class="pre">flatten</span></code> attribute in the output file
-declaration.</p>
+<p class="last">默认情况下，所有与指定的glob模式匹配的文件都由channel作为唯一（列表）项发出。 通过在输出文件声明中添加 <code class="docutils literal notranslate"><span class="pre">mode</span> <span class="pre">flatten</span></code> 属性，还可以将每个文件作为唯一项输出。</p>
 </div>
-<p>By using the <cite>mode</cite> attribute the previous example can be re-written as show below:</p>
+<p>通过使用mode属性，可以重写上一个示例，如下所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">splitLetters</span> <span class="p">{</span>
 
     <span class="n">output</span><span class="p">:</span>
@@ -1232,11 +1108,9 @@ declaration.</p>
 </div>
 <p>Read more about glob syntax at the following link <a class="reference external" href="http://docs.oracle.com/javase/tutorial/essential/io/fileOps.html#glob">What is a glob?</a></p>
 </div>
-<div class="section" id="dynamic-output-file-names">
-<span id="process-dynoutname"></span><h3>Dynamic output file names<a class="headerlink" href="#dynamic-output-file-names" title="永久链接至标题">¶</a></h3>
-<p>When an output file name needs to be expressed dynamically, it is possible to define it using a dynamic evaluated
-string which references values defined in the input declaration block or in the script global context.
-For example:</p>
+<div class="section" id="process-dynoutname">
+<span id="id12"></span><h3>动态输出文件名<a class="headerlink" href="#process-dynoutname" title="永久链接至标题">¶</a></h3>
+<p>当需要动态表示输出文件名时，可以使用动态计算字符串来定义它，该字符串引用在输入声明块或脚本全局上下文中定义的值。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">align</span> <span class="p">{</span>
   <span class="nb">input</span><span class="p">:</span>
   <span class="n">val</span> <span class="n">x</span> <span class="kn">from</span> <span class="nn">species</span>
@@ -1251,26 +1125,17 @@ For example:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>In the above example, each time the process is executed an alignment file is produced whose name depends
-on the actual value of the <code class="docutils literal notranslate"><span class="pre">x</span></code> input.</p>
+<p>在上面的示例中，每次执行该process时，都会生成一个比对文件，其名称取决于 <code class="docutils literal notranslate"><span class="pre">x</span></code> 输入的实际值。</p>
 <div class="admonition tip">
 <p class="first admonition-title">小技巧</p>
-<p>The management of output files is a very common misunderstanding when using Nextflow.
-With other tools, it is generally necessary to organize the outputs files into some kind of directory
-structure or to guarantee a unique file name scheme, so that result files won’t overwrite each other
-and that they can be referenced univocally by downstream tasks.</p>
-<p>With Nextflow, in most cases, you don’t need to take care of naming output files, because each task is executed
-in its own unique temporary directory, so files produced by different tasks can never override each other.
-Also meta-data can be associated with outputs by using the <a class="reference internal" href="#process-set"><span class="std std-ref">set output</span></a> qualifier, instead of
-including them in the output file name.</p>
-<p class="last">To sum up, the use of output files with static names over dynamic ones is preferable whenever possible,
-because it will result in a simpler and more portable code.</p>
+<p>使用Nextflow时，输出文件的管理是一个非常常见的误解。使用其他工具时，通常需要将输出文件组织成某种目录结构或保证唯一的文件名方案，以便结果文件不会相互覆盖，并且可以由下游任务单独引用它们。</p>
+<p>使用Nextflow，在大多数情况下，您不需要处理命名输出文件，因为每个任务都在其自己唯一的临时目录中执行，因此由不同任务生成的文件永远不会相互覆盖。此外，元数据可以通过使用  <a class="reference internal" href="#process-set"><span class="std std-ref">set output</span></a> 限定符与输出相关联，而不是将它们包含在输出文件名中。</p>
+<p class="last">总而言之，尽可能使用具有静态名称的输出文件而不是动态名称，因为它将导致更简单和更可移植的代码。</p>
 </div>
 </div>
-<div class="section" id="output-stdout-special-file">
-<span id="process-stdout"></span><h3>Output ‘stdout’ special file<a class="headerlink" href="#output-stdout-special-file" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">stdout</span></code> qualifier allows to <cite>capture</cite> the <cite>stdout</cite> output of the executed process and send it over
-the channel specified in the output parameter declaration. For example:</p>
+<div class="section" id="stdout">
+<span id="process-stdout"></span><h3>输出 ‘stdout’ 特殊文件<a class="headerlink" href="#stdout" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">stdout</span></code> 限定符允许捕获已执行进程的stdout输出，并通过输出参数声明中指定channel发送它。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">echoSomething</span> <span class="p">{</span>
     <span class="n">output</span><span class="p">:</span>
     <span class="n">stdout</span> <span class="n">channel</span>
@@ -1283,11 +1148,9 @@ the channel specified in the output parameter declaration. For example:</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="output-set-of-values">
-<span id="process-set"></span><h3>Output ‘set’ of values<a class="headerlink" href="#output-set-of-values" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">set</span></code> qualifier allows to send multiple values into a single channel. This feature is useful
-when you need to <cite>group together</cite> the results of multiple executions of the same process, as shown in the following
-example:</p>
+<div class="section" id="process-set">
+<span id="id13"></span><h3>输出’set’值<a class="headerlink" href="#process-set" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">set</span></code> 限定符允许将多个值发送到单个channel。 当您需要将同一process的多次执行结果组合在一起时，此功能非常有用，如以下示例所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="n">Channel</span><span class="o">.</span><span class="n">fromPath</span> <span class="s1">&#39;*.fa&#39;</span>
 <span class="n">species</span> <span class="o">=</span> <span class="n">Channel</span><span class="o">.</span><span class="kn">from</span> <span class="s1">&#39;human&#39;</span><span class="p">,</span> <span class="s1">&#39;cow&#39;</span><span class="p">,</span> <span class="s1">&#39;horse&#39;</span>
 
@@ -1306,35 +1169,32 @@ example:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>In the above example a <cite>BLAST</cite> task is executed for each pair of <code class="docutils literal notranslate"><span class="pre">species</span></code> and <code class="docutils literal notranslate"><span class="pre">query</span></code> that are received.
-When the task completes a new tuple containing the value for <code class="docutils literal notranslate"><span class="pre">species</span></code> and the file <code class="docutils literal notranslate"><span class="pre">result</span></code> is sent to the <code class="docutils literal notranslate"><span class="pre">blastOuts</span></code> channel.</p>
-<p>A <cite>set</cite> declaration can contain any combination of the following qualifiers, previously described: <code class="docutils literal notranslate"><span class="pre">val</span></code>, <code class="docutils literal notranslate"><span class="pre">file</span></code> and <code class="docutils literal notranslate"><span class="pre">stdout</span></code>.</p>
+<p>在上面的示例中，针对接收的每对 <code class="docutils literal notranslate"><span class="pre">species</span></code>  和 <code class="docutils literal notranslate"><span class="pre">query</span></code> 执行BLAST任务。 当任务完成一个包含 <code class="docutils literal notranslate"><span class="pre">species</span></code> 值的新元组时， <code class="docutils literal notranslate"><span class="pre">result</span></code> 文件将被发送到 <code class="docutils literal notranslate"><span class="pre">blastOuts</span></code>  channel。</p>
+<p>set声明可以包含以下描述的以下限定符的任意组合： <code class="docutils literal notranslate"><span class="pre">val</span></code>, <code class="docutils literal notranslate"><span class="pre">file</span></code> 和 <code class="docutils literal notranslate"><span class="pre">stdout</span></code>.</p>
 <div class="admonition tip">
 <p class="first admonition-title">小技巧</p>
-<p class="last">Variable identifiers are interpreted as <cite>values</cite> while strings literals are interpreted as <cite>files</cite> by default,
-thus the above output <cite>set</cite> can be rewritten using a short notation as shown below.</p>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">output</span><span class="p">:</span>
+<p>变量标识符被解释为值，而字符串文字默认被解释为文件，因此可以使用短符号重写上述输出集，如下所示。</p>
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">output</span><span class="p">:</span>
     <span class="nb">set</span> <span class="n">species</span><span class="p">,</span> <span class="s1">&#39;result&#39;</span> <span class="n">into</span> <span class="n">blastOuts</span>
 </pre></div>
 </div>
-<p>File names can be defined in a dynamic manner as explained in the <a class="reference internal" href="#process-dynoutname"><span class="std std-ref">Dynamic output file names</span></a> section.</p>
 </div>
-<div class="section" id="optional-output">
-<h3>Optional Output<a class="headerlink" href="#optional-output" title="永久链接至标题">¶</a></h3>
-<p>In most cases a process is expected to generate output that is added to the output channel.  However, there are situations where it is valid for a process to <cite>not</cite> generate output. In these cases <code class="docutils literal notranslate"><span class="pre">optional</span> <span class="pre">true</span></code> may be added to the output declaration, which tells Nextflow not to fail the process if the declared output is not created.</p>
+<p>文件名可以动态方式定义，如  <a class="reference internal" href="#process-dynoutname"><span class="std std-ref">动态输出文件名</span></a> 分所述。</p>
+</div>
+<div class="section" id="id14">
+<h3>可选输出<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
+<p>在大多数情况下，一个process会生成添加到输出channel的输出。 但是，有些情况下，process无法生成输出。 在这些情况下，可以将 <code class="docutils literal notranslate"><span class="pre">optional</span> <span class="pre">true</span></code> 添加到输出声明中，如果未创建声明的输出，则声明Nextflow不会使进程失败。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">output</span><span class="p">:</span>
     <span class="n">file</span><span class="p">(</span><span class="s2">&quot;output.txt&quot;</span><span class="p">)</span> <span class="n">optional</span> <span class="n">true</span> <span class="n">into</span> <span class="n">outChannel</span>
 </pre></div>
 </div>
-<p>In this example, the process is normally expected to generate an <code class="docutils literal notranslate"><span class="pre">output.txt</span></code> file, but in the cases where the file is legitimately missing, the process does not fail. <code class="docutils literal notranslate"><span class="pre">outChannel</span></code> is only populated by those processes that do generate <code class="docutils literal notranslate"><span class="pre">output.txt</span></code>.</p>
+<p>在此示例中，通常期望该process生成  <code class="docutils literal notranslate"><span class="pre">output.txt</span></code>  文件，但在文件合法丢失的情况下，该进程不会失败。  <code class="docutils literal notranslate"><span class="pre">outChannel</span></code> 仅由生成 <code class="docutils literal notranslate"><span class="pre">output.txt</span></code> 的processes填充。</p>
 </div>
 </div>
 <div class="section" id="when">
 <h2>When<a class="headerlink" href="#when" title="永久链接至标题">¶</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">when</span></code> declaration allows you to define a condition that must be verified in order to execute the process.
-This can be any expression that evaluates a boolean value.</p>
-<p>It is useful to enable/disable the process execution depending the state of various inputs and parameters. For example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">when</span></code> 声明允许您定义必须在验证条件下才能执行该process。 这可以是任何计算布尔值的表达式。</p>
+<p>根据各种输入和参数的状态启用/禁用process执行非常有用。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">find</span> <span class="p">{</span>
   <span class="nb">input</span><span class="p">:</span>
   <span class="n">file</span> <span class="n">proteins</span>
@@ -1354,15 +1214,13 @@ This can be any expression that evaluates a boolean value.</p>
 </div>
 <div class="section" id="directives">
 <span id="process-directives"></span><h2>Directives<a class="headerlink" href="#directives" title="永久链接至标题">¶</a></h2>
-<p>Using the <cite>directive</cite> declarations block you can provide optional settings that will affect the execution of the current
-process.</p>
-<p>They must be entered at the top of the process <cite>body</cite>, before any other declaration blocks (i.e. <code class="docutils literal notranslate"><span class="pre">input</span></code>, <code class="docutils literal notranslate"><span class="pre">output</span></code>, etc)
-and have the following syntax:</p>
+<p>使用directive声明块，您可以提供将影响当前process执行的可选设置。</p>
+<p>它们必须在任何其他声明块（即 <code class="docutils literal notranslate"><span class="pre">input</span></code>, <code class="docutils literal notranslate"><span class="pre">output</span></code>, 等）之前输入到process body的顶部，并具有以下语法:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="n">value</span> <span class="p">[,</span> <span class="n">value2</span> <span class="p">[,</span><span class="o">..</span><span class="p">]]</span>
 </pre></div>
 </div>
-<p>Some directives are generally available to all processes, some others depends on the <cite>executor</cite> currently defined.</p>
-<p>The directives are:</p>
+<p>某些指令通常可用于所有processes，其他指令取决于当前定义的执行程序。</p>
+<p>这些指令是：</p>
 <ul class="simple">
 <li><a class="reference internal" href="#afterscript">afterScript</a></li>
 <li><a class="reference internal" href="#beforescript">beforeScript</a></li>
@@ -1397,13 +1255,11 @@ and have the following syntax:</p>
 </ul>
 <div class="section" id="afterscript">
 <h3>afterScript<a class="headerlink" href="#afterscript" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">afterScript</span></code> directive allows you to execute a custom (Bash) snippet immediately <em>after</em> the main process has run.
-This may be useful to clean up your staging area.</p>
+<p><code class="docutils literal notranslate"><span class="pre">afterScript</span></code>  指令允许您在主进程运行后立即执行自定义（Bash）代码段。 这可能有助于清理您的临时区域。</p>
 </div>
 <div class="section" id="beforescript">
 <h3>beforeScript<a class="headerlink" href="#beforescript" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">beforeScript</span></code> directive allows you to execute a custom (Bash) snippet <em>before</em> the main process script is run.
-This may be useful to initialise the underlying cluster environment or for other custom initialisation.</p>
+<p><code class="docutils literal notranslate"><span class="pre">beforeScript</span></code> 指令允许您在运行主进程脚本之前执行自定义（Bash）代码段。 这可能对初始化基础集群环境或其他自定义初始化很有用。</p>
 <p>For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">foo</span> <span class="p">{</span>
 
@@ -1419,14 +1275,9 @@ This may be useful to initialise the underlying cluster environment or for other
 </div>
 <div class="section" id="cache">
 <h3>cache<a class="headerlink" href="#cache" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">cache</span></code> directive allows you to store the process results to a local cache. When the cache is enabled <em>and</em>
-the pipeline is launched with the <a class="reference internal" href="getstarted.html#getstart-resume"><span class="std std-ref">resume</span></a> option, any following attempt to execute the process,
-along with the same inputs, will cause the process execution to be skipped, producing the stored data as
-the actual results.</p>
-<p>The caching feature generates a unique <cite>key</cite> by indexing the process script and inputs. This key is used
-identify univocally the outputs produced by the process execution.</p>
-<p>The cache is enabled by default, you can disable it for a specific process by setting the <code class="docutils literal notranslate"><span class="pre">cache</span></code>
-directive to <code class="docutils literal notranslate"><span class="pre">false</span></code>. For example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">cache</span></code> 指令允许您将进程结果存储到本地缓存。 启用高速缓存并使用 <a class="reference internal" href="getstarted.html#getstart-resume"><span class="std std-ref">resume</span></a> 选项启动pipeline时，执行该过程的任何后续尝试以及相同的输入将导致跳过流程执行，从而将存储的数据生成为实际结果。</p>
+<p>缓存功能通过索引进程脚本和输入来生成唯一键。 该密钥用于明确识别process执行产生的输出。</p>
+<p>默认情况下启用缓存，您可以通过将 <code class="docutils literal notranslate"><span class="pre">cache</span></code> 指令设置为 <code class="docutils literal notranslate"><span class="pre">false</span></code> 来禁用特定process。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">noCacheThis</span> <span class="p">{</span>
   <span class="n">cache</span> <span class="n">false</span>
 
@@ -1435,7 +1286,7 @@ directive to <code class="docutils literal notranslate"><span class="pre">false<
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">cache</span></code> directive possible values are shown in the following table:</p>
+<p><code class="docutils literal notranslate"><span class="pre">cache</span></code> 指令可能的值如下表所示：</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="8%" />
@@ -1464,10 +1315,8 @@ directive to <code class="docutils literal notranslate"><span class="pre">false<
 </div>
 <div class="section" id="conda">
 <span id="process-conda"></span><h3>conda<a class="headerlink" href="#conda" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">conda</span></code> directive allows for the definition of the process dependencies using the <a class="reference external" href="https://conda.io">Conda</a>
-package manager.</p>
-<p>Nextflow automatically sets up an environment for the given package names listed by in the <code class="docutils literal notranslate"><span class="pre">conda</span></code> directive.
-For example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">conda</span></code> 指令允许使用 <a class="reference external" href="https://conda.io">Conda</a> 包管理器定义process依赖性。</p>
+<p>Nextflow自动为 <code class="docutils literal notranslate"><span class="pre">conda</span></code> 指令中列出的给定包名称设置环境。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">foo</span> <span class="p">{</span>
   <span class="n">conda</span> <span class="s1">&#39;bwa=0.7.15&#39;</span>
 
@@ -1477,17 +1326,14 @@ For example:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Multiple packages can be specified separating them with a blank space eg. <code class="docutils literal notranslate"><span class="pre">bwa=0.7.15</span> <span class="pre">fastqc=0.11.5</span></code>.
-The name of the channel from where a specific package needs to be downloaded can be specified using the usual
-Conda notation i.e. prefixing the package with the channel name as shown here <code class="docutils literal notranslate"><span class="pre">bioconda::bwa=0.7.15</span></code>.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">conda</span></code> directory also allows the specification of a Conda environment file
-path or the path of an existing environment directory. See the <a class="reference internal" href="conda.html#conda-page"><span class="std std-ref">Conda environments</span></a> page for further details.</p>
+<p>可以指定多个包，用空格分隔它们，例如: <code class="docutils literal notranslate"><span class="pre">bwa=0.7.15</span> <span class="pre">fastqc=0.11.5</span></code>. 可以使用通常的Conda表示法指定需要下载特定包的channel的名称，即在包之前添加频道名称，如此处所示 <code class="docutils literal notranslate"><span class="pre">bioconda::bwa=0.7.15</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">conda</span></code>  目录还允许指定Conda环境文件路径或现有环境目录的路径。 有关更多详细信息，请参阅  <a class="reference internal" href="conda.html#conda-page"><span class="std std-ref">Conda environments</span></a> 。</p>
 </div>
 <div class="section" id="container">
 <span id="process-container"></span><h3>container<a class="headerlink" href="#container" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">container</span></code> directive allows you to execute the process script in a <a class="reference external" href="http://docker.io">Docker</a> container.</p>
-<p>It requires the Docker daemon to be running in machine where the pipeline is executed, i.e. the local machine when using the
-<em>local</em> executor or the cluster nodes when the pipeline is deployed through a <em>grid</em> executor.</p>
+<blockquote>
+<div><code class="docutils literal notranslate"><span class="pre">container</span></code> 指令允许您在 <a class="reference external" href="http://docker.io">Docker</a> 容器中执行process脚本。</div></blockquote>
+<p>它要求Docker守护程序在执行pipeline的机器中运行，即当通过网格执行器部署pipeline时使用本地执行程序或集群节点时的本地机器。</p>
 <p>For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">runThisInDocker</span> <span class="p">{</span>
 
@@ -1500,21 +1346,19 @@ path or the path of an existing environment directory. See the <a class="referen
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Simply replace in the above script <code class="docutils literal notranslate"><span class="pre">dockerbox:tag</span></code> with the Docker image name you want to use.</p>
+<p>只需在上面的脚本 <code class="docutils literal notranslate"><span class="pre">dockerbox:tag</span></code> 中替换您要使用的Docker镜像名称。</p>
 <div class="admonition tip">
 <p class="first admonition-title">小技巧</p>
-<p class="last">This can be very useful to execute your scripts into a replicable self-contained environment or to deploy your pipeline in the cloud.</p>
+<p class="last">这对于将脚本执行到可复制的自包含环境或在云中部署pipeline非常有用。</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">注解</p>
-<p class="last">This directive is ignore for processes <a class="reference internal" href="#process-native"><span class="std std-ref">executed natively</span></a>.</p>
+<p class="last">对于本机执行的processes  <a class="reference internal" href="#process-native"><span class="std std-ref">executed natively</span></a>，该指令被忽略。</p>
 </div>
 </div>
 <div class="section" id="containeroptions">
 <span id="process-containeroptions"></span><h3>containerOptions<a class="headerlink" href="#containeroptions" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">containerOptions</span></code> directive allows you to specify any container execution option supported by the underlying
-container engine (ie. Docker, Singularity, etc). This can be useful to provide container settings
-only for a specific process e.g. mount a custom path:</p>
+<p><code class="docutils literal notranslate"><span class="pre">containerOptions</span></code> 指令允许您指定底层容器引擎支持的任何容器执行选项（即Docker，Singularity等）。这对于仅为特定过程提供容器设置是有用的，例如 安装自定义路径:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">runThisWithDocker</span> <span class="p">{</span>
 
     <span class="n">container</span> <span class="s1">&#39;busybox:latest&#39;</span>
@@ -1530,13 +1374,12 @@ only for a specific process e.g. mount a custom path:</p>
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">警告</p>
-<p class="last">This feature is not supported by <a class="reference internal" href="executor.html#awsbatch-executor"><span class="std std-ref">AWS Batch</span></a> and <a class="reference internal" href="executor.html#k8s-executor"><span class="std std-ref">Kubernetes</span></a> executors.</p>
+<p class="last"><a class="reference internal" href="executor.html#awsbatch-executor"><span class="std std-ref">AWS Batch</span></a>  和  <a class="reference internal" href="executor.html#k8s-executor"><span class="std std-ref">Kubernetes</span></a> executors 不支持此功能。</p>
 </div>
 </div>
 <div class="section" id="cpus">
 <span id="process-cpus"></span><h3>cpus<a class="headerlink" href="#cpus" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">cpus</span></code> directive allows you to define the number of (logical) CPU required by the process’ task.
-For example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">cpus</span></code> 指令允许您定义process任务所需的（逻辑）CPU数量。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">big_job</span> <span class="p">{</span>
 
   <span class="n">cpus</span> <span class="mi">8</span>
@@ -1548,25 +1391,22 @@ For example:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>This directive is required for tasks that execute multi-process or multi-threaded commands/tools and it is meant
-to reserve enough CPUs when a pipeline task is executed through a cluster resource manager.</p>
+<p>执行多进程或多线程命令/工具的任务需要此指令，并且当通过集群资源管理器执行pipeline任务时，该指令用于保留足够的CPU。</p>
 <p>See also: <a class="reference internal" href="#penv">penv</a>, <a class="reference internal" href="#memory">memory</a>, <a class="reference internal" href="#time">time</a>, <a class="reference internal" href="#queue">queue</a>, <a class="reference internal" href="#maxforks">maxForks</a></p>
 </div>
 <div class="section" id="clusteroptions">
 <span id="process-clusteroptions"></span><h3>clusterOptions<a class="headerlink" href="#clusteroptions" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">clusterOptions</span></code> directive allows the usage of any <cite>native</cite> configuration option accepted by your cluster submit command.
-You can use it to request non-standard resources or use settings that are specific to your cluster and not supported
-out of the box by Nextflow.</p>
+<p><code class="docutils literal notranslate"><span class="pre">clusterOptions</span></code>  指令允许使用cluster submit命令接受的任何本机配置选项。 您可以使用它来请求非标准资源或使用特定于您的群集的设置，并且Nextflow不支持开箱即用。</p>
 <div class="admonition note">
 <p class="first admonition-title">注解</p>
-<p class="last">This directive is taken in account only when using a grid based executor:
+<p class="last">仅当使用基于网格的执行程序(grid based executor)时才考虑此指令:
 <a class="reference internal" href="executor.html#sge-executor"><span class="std std-ref">SGE</span></a>, <a class="reference internal" href="executor.html#lsf-executor"><span class="std std-ref">LSF</span></a>, <a class="reference internal" href="executor.html#slurm-executor"><span class="std std-ref">SLURM</span></a>, <a class="reference internal" href="executor.html#pbs-executor"><span class="std std-ref">PBS/Torque</span></a> and
 <a class="reference internal" href="executor.html#condor-executor"><span class="std std-ref">HTCondor</span></a> executors.</p>
 </div>
 </div>
 <div class="section" id="disk">
 <span id="process-disk"></span><h3>disk<a class="headerlink" href="#disk" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">disk</span></code> directive allows you to define how much local disk storage the process is allowed to use. For example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">disk</span></code> 指令允许您定义允许process使用多少本地磁盘存储。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">big_job</span> <span class="p">{</span>
 
     <span class="n">disk</span> <span class="s1">&#39;2 GB&#39;</span>
@@ -1578,7 +1418,7 @@ out of the box by Nextflow.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The following memory unit suffix can be used when specifying the disk value:</p>
+<p>指定磁盘值时，可以使用以下内存单元后缀：</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="35%" />
@@ -1616,9 +1456,7 @@ and the <a class="reference internal" href="executor.html#condor-executor"><span
 </div>
 <div class="section" id="echo">
 <span id="process-echo"></span><h3>echo<a class="headerlink" href="#echo" title="永久链接至标题">¶</a></h3>
-<p>By default the <cite>stdout</cite> produced by the commands executed in all processes is ignored.
-Setting the <code class="docutils literal notranslate"><span class="pre">echo</span></code> directive to <code class="docutils literal notranslate"><span class="pre">true</span></code> you can forward the process <cite>stdout</cite> to the current top
-running process <cite>stdout</cite> file, showing it in the shell terminal.</p>
+<p>默认情况下，所有processes中执行的命令生成的stdout将被忽略。 将 <code class="docutils literal notranslate"><span class="pre">echo</span></code>  指令设置为 <code class="docutils literal notranslate"><span class="pre">true</span></code> ，可以将process stdout转发到当前运行最高的process stdout文件，并在shell终端中显示它。</p>
 <p>For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">sayHello</span> <span class="p">{</span>
   <span class="n">echo</span> <span class="n">true</span>
@@ -1631,14 +1469,12 @@ running process <cite>stdout</cite> file, showing it in the shell terminal.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Hello</span>
 </pre></div>
 </div>
-<p>Without specifying <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">true</span></code> you won’t see the <code class="docutils literal notranslate"><span class="pre">Hello</span></code> string printed out when executing the above example.</p>
+<p>如果不指定  <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">true</span></code> ，则在执行上述示例时不会看到打印出的 <code class="docutils literal notranslate"><span class="pre">Hello</span></code>  字符串。</p>
 </div>
 <div class="section" id="errorstrategy">
 <span id="process-page-error-strategy"></span><h3>errorStrategy<a class="headerlink" href="#errorstrategy" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">errorStrategy</span></code> directive allows you to define how an error condition is managed by the process. By default when
-an error status is returned by the executed script, the process stops immediately. This in turn forces the entire pipeline
-to terminate.</p>
-<p>Table of available error strategies:</p>
+<p><code class="docutils literal notranslate"><span class="pre">errorStrategy</span></code> 指令允许您定义进程管理错误条件的方式。 默认情况下，执行的脚本返回错误状态时，进程立即停止。 这反过来迫使整个pipeline终止。</p>
+<p>可用错误策略表：</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="11%" />
@@ -1664,8 +1500,7 @@ to terminate.</p>
 </tr>
 </tbody>
 </table>
-<p>When setting the <code class="docutils literal notranslate"><span class="pre">errorStrategy</span></code> directive to <code class="docutils literal notranslate"><span class="pre">ignore</span></code> the process doesn’t stop on an error condition,
-it just reports a message notifying you of the error event.</p>
+<p>设置 <code class="docutils literal notranslate"><span class="pre">errorStrategy</span></code>  指令为 <code class="docutils literal notranslate"><span class="pre">ignore</span></code> , 进程在错误情况下不会停止时，它只会报告一条消息，通知您错误事件。</p>
 <p>For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">ignoreAnyError</span> <span class="p">{</span>
    <span class="n">errorStrategy</span> <span class="s1">&#39;ignore&#39;</span>
@@ -1680,8 +1515,7 @@ it just reports a message notifying you of the error event.</p>
 <p class="last">By definition a command script fails when it ends with a non-zero exit status. To change this behavior
 see <a class="reference internal" href="#validexitstatus">validExitStatus</a>.</p>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">retry</span></code> <cite>error strategy</cite>, allows you to re-submit for execution a process
-returning an error condition. For example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">retry</span></code> 错误策略允许您重新提交执行过程，返回错误条件。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">retryIfFail</span> <span class="p">{</span>
    <span class="n">errorStrategy</span> <span class="s1">&#39;retry&#39;</span>
 
@@ -1690,14 +1524,12 @@ returning an error condition. For example:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The number of times a failing process is re-executed is defined by the <a class="reference internal" href="#maxretries">maxRetries</a> and <a class="reference internal" href="#maxerrors">maxErrors</a> directives.</p>
+<p>重新执行失败进程的次数由 <a class="reference internal" href="#maxretries">maxRetries</a> 和 <a class="reference internal" href="#maxerrors">maxErrors</a>  指令定义。</p>
 </div>
 <div class="section" id="executor">
 <span id="process-executor"></span><h3>executor<a class="headerlink" href="#executor" title="永久链接至标题">¶</a></h3>
-<p>The <cite>executor</cite> defines the underlying system where processes are executed. By default a process uses the executor
-defined globally in the <code class="docutils literal notranslate"><span class="pre">nextflow.config</span></code> file.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">executor</span></code> directive allows you to configure what executor has to be used by the process, overriding the default
-configuration. The following values can be used:</p>
+<p><code class="docutils literal notranslate"><span class="pre">executor</span></code> 定义执行进程的底层系统。 默认情况下，process使用 <code class="docutils literal notranslate"><span class="pre">nextflow.config</span></code> 文件中全局定义的执行程序。</p>
+<p><code class="docutils literal notranslate"><span class="pre">executor</span></code> 指令允许您配置进程必须使用的执行程序，从而覆盖默认配置。 可以使用以下值：</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="10%" />
@@ -1754,14 +1586,12 @@ configuration. The following values can be used:</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">注解</p>
-<p class="last">Each executor provides its own set of configuration options that can set be in the <cite>directive</cite> declarations block.
-See <a class="reference internal" href="executor.html#executor-page"><span class="std std-ref">Executors</span></a> section to read about specific executor directives.</p>
+<p class="last">每个执行程序都提供自己的一组配置选项，可以在指令声明块中进行设置。 请参阅 <a class="reference internal" href="executor.html#executor-page"><span class="std std-ref">Executors</span></a> 部分以了解特定执行程序指令。</p>
 </div>
 </div>
 <div class="section" id="ext">
 <span id="process-ext"></span><h3>ext<a class="headerlink" href="#ext" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">ext</span></code> is a special directive used as <em>namespace</em> for user custom process directives. This can be useful for
-advanced configuration options. For example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">ext</span></code> 是一个特殊指令，用作用户自定义流程指令的命名空间。 这对高级配置选项很有用。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">mapping</span> <span class="p">{</span>
   <span class="n">container</span> <span class="s2">&quot;biocontainers/star:$</span><span class="si">{task.ext.version}</span><span class="s2">&quot;</span>
 
@@ -1775,16 +1605,14 @@ advanced configuration options. For example:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>In the above example, the process uses a container whose version is controlled by the <code class="docutils literal notranslate"><span class="pre">ext.version</span></code> property.
-This can be defined in the <code class="docutils literal notranslate"><span class="pre">nextflow.config</span></code> file as shown below:</p>
+<p>在上面的示例中，该process使用一个容器，其版本由 <code class="docutils literal notranslate"><span class="pre">ext.version</span></code> 属性控制。 这可以在 <code class="docutils literal notranslate"><span class="pre">nextflow.config</span></code> 文件中定义，如下所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span><span class="o">.</span><span class="n">ext</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="s1">&#39;2.5.3&#39;</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="maxerrors">
 <span id="process-maxerrors"></span><h3>maxErrors<a class="headerlink" href="#maxerrors" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">maxErrors</span></code> directive allows you to specify the maximum number of times a process can fail when using the <code class="docutils literal notranslate"><span class="pre">retry</span></code> <cite>error strategy</cite>.
-By default this directive is disabled, you can set it as shown in the example below:</p>
+<p><code class="docutils literal notranslate"><span class="pre">maxErrors</span></code>  指令允许您指定使用 <code class="docutils literal notranslate"><span class="pre">retry</span></code> 错误策略时process可能失败的最大次数。 默认情况下，此指令被禁用，您可以如下例所示进行设置:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">retryIfFail</span> <span class="p">{</span>
   <span class="n">errorStrategy</span> <span class="s1">&#39;retry&#39;</span>
   <span class="n">maxErrors</span> <span class="mi">5</span>
@@ -1797,16 +1625,14 @@ By default this directive is disabled, you can set it as shown in the example be
 </div>
 <div class="admonition note">
 <p class="first admonition-title">注解</p>
-<p class="last">This setting considers the <strong>total</strong> errors accumulated for a given process, across all instances. If you want
-to control the number of times a process <strong>instance</strong> (aka task) can fail, use <code class="docutils literal notranslate"><span class="pre">maxRetries</span></code>.</p>
+<p class="last">此设置考虑了在所有实例中为给定进程累积的总错误。 如果要控制process实例（也称为task）失败的次数，请使用 <code class="docutils literal notranslate"><span class="pre">maxRetries</span></code>。.</p>
 </div>
 <p>See also: <a class="reference internal" href="#errorstrategy">errorStrategy</a> and <a class="reference internal" href="#maxretries">maxRetries</a>.</p>
 </div>
 <div class="section" id="maxforks">
 <span id="process-maxforks"></span><h3>maxForks<a class="headerlink" href="#maxforks" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">maxForks</span></code> directive allows you to define the maximum number of process instances that can be executed in parallel.
-By default this value is equals to the number of CPU cores available minus 1.</p>
-<p>If you want to execute a process in a sequential manner, set this directive to one. For example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">maxForks</span></code>  指令允许您定义可以并行执行的最大process实例数。 默认情况下，此值等于可用CPU核心数减1。</p>
+<p>如果要以顺序方式执行process，请将此指令设置为1。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">doNotParallelizeIt</span> <span class="p">{</span>
 
    <span class="n">maxForks</span> <span class="mi">1</span>
@@ -1821,9 +1647,7 @@ By default this value is equals to the number of CPU cores available minus 1.</p
 </div>
 <div class="section" id="maxretries">
 <span id="process-maxretries"></span><h3>maxRetries<a class="headerlink" href="#maxretries" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">maxRetries</span></code> directive allows you to define the maximum number of times a process instance can be
-re-submitted in case of failure. This value is applied only when using the <code class="docutils literal notranslate"><span class="pre">retry</span></code> <cite>error strategy</cite>. By default
-only one retry is allowed, you can increase this value as shown below:</p>
+<p><code class="docutils literal notranslate"><span class="pre">maxRetries</span></code> 指令允许您定义在发生故障时可以重新提交process实例的最大次数。 仅在使用 <code class="docutils literal notranslate"><span class="pre">retry</span></code> 错误策略时才应用此值。 默认情况下，只允许重试一次，您可以增加此值，如下所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">retryIfFail</span> <span class="p">{</span>
     <span class="n">errorStrategy</span> <span class="s1">&#39;retry&#39;</span>
     <span class="n">maxRetries</span> <span class="mi">3</span>
@@ -1836,16 +1660,13 @@ only one retry is allowed, you can increase this value as shown below:</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">注解</p>
-<p class="last">There is a subtle but important difference between <code class="docutils literal notranslate"><span class="pre">maxRetries</span></code> and the <code class="docutils literal notranslate"><span class="pre">maxErrors</span></code> directive.
-The latter defines the total number of errors that are allowed during the process execution (the same process can
-launch different execution instances), while the <code class="docutils literal notranslate"><span class="pre">maxRetries</span></code> defines the maximum number of times the same process
-execution can be retried in case of an error.</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">maxRetries</span></code> 和 <code class="docutils literal notranslate"><span class="pre">maxErrors</span></code> 指令之间存在微妙但重要的区别。 后者定义了process执行期间允许的错误总数（同一process可以启动不同的执行实例），而  <code class="docutils literal notranslate"><span class="pre">maxRetries</span></code>  定义了在发生错误时可以重试相同process执行的最大次数。</p>
 </div>
 <p>See also: <a class="reference internal" href="#errorstrategy">errorStrategy</a> and <a class="reference internal" href="#maxerrors">maxErrors</a>.</p>
 </div>
 <div class="section" id="memory">
 <span id="process-memory"></span><h3>memory<a class="headerlink" href="#memory" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">memory</span></code> directive allows you to define how much memory the process is allowed to use. For example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">memory</span></code> 指令允许您定义允许process使用多少内存。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">big_job</span> <span class="p">{</span>
 
     <span class="n">memory</span> <span class="s1">&#39;2 GB&#39;</span>
@@ -1890,12 +1711,9 @@ execution can be retried in case of an error.</p>
 </div>
 <div class="section" id="module">
 <span id="process-module"></span><h3>module<a class="headerlink" href="#module" title="永久链接至标题">¶</a></h3>
-<p><a class="reference external" href="http://modules.sourceforge.net/">Environment Modules</a> is a package manager that allows you to dynamically configure
-your execution environment and easily switch between multiple versions of the same software tool.</p>
-<p>If it is available in your system you can use it with Nextflow in order to configure the processes execution
-environment in your pipeline.</p>
-<p>In a process definition you can use the <code class="docutils literal notranslate"><span class="pre">module</span></code> directive to load a specific module version to be used in the
-process execution environment. For example:</p>
+<p><a class="reference external" href="http://modules.sourceforge.net/">Environment Modules</a> 是一个包管理器，允许您动态配置执行环境，并在同一软件工具的多个版本之间轻松切换.</p>
+<p>如果它在您的系统中可用，您可以将其与Nextflow一起使用，以便在pipeline中配置process执行环境。</p>
+<p>在process定义中，您可以使用 <code class="docutils literal notranslate"><span class="pre">module</span></code> 指令加载要在process执行环境中使用的特定模块版本。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">basicExample</span> <span class="p">{</span>
 
   <span class="n">module</span> <span class="s1">&#39;ncbi-blast/2.2.27&#39;</span>
@@ -1906,9 +1724,7 @@ process execution environment. For example:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>You can repeat the <code class="docutils literal notranslate"><span class="pre">module</span></code> directive for each module you need to load. Alternatively multiple modules
-can be specified in a single <code class="docutils literal notranslate"><span class="pre">module</span></code> directive by separating all the module names by using a <code class="docutils literal notranslate"><span class="pre">:</span></code>
-(colon) character as shown below:</p>
+<p>您可以为需要加载的每个模块重复  <code class="docutils literal notranslate"><span class="pre">module</span></code> 指令。 或者，可以在单个 <code class="docutils literal notranslate"><span class="pre">module</span></code> 指令中指定多个模块，方法是使用 <code class="docutils literal notranslate"><span class="pre">:</span></code> (冒号）字符分隔所有模块名称，如下所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">process</span> <span class="n">manyModules</span> <span class="p">{</span>
 
    <span class="n">module</span> <span class="s1">&#39;ncbi-blast/2.2.27:t_coffee/10.0:clustalw/2.1&#39;</span>
@@ -1922,8 +1738,7 @@ can be specified in a single <code class="docutils literal notranslate"><span cl
 </div>
 <div class="section" id="penv">
 <span id="process-penv"></span><h3>penv<a class="headerlink" href="#penv" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">penv</span></code> directive  allows you to define the <cite>parallel environment</cite> to be used when submitting a parallel task to the
-<a class="reference internal" href="executor.html#sge-executor"><span class="std std-ref">SGE</span></a> resource manager. For example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">penv</span></code> 指令允许您定义在向 <a class="reference internal" href="executor.html#sge-executor"><span class="std std-ref">SGE</span></a> 资源管理器提交并行任务时要使用的并行环境。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">big_job</span> <span class="p">{</span>
 
   <span class="n">cpus</span> <span class="mi">4</span>
@@ -1936,8 +1751,7 @@ can be specified in a single <code class="docutils literal notranslate"><span cl
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>This configuration depends on the parallel environment provided by your grid engine installation. Refer to your
-cluster documentation or contact your admin to lean more about this.</p>
+<p>此配置取决于Grid Engine安装提供的并行环境。 请参阅您的群集文档或与您的管理员联系以了解更多信息。</p>
 <div class="admonition note">
 <p class="first admonition-title">注解</p>
 <p class="last">This setting is available when using the <a class="reference internal" href="executor.html#sge-executor"><span class="std std-ref">SGE</span></a> executor.</p>
@@ -1946,8 +1760,7 @@ cluster documentation or contact your admin to lean more about this.</p>
 </div>
 <div class="section" id="pod">
 <span id="process-pod"></span><h3>pod<a class="headerlink" href="#pod" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">pod</span></code> directive allows the definition of pods specific settings, such as environment variables, secrets
-and config maps when using the <a class="reference internal" href="executor.html#k8s-executor"><span class="std std-ref">Kubernetes</span></a> executor.</p>
+<p><code class="docutils literal notranslate"><span class="pre">pod</span></code> 指令允许在使用 <a class="reference internal" href="executor.html#k8s-executor"><span class="std std-ref">Kubernetes</span></a> executor 时定义pod特定设置，例如环境变量，机密和配置映射。</p>
 <p>For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">your_task</span> <span class="p">{</span>
   <span class="n">pod</span> <span class="n">env</span><span class="p">:</span> <span class="s1">&#39;FOO&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="s1">&#39;bar&#39;</span>
@@ -1958,8 +1771,9 @@ and config maps when using the <a class="reference internal" href="executor.html
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The above snippet defines an environment variable named <code class="docutils literal notranslate"><span class="pre">FOO</span></code> which value is <code class="docutils literal notranslate"><span class="pre">bar</span></code>.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">pod</span></code> directive allows the definition of the following options:</p>
+<p>The above snippet defines an environment variable named <code class="docutils literal notranslate"><span class="pre">FOO</span></code> which value is <code class="docutils literal notranslate"><span class="pre">bar</span></code>.
+上面的代码片段定义了一个名为 <code class="docutils literal notranslate"><span class="pre">FOO</span></code>  的环境变量，其值为 <code class="docutils literal notranslate"><span class="pre">bar</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">pod</span></code>  指令允许定义以下选项：</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="13%" />
@@ -1998,14 +1812,13 @@ and config maps when using the <a class="reference internal" href="executor.html
 </tr>
 </tbody>
 </table>
-<p>When defined in the Nextflow configuration file, a pod setting can be defined using the canonical
-associative array syntax. For example:</p>
+<p>在Nextflow配置文件中定义时，可以使用规范关联数组语法定义pod设置。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="p">{</span>
   <span class="n">pod</span> <span class="o">=</span> <span class="p">[</span><span class="n">env</span><span class="p">:</span> <span class="s1">&#39;FOO&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="s1">&#39;bar&#39;</span><span class="p">]</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>When more than one setting needs to be provides they must be enclosed in a list definition as shown below:</p>
+<p>当需要提供多个设置时，必须将它们包含在列表定义中，如下所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="p">{</span>
   <span class="n">pod</span> <span class="o">=</span> <span class="p">[</span> <span class="p">[</span><span class="n">env</span><span class="p">:</span> <span class="s1">&#39;FOO&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="s1">&#39;bar&#39;</span><span class="p">],</span> <span class="p">[</span><span class="n">secret</span><span class="p">:</span> <span class="s1">&#39;my-secret/key1&#39;</span><span class="p">,</span> <span class="n">mountPath</span><span class="p">:</span> <span class="s1">&#39;/etc/file.txt&#39;</span><span class="p">]</span> <span class="p">]</span>
 <span class="p">}</span>
@@ -2014,7 +1827,7 @@ associative array syntax. For example:</p>
 </div>
 <div class="section" id="publishdir">
 <span id="process-publishdir"></span><h3>publishDir<a class="headerlink" href="#publishdir" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">publishDir</span></code> directive allows you to publish the process output files to a specified folder. For example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">publishDir</span></code> 指令允许您将process输出文件输出到指定的文件夹。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">foo</span> <span class="p">{</span>
 
     <span class="n">publishDir</span> <span class="s1">&#39;/data/chunks&#39;</span>
@@ -2028,16 +1841,13 @@ associative array syntax. For example:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The above example splits the string <code class="docutils literal notranslate"><span class="pre">Hola</span></code> into file chunks of a single byte. When complete the <code class="docutils literal notranslate"><span class="pre">chunk_*</span></code> output files
-are published into the <code class="docutils literal notranslate"><span class="pre">/data/chunks</span></code> folder.</p>
+<p>上面的示例将字符串 <code class="docutils literal notranslate"><span class="pre">Hola</span></code> 拆分为单个字节的文件块。 完成后， <code class="docutils literal notranslate"><span class="pre">chunk_*</span></code> 输出文件到 <code class="docutils literal notranslate"><span class="pre">/data/chunks</span></code> 文件夹中。</p>
 <div class="admonition tip">
 <p class="first admonition-title">小技巧</p>
-<p class="last">The <code class="docutils literal notranslate"><span class="pre">publishDir</span></code> directive can be specified more than one time in to publish the output files
-to different target directories. This feature requires version 0.29.0 or higher.</p>
+<p class="last">可以多次指定  <code class="docutils literal notranslate"><span class="pre">publishDir</span></code> 指令将输出文件发布到不同的目标目录。 此功能需要0.29.0或更高版本。</p>
 </div>
-<p>By default files are published to the target folder creating a <em>symbolic link</em> for each process output that links
-the file produced into the process working directory. This behavior can be modified using the <code class="docutils literal notranslate"><span class="pre">mode</span></code> parameter.</p>
-<p>Table of optional parameters that can be used with the <code class="docutils literal notranslate"><span class="pre">publishDir</span></code> directive:</p>
+<p>默认情况下，文件将发布到目标文件夹，为每个process输出创建一个符号链接，该链接将生成的文件链接到进程工作目录。 可以使用``mode`` 参数修改此行为。</p>
+<p>可与 <code class="docutils literal notranslate"><span class="pre">publishDir</span></code> 指令一起使用的可选参数表:</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="9%" />
@@ -2130,8 +1940,7 @@ must not be accessed by other downstream processes.</p>
 </div>
 <div class="section" id="queue">
 <span id="process-queue"></span><h3>queue<a class="headerlink" href="#queue" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">queue</span></code> directory allows you to set the <cite>queue</cite> where jobs are scheduled when using a grid based executor
-in your pipeline. For example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">queue</span></code> 目录允许您设置在pipeline中使用基于网格的执行程序时计划作业的队列。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">grid_job</span> <span class="p">{</span>
 
     <span class="n">queue</span> <span class="s1">&#39;long&#39;</span>
@@ -2143,7 +1952,7 @@ in your pipeline. For example:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Multiple queues can be specified by separating their names with a comma for example:</p>
+<p>可以通过用逗号分隔它们的名称来指定多个队列，例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">grid_job</span> <span class="p">{</span>
 
     <span class="n">queue</span> <span class="s1">&#39;short,long,cn-el6&#39;</span>
@@ -2163,8 +1972,7 @@ in your pipeline. For example:</p>
 </div>
 <div class="section" id="label">
 <span id="process-label"></span><h3>label<a class="headerlink" href="#label" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">label</span></code> directive allows the annotation of processes with mnemonic identifier of your choice.
-For example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">label</span></code> 指令允许使用您选择的助记符标识符对process进行注释。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">bigTask</span> <span class="p">{</span>
 
   <span class="n">label</span> <span class="s1">&#39;big_mem&#39;</span>
@@ -2175,24 +1983,20 @@ For example:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The same label can be applied to more than a process and multiple labels can be applied to the same
-process using the <code class="docutils literal notranslate"><span class="pre">label</span></code> directive more than one time.</p>
+<p>相同的标签可以应用于多个process，并且可以使用 <code class="docutils literal notranslate"><span class="pre">label</span></code> 指令多次将多个标签应用于同一process。</p>
 <div class="admonition note">
 <p class="first admonition-title">注解</p>
 <p class="last">A label must consist of alphanumeric characters or <code class="docutils literal notranslate"><span class="pre">_</span></code>, must start with an alphabetic character
 and must end with an alphanumeric character.</p>
 </div>
-<p>Labels are useful to organise workflow processes in separate groups which can be referenced
-in the configuration file to select and configure subset of processes having similar computing requirements.</p>
+<p>标签对于在单独的组中组织工作process过程非常有用，可以在配置文件中引用它们来选择和配置具有类似计算要求的过程子集。</p>
 <p>See the <a class="reference internal" href="config.html#config-process-selectors"><span class="std std-ref">Process选择器</span></a> documentation for details.</p>
 </div>
 <div class="section" id="scratch">
 <span id="process-scratch"></span><h3>scratch<a class="headerlink" href="#scratch" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">scratch</span></code> directive allows you to execute the process in a temporary folder that is local to the execution node.</p>
-<p>This is useful when your pipeline is launched by using a <cite>grid</cite> executor, because it permits to decrease the NFS
-overhead by running the pipeline processes in a temporary directory in the local disk of the actual execution node.
-Only the files declared as output in the process definition will be copied in the pipeline working area.</p>
-<p>In its basic form simply specify <code class="docutils literal notranslate"><span class="pre">true</span></code> at the directive value, as shown below:</p>
+<p><code class="docutils literal notranslate"><span class="pre">scratch</span></code> 指令允许您在执行节点本地的临时文件夹中执行该process。</p>
+<p>当您使用网格执行程序启动pipeline时，这非常有用，因为它允许通过在实际执行节点的本地磁盘中的临时目录中运行pipeline进程来减少NFS开销。 只有在process定义中声明为输出的文件才会被复制到pipeline工作区中。</p>
+<p>在其基本形式中，只需在指令值中指定 <code class="docutils literal notranslate"><span class="pre">true</span></code>，如下所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">simpleTask</span> <span class="p">{</span>
 
   <span class="n">scratch</span> <span class="n">true</span>
@@ -2206,22 +2010,18 @@ Only the files declared as output in the process definition will be copied in th
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>By doing this, it tries to execute the script in the directory defined by the variable <code class="docutils literal notranslate"><span class="pre">$TMPDIR</span></code> in the execution node.
-If this variable does not exist, it will create a new temporary directory by using the Linux command <code class="docutils literal notranslate"><span class="pre">mktemp</span></code>.</p>
-<p>A custom environment variable, other than <code class="docutils literal notranslate"><span class="pre">$TMPDIR</span></code>, can be specified by simply using it as the scratch value, for
-example:</p>
+<p>通过这样做，它尝试在执行节点中的变量 <code class="docutils literal notranslate"><span class="pre">$TMPDIR</span></code> 定义的目录中执行脚本。 如果此变量不存在，它将使用Linux命令 <code class="docutils literal notranslate"><span class="pre">mktemp</span></code> 创建一个新的临时目录。</p>
+<p>可以通过简单地将其用作临时值来指定除 <code class="docutils literal notranslate"><span class="pre">$TMPDIR</span></code> 之外的自定义环境变量，例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scratch</span> <span class="s1">&#39;$MY_GRID_TMP&#39;</span>
 </pre></div>
 </div>
-<p>Note, it must be wrapped by single quotation characters, otherwise the variable will be evaluated in the
-pipeline script context.</p>
-<p>You can also provide a specific folder path as scratch value, for example:</p>
+<p>注意，它必须用单引号字符包装，否则将在pipeline脚本上下文中评估变量。</p>
+<p>您还可以将特定文件夹路径提供为临时值，例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scratch</span> <span class="s1">&#39;/tmp/my/path&#39;</span>
 </pre></div>
 </div>
-<p>By doing this, a new temporary directory will be created in the specified path each time a process is executed.</p>
-<p>Finally, when the <code class="docutils literal notranslate"><span class="pre">ram-disk</span></code> string is provided as <code class="docutils literal notranslate"><span class="pre">scratch</span></code> value, the process will be execute in the node
-RAM virtual disk.</p>
+<p>通过执行此操作，每次执行process时，将在指定的路径中创建新的临时目录。</p>
+<p>最后，当 <code class="docutils literal notranslate"><span class="pre">ram-disk</span></code> 字符串作为 <code class="docutils literal notranslate"><span class="pre">scratch</span></code> 值提供时，该process将在节点RAM虚拟磁盘中执行。</p>
 <p>Summary of allowed values:</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -2254,17 +2054,13 @@ RAM virtual disk.</p>
 </div>
 <div class="section" id="storedir">
 <span id="process-storedir"></span><h3>storeDir<a class="headerlink" href="#storedir" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">storeDir</span></code> directive allows you to define a directory that is used as <cite>permanent</cite> cache for your process results.</p>
-<p>In more detail, it affects the process execution in two main ways:</p>
+<p><code class="docutils literal notranslate"><span class="pre">storeDir</span></code> 指令允许您定义用作process结果的永久缓存的目录。</p>
+<p>更详细地说，它以两种主要方式影响process执行:</p>
 <ol class="arabic simple">
-<li>The process is executed only if the files declared in the <cite>output</cite> clause do not exist in the directory specified by
-the <code class="docutils literal notranslate"><span class="pre">storeDir</span></code> directive. When the files exist the process execution is skipped and these files are used as
-the actual process result.</li>
-<li>Whenever a process is successfully completed the files listed in the <cite>output</cite> declaration block are moved into the directory
-specified by the <code class="docutils literal notranslate"><span class="pre">storeDir</span></code> directive.</li>
+<li>只有在 <code class="docutils literal notranslate"><span class="pre">storeDir</span></code>  指令指定的目录中不存在output子句中声明的文件时，才会执行该过程。 当文件存在时，将跳过流程执行，并将这些文件用作实际流程结果。</li>
+<li>每当process成功完成时，输出声明块中列出的文件将被移动到 <code class="docutils literal notranslate"><span class="pre">storeDir</span></code> 指令指定的目录中.</li>
 </ol>
-<p>The following example shows how to use the <code class="docutils literal notranslate"><span class="pre">storeDir</span></code> directive to create a directory containing a BLAST database
-for each species specified by an input parameter:</p>
+<p>以下示例显示如何使用 <code class="docutils literal notranslate"><span class="pre">storeDir</span></code> 指令为输入参数指定的每个物种创建包含BLAST数据库的目录:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">genomes</span> <span class="o">=</span> <span class="n">Channel</span><span class="o">.</span><span class="n">fromPath</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">genomes</span><span class="p">)</span>
 
 <span class="n">process</span> <span class="n">formatBlastDatabases</span> <span class="p">{</span>
@@ -2288,9 +2084,7 @@ for each species specified by an input parameter:</p>
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">警告</p>
-<p class="last">The <code class="docutils literal notranslate"><span class="pre">storeDir</span></code> directive is meant for long term process caching and should not be used to
-output the files produced by a process to a specific folder or organise result data in <cite>semantic</cite> directory structure.
-In these cases you may use the <a class="reference internal" href="#publishdir">publishDir</a> directive instead.</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">storeDir</span></code> 指令用于长期process缓存，不应用于将process生成的文件输出到特定文件夹或组织语义目录结构中的结果数据。 在这些情况下，您可以使用 <a class="reference internal" href="#publishdir">publishDir</a> 指令。</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">注解</p>
@@ -2300,8 +2094,7 @@ In these cases you may use the <a class="reference internal" href="#publishdir">
 </div>
 <div class="section" id="stageinmode">
 <span id="process-stageinmode"></span><h3>stageInMode<a class="headerlink" href="#stageinmode" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">stageInMode</span></code> directive defines how input files are staged-in to the process work directory. The following values
-are allowed:</p>
+<p><code class="docutils literal notranslate"><span class="pre">stageInMode</span></code> 指令定义输入文件如何进入process工作目录。 允许以下值：</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="5%" />
@@ -2330,8 +2123,7 @@ are allowed:</p>
 </div>
 <div class="section" id="stageoutmode">
 <span id="process-stageoutmode"></span><h3>stageOutMode<a class="headerlink" href="#stageoutmode" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">stageOutMode</span></code> directive defines how output files are staged-out from the scratch directory to the process work
-directory. The following values are allowed:</p>
+<p><code class="docutils literal notranslate"><span class="pre">stageOutMode</span></code> 指令定义输出文件如何从暂存目录转移到process工作目录。 允许以下值：</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="6%" />
@@ -2358,8 +2150,7 @@ directory. The following values are allowed:</p>
 </div>
 <div class="section" id="tag">
 <span id="process-tag"></span><h3>tag<a class="headerlink" href="#tag" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">tag</span></code> directive allows you to associate each process executions with a custom label, so that it will be easier
-to identify them in the log file or in the trace execution report. For example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">tag</span></code> 指令允许您将每个process执行与自定义标签相关联，以便在日志文件或跟踪执行报告中更容易识别它们。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">foo</span> <span class="p">{</span>
   <span class="n">tag</span> <span class="s2">&quot;$code&quot;</span>
 
@@ -2372,7 +2163,7 @@ to identify them in the log file or in the trace execution report. For example:<
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The above snippet will print a log similar to the following one, where process names contain the tag value:</p>
+<p>上面的代码段将打印一个类似于以下内容的日志，其中process名称包含标记值:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">6</span><span class="n">e</span><span class="o">/</span><span class="mi">28919</span><span class="n">b</span><span class="p">]</span> <span class="n">Submitted</span> <span class="n">process</span> <span class="o">&gt;</span> <span class="n">foo</span> <span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
 <span class="p">[</span><span class="n">d2</span><span class="o">/</span><span class="mi">1</span><span class="n">c6175</span><span class="p">]</span> <span class="n">Submitted</span> <span class="n">process</span> <span class="o">&gt;</span> <span class="n">foo</span> <span class="p">(</span><span class="n">gamma</span><span class="p">)</span>
 <span class="p">[</span><span class="mi">1</span><span class="n">c</span><span class="o">/</span><span class="mi">3</span><span class="n">ef220</span><span class="p">]</span> <span class="n">Submitted</span> <span class="n">process</span> <span class="o">&gt;</span> <span class="n">foo</span> <span class="p">(</span><span class="n">omega</span><span class="p">)</span>
@@ -2382,7 +2173,7 @@ to identify them in the log file or in the trace execution report. For example:<
 </div>
 <div class="section" id="time">
 <span id="process-time"></span><h3>time<a class="headerlink" href="#time" title="永久链接至标题">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">time</span></code> directive allows you to define how long a process is allowed to run. For example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">time</span></code> 指令允许您定义允许process运行的时间。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">big_job</span> <span class="p">{</span>
 
     <span class="n">time</span> <span class="s1">&#39;1h&#39;</span>
@@ -2393,7 +2184,7 @@ to identify them in the log file or in the trace execution report. For example:<
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The following time unit suffix can be used when specifying the duration value:</p>
+<p>指定持续时间值时，可以使用以下时间单位后缀：</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="35%" />
@@ -2429,10 +2220,8 @@ to identify them in the log file or in the trace execution report. For example:<
 </div>
 <div class="section" id="validexitstatus">
 <span id="process-validexitstatus"></span><h3>validExitStatus<a class="headerlink" href="#validexitstatus" title="永久链接至标题">¶</a></h3>
-<p>A process is terminated when the executed command returns an error exit status. By default any error status
-other than <code class="docutils literal notranslate"><span class="pre">0</span></code> is interpreted as an error condition.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">validExitStatus</span></code> directive allows you to fine control which error status will represent a successful command execution.
-You can specify a single value or multiple values as shown in the following example:</p>
+<p>当执行的命令返回错误退出状态时，process终止。 默认情况下，除 <code class="docutils literal notranslate"><span class="pre">0</span></code>  以外的任何错误状态都将被解释为错误条件。</p>
+<p><code class="docutils literal notranslate"><span class="pre">validExitStatus</span></code> 指令允许您精确控制哪个错误状态将代表成功执行命令。 您可以指定单个值或多个值，如以下示例所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">returnOk</span> <span class="p">{</span>
     <span class="n">validExitStatus</span> <span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span>
 
@@ -2444,16 +2233,12 @@ You can specify a single value or multiple values as shown in the following exam
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>In the above example, although the command script ends with a <code class="docutils literal notranslate"><span class="pre">1</span></code> exit status, the process
-will not return an error condition because the value <code class="docutils literal notranslate"><span class="pre">1</span></code> is declared as a <cite>valid</cite> status in
-the <code class="docutils literal notranslate"><span class="pre">validExitStatus</span></code> directive.</p>
+<p>在上面的示例中，尽管命令脚本以 <code class="docutils literal notranslate"><span class="pre">1</span></code> 退出状态结束，但该process不会返回错误条件，因为值 <code class="docutils literal notranslate"><span class="pre">1</span></code>  在 <code class="docutils literal notranslate"><span class="pre">validExitStatus</span></code> 指令中被声明为有效状态。</p>
 </div>
 <div class="section" id="dynamic-directives">
 <h3>Dynamic directives<a class="headerlink" href="#dynamic-directives" title="永久链接至标题">¶</a></h3>
-<p>A directive can be assigned <em>dynamically</em>, during the process execution, so that its actual value can be evaluated
-depending on the value of one, or more, process’ input values.</p>
-<p>In order to be defined in a dynamic manner the directive’s value needs to be expressed by using a <a class="reference internal" href="script.html#script-closure"><span class="std std-ref">closure</span></a>
-statement, as in the following example:</p>
+<p>可以在process执行期间动态分配指令，以便可以根据一个或多个process输入值来评估其实际值。</p>
+<p>为了以动态方式定义，需要使用 <a class="reference internal" href="script.html#script-closure"><span class="std std-ref">closure</span></a> 语句表达指令的值，如下例所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>process foo {
 
   executor &#39;sge&#39;
@@ -2469,17 +2254,15 @@ statement, as in the following example:</p>
 }
 </pre></div>
 </div>
-<p>In the above example the <a class="reference internal" href="#queue">queue</a> directive is evaluated dynamically, depending on the input value <code class="docutils literal notranslate"><span class="pre">entries</span></code>. When it is
-bigger than 100, jobs will be submitted to the queue <code class="docutils literal notranslate"><span class="pre">long</span></code>, otherwise the <code class="docutils literal notranslate"><span class="pre">short</span></code> one will be used.</p>
-<p>All directives can be assigned to a dynamic value except the following:</p>
+<p>在上面的示例中， <a class="reference internal" href="#queue">queue</a> 指令是动态计算的，具体取决于输入值 <code class="docutils literal notranslate"><span class="pre">entries</span></code> 。 当它大于100时，作业将被提交到 <code class="docutils literal notranslate"><span class="pre">long</span></code> 队列中，否则将使用 <code class="docutils literal notranslate"><span class="pre">short</span></code> 队列作业。</p>
+<p>可以将所有指令分配给动态值，但以下情况除外：</p>
 <ul class="simple">
 <li><a class="reference internal" href="#executor">executor</a></li>
 <li><a class="reference internal" href="#maxforks">maxForks</a></li>
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">注解</p>
-<p class="last">You can retrieve the current value of a dynamic directive in the process script by using the implicit variable <code class="docutils literal notranslate"><span class="pre">task</span></code>
-which holds the directive values defined in the current process instance.</p>
+<p class="last">您可以使用包含当前process实例中定义的指令值的隐式变量 <code class="docutils literal notranslate"><span class="pre">task</span></code> 来检索process脚本中动态指令的当前值。</p>
 </div>
 <p>For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>process foo {
@@ -2499,11 +2282,8 @@ which holds the directive values defined in the current process instance.</p>
 </div>
 <div class="section" id="dynamic-computing-resources">
 <h3>Dynamic computing resources<a class="headerlink" href="#dynamic-computing-resources" title="永久链接至标题">¶</a></h3>
-<p>It’s a very common scenario that different instances of the same process may have very different needs in terms of computing resources.
-In such situations requesting, for example, an amount of memory too low will cause some tasks to fail.
-Instead, using a higher limit that fits all the tasks in your execution could significantly decrease the execution priority of your jobs.</p>
-<p>The <a class="reference internal" href="#dynamic-directives">Dynamic directives</a> evaluation feature can be used to modify the amount of computing resources requested in case
-of a process failure and try to re-execute it using a higher limit. For example:</p>
+<p>这是一种非常常见的情况，即同一process的不同实例在计算资源方面可能有非常不同的需求。 例如，在这种情况下请求一定量的内存太低会导致某些任务失败。 相反，使用适合执行中所有任务的更高限制可能会显着降低作业的执行优先级。</p>
+<p><a class="reference internal" href="#dynamic-directives">Dynamic directives</a>  评估功能可用于修改在process失败的情况下请求的计算资源量，并尝试使用更高的限制重新执行它。 例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>process foo {
 
     memory { 2.GB * task.attempt }
@@ -2518,12 +2298,9 @@ of a process failure and try to re-execute it using a higher limit. For example:
 }
 </pre></div>
 </div>
-<p>In the above example the <a class="reference internal" href="#memory">memory</a> and execution <a class="reference internal" href="#time">time</a> limits are defined dynamically. The first time the process
-is executed the <code class="docutils literal notranslate"><span class="pre">task.attempt</span></code> is set to <code class="docutils literal notranslate"><span class="pre">1</span></code>, thus it will request a two GB of memory and one hour of maximum execution
-time.</p>
-<p>If the task execution fail reporting an exit status equals <code class="docutils literal notranslate"><span class="pre">140</span></code>, the task is re-submitted (otherwise terminates immediately).
-This time the value of <code class="docutils literal notranslate"><span class="pre">task.attempt</span></code> is <code class="docutils literal notranslate"><span class="pre">2</span></code>, thus increasing the amount of the memory to four GB and the time to 2 hours, and so on.</p>
-<p>The directive <a class="reference internal" href="#maxretries">maxRetries</a> set the maximum number of time the same task can be re-executed.</p>
+<p>在上面的示例中，动态定义了 <a class="reference internal" href="#memory">memory</a> 和执行 <a class="reference internal" href="#time">time</a> 限制。 第一次执行该process时， <code class="docutils literal notranslate"><span class="pre">task.attempt</span></code> 设置为 <code class="docutils literal notranslate"><span class="pre">1</span></code>，因此它将请求2GB的内存和1小时的最长执行时间。</p>
+<p>如果任务执行失败，报告退出状态等于 <code class="docutils literal notranslate"><span class="pre">140</span></code>，则重新提交任务（否则立即终止）。 这次 <code class="docutils literal notranslate"><span class="pre">task.attempt</span></code> 的值为 <code class="docutils literal notranslate"><span class="pre">2</span></code>，从而将内存量增加到4GB，时间增加到2小时，依此类推。</p>
+<p>指令 <cite>maxRetries</cite> 设置可以重新执行同一任务的最大时间。</p>
 </div>
 </div>
 </div>

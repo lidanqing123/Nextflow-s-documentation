@@ -4,12 +4,10 @@
 Processes
 *********
 
-In Nextflow a `process` is the basic processing `primitive` to execute a user script.
+在Nextflow中，``process`` 是执行用户脚本的基本处理进程。
 
-The process definition starts with keyword the ``process``, followed by process name and finally the process `body`
-delimited by curly brackets. The process body must contain a string which represents the command or, more generally,
-a script that is executed by it. A basic process looks like the following example::
 
+process定义以关键字 ``process`` 开始，后跟process名称，最后由大括号分隔的process代码块。 ``process`` 正文必须包含表示命令的字符串，或者更一般地说，包含由其执行的脚本。 一个基本 ``process`` 如下例所示::
   process sayHello {
 
       """
@@ -19,9 +17,7 @@ a script that is executed by it. A basic process looks like the following exampl
   }
 
 
-A process may contain five definition blocks, respectively: directives,
-inputs, outputs, when clause and finally the process script. The syntax is defined as follows:
-
+一个process可以分别包含五个定义块, 分别是：指令(directives)，输入(inputs)，输出(outputs)，when子句和最后的process脚本。 语法定义如下：
 ::
 
   process < name > {
@@ -45,24 +41,18 @@ inputs, outputs, when clause and finally the process script. The syntax is defin
 
 .. _process-script:
 
-Script
+脚本
 ======
 
-The `script` block is a string statement that defines the command that is executed by the process to carry out its task.
+脚本块是一个字符串语句，用于定义process执行其执行任务的命令。
 
-A process contains one and only one script block, and it must be the last statement when the process contains
-input and output declarations.
+process包含一个且只有一个脚本块，当process包含输入和输出声明时，它必须是最后一个语句。
 
-The entered string is executed as a `Bash <http://en.wikipedia.org/wiki/Bash_(Unix_shell)>`_ script in the
-`host` system. It can be any command, script or combination of them, that you would normally use in terminal shell
-or in a common Bash script.
+输入的字符串在主机系统中作为`Bash <http://en.wikipedia.org/wiki/Bash_(Unix_shell)>`_ 脚本执行。 它可以是您通常在终端shell或常见的Bash脚本中使用的任何命令，脚本或它们的组合。
 
-The only limitation to the commands that can be used in the script statement is given by the availability of those
-programs in the target execution system.
+脚本语句中使用的命令的唯一限制是在目标执行系统中那些实用性程序。
 
-
-The script block can be a simple string or multi-line string. The latter simplifies the writing of non trivial scripts
-composed by multiple commands spanning over multiple lines. For example::
+脚本块可以是简单的字符串或多行字符串。 后者简化了由跨越多行的多个命令组成的非平凡脚本的编写。 例如::
 
     process doMoreThings {
 
@@ -74,20 +64,17 @@ composed by multiple commands spanning over multiple lines. For example::
 
     }
 
-As explained in the script tutorial section, strings can be defined by using a single-quote
-or a double-quote, and multi-line strings are defined by three single-quote or three double-quote characters.
+如脚本教程部分所述，可以使用单引号或双引号定义字符串，多行字符串由三个单引号或三个双引号字符定义。
 
-There is a subtle but important difference between them. Like in Bash, strings delimited by a ``"`` character support
-variable substitutions, while strings delimited by ``'`` do not.
+它们之间存在微妙但重要的区别。 就像在Bash中一样，双引号 ``"`` 的字符串支持变量替换，而单引号 ``'`` 的字符串则不行。
 
-In the above code fragment the ``$db`` variable is replaced by the actual value defined somewhere in the
-pipeline script.
 
-.. warning:: Since Nextflow uses the same Bash syntax for variable substitutions in strings, you need to manage them
-  carefully depending on if you want to evaluate a variable in the Nextflow context - or - in the Bash environment execution.
+在上面的代码片段中， ``$db`` 变量被流程脚本中某处定义的实际值替换。
 
-When you need to access a system environment variable  in your script you have two options. The first choice is as
-easy as defining your script block by using a single-quote string. For example::
+.. warning:: 由于Nextflow对字符串中的变量替换使用相同的Bash语法，因此您需要仔细管理它们，具体取决于您是否要在Nextflow上下文中评估变量 - 或者 - 在Bash环境执行中。
+
+
+当您需要在脚本中访问系统环境变量时，您有两个选择。 第一种选择就像使用单引号字符串定义脚本块一样简单。 例如::
 
     process printPath {
 
@@ -97,11 +84,10 @@ easy as defining your script block by using a single-quote string. For example::
 
     }
 
-The drawback of this solution is that you will not able to access variables defined in the pipeline script context,
-in your script block.
 
-To fix this, define your script by using a double-quote string and `escape` the system environment variables by
-prefixing them with a back-slash ``\`` character, as shown in the following example::
+此解决方案的缺点是您将无法在脚本块中访问流程脚本上下文中定义的变量。
+
+要解决此问题，请使用双引号字符串定义脚本，并通过在前面添加反斜杠( ``\`` )字符来转义(`escape` )系统环境变量，如以下示例所示::
 
 
     process doOtherThings {
@@ -114,27 +100,23 @@ prefixing them with a back-slash ``\`` character, as shown in the following exam
 
     }
 
-In this example the ``$MAX`` variable has to be defined somewhere before, in the pipeline script.
-`Nextflow` replaces it with the actual value before executing the script. Instead, the ``$DB`` variable
-must exist in the script execution environment and the Bash interpreter will replace it with the actual value.
+
+在此示例中，必须在流程脚本之前的某处定义 ``$MAX`` 变量。 在执行脚本之前，Nextflow会将其替换为实际值。 相反，``$DB`` 变量必须存在于脚本执行环境中，Bash解释器将用实际值替换它。
 
 .. tip::
-  Alternatively you can use the :ref:`process-shell` block definition which allows a script to contain both
-  Bash and Nextflow variables without having to escape the first.
+  或者，您可以使用 :ref:`process-shell` 块定义，该定义允许脚本包含Bash和Nextflow变量，而不必转义第一个。
 
-Scripts `à la carte`
+
+脚本语言
 --------------------
 
-The process script is interpreted by Nextflow as a Bash script by default, but you are not limited to it.
+默认情况下，Nextflow Process将流程脚本解释为Bash脚本，但您不必受限于此。
 
-You can use your favourite scripting language (e.g. Perl, Python, Ruby, R, etc), or even mix them in the same pipeline.
+您可以使用自己喜欢的脚本语言（例如Perl，Python，Ruby，R等），甚至可以将它们混合在同一个流程中。
 
-A pipeline may be composed by processes that execute very different tasks. Using `Nextflow` you can choose the scripting
-language that better fits the task carried out by a specified process. For example for some processes `R` could be
-more useful than `Perl`, in other you may need to use `Python` because it provides better access to a library or an API, etc.
+流程可以由执行非常不同的任务的进程组成。 使用Nextflow，您可以选择更适合指定进程执行的任务的脚本语言。 例如，对于某些进程，R可能比Perl更有用，在其他情况下，您可能需要使用Python，因为它可以更好地访问一个库或一个API等。
 
-To use a scripting other than Bash, simply start your process script with the corresponding
-`shebang <http://en.wikipedia.org/wiki/Shebang_(Unix)>`_ declaration. For example::
+要使用Bash以外的脚本，只需使用相应的 `shebang <http://en.wikipedia.org/wiki/Shebang_(Unix)>`_ 声明启动您的流程脚本。 例如::
 
     process perlStuff {
 
@@ -159,22 +141,19 @@ To use a scripting other than Bash, simply start your process script with the co
     }
 
 
-.. tip:: Since the actual location of the interpreter binary file can change across platforms, to make your scripts
-   more portable it is wise to use the ``env`` shell command followed by the interpreter's name, instead of the absolute
-   path of it. Thus, the `shebang` declaration for a Perl script, for example,
-   would look like: ``#!/usr/bin/env perl`` instead of the one in the above pipeline fragment.
+.. tip:: 由于解释器二进制文件的实际位置可以跨平台更改，为了使脚本更具可移植性，最好使用 ``env`` shell命令后跟解释器的名称，而不是它的绝对路径。 因此，例如，Perl脚本的shebang声明看起来像： ``#!/usr/bin/env perl`` 而不是上面流程片段中的那个。
 
 
-Conditional scripts
+
+条件脚本
 -------------------
 
-Complex process scripts may need to evaluate conditions on the input parameters or use traditional flow control
-statements (i.e. ``if``, ``switch``, etc) in order to execute specific script commands, depending on the current
-inputs configuration.
 
-Process scripts can contain conditional statements by simply prefixing the script block with the keyword ``script:``.
-By doing that the interpreter will evaluate all the following statements as a code block that must return the
-script string to be executed. It's much easier to use than to explain, for example::
+复杂的process脚本可能需要评估输入参数的条件或使用传统的数据流控制语句（即 ``if``, ``switch``,等）以执行特定的脚本命令，具体取决于当前的输入配置.
+
+
+``process`` 脚本可以通过在脚本块前面加上关键字 ``mode`` 前缀来包含条件语句. 通过这样做，解释器将所有以下语句评估为必须返回要执行的脚本字符串的代码块. 
+它比使用解释更容易, 例如::
 
 
     seq_to_align = ...
@@ -206,20 +185,18 @@ script string to be executed. It's much easier to use than to explain, for examp
     }
 
 
-In the above example the process will execute the script fragment depending on the value of the ``mode`` parameter.
-By default it will execute the ``tcoffee`` command, changing the ``mode`` variable to ``mafft`` or ``clustalo`` value,
-the other branches will be executed.
+
+在上面的示例中，process将根据 ``mode`` 参数的值执行脚本片段。 默认情况下，它将执行  ``tcoffee``  命令，将 ``mode`` 变量更改为 ``mafft`` 或 ``clustalo`` 值，其他分支将被执行。
 
 .. _process-template:
 
-Template
+模板
 --------
 
-Process script can be externalised by using *template* files which can be reused across different processes and tested
-independently by the overall pipeline execution.
+process脚本可以通过使用 *template* 文件进行外部化，模板文件可以在不同的process中重复使用，并由整个流程执行独立测试。
 
-A template is simply a shell script file that Nextflow is able to execute by using the ``template`` function
-as shown below::
+
+模板只是一个shell脚本文件，Nextflow可以使用 ``template`` 函数执行，如下所示::
 
     process template_example {
 
@@ -232,10 +209,9 @@ as shown below::
     }
 
 
-Nextflow looks for the ``my_script.sh`` template file in the directory ``templates`` that must exist in the same folder
-where the Nextflow script file is located (any other location can be provided by using an absolute template path).
+Nextflow在 ``templates`` 目录中查找 ``my_script.sh`` 模板文件，该模板必须存在于Nextflow脚本文件所在的同一文件夹中（可以使用绝对模板路径提供任何其他位置）。
 
-The template script can contain any piece of code that can be executed by the underlying system. For example::
+模板脚本可以包含可由底层系统执行的任何代码段。 例如::
 
   #!/bin/bash
   echo "process started at `date`"
@@ -245,12 +221,7 @@ The template script can contain any piece of code that can be executed by the un
 
 
 
-.. tip::
-  Note that the dollar character (``$``) is interpreted as a Nextflow variable placeholder, when the script is run as a
-  Nextflow template, while it is evaluated as a Bash variable when it is run alone. This can be very useful to test
-  your script autonomously, i.e. independently from Nextflow execution. You only need to provide a Bash environment
-  variable for each the Nextflow variable existing in your script. For example, it would be possible to execute the above
-  script entering the following command in the shell terminal: ``STR='foo' bash templates/my_script.sh``
+.. tip::  请注意，当脚本作为Nextflow模板运行时，美元字符（``$``）将被解释为Nextflow变量占位符，而当单独运行时，它将被计算为Bash变量。 这对于自主测试脚本非常有用，即独立于Nextflow执行。 您只需为脚本中存在的每个Nextflow变量提供Bash环境变量。 例如，可以执行以上脚本在shell终端中输入以下命令：``STR='foo' bash templates/my_script.sh``
 
 
 .. _process-shell:
@@ -258,15 +229,13 @@ The template script can contain any piece of code that can be executed by the un
 Shell
 -----
 
-.. warning:: This is an incubating feature. It may change in future Nextflow releases.
+.. warning::  这是一个孵化功能。 它可能会在将来的Nextflow版本中发生变化。
 
 
-The ``shell`` block is a string statement that defines the *shell* command executed by the process to carry out its task.
-It is an alternative to the :ref:`process-script` definition with an important difference, it uses
-the exclamation mark ``!`` character as the variable placeholder for Nextflow variables in place of the usual dollar character.
+ ``shell`` 块是一个字符串语句，它定义process执行的shell命令以执行其任务。 它是 :ref:`process-script` 定义的替代品，具有重要的区别，它使用感叹号``!`` 字符作为Nextflow变量的变量占位符，代替通常的美元字符。
 
-In this way it is possible to use both Nextflow and Bash variables in the same piece of code without having to escape
-the latter and making process scripts more readable and easy to maintain. For example::
+
+通过这种方式，可以在同一段代码中同时使用Nextflow和Bash变量，而不必逃避后者并使流程脚本更易读和易于维护。 例如::
 
     process myTask {
 
@@ -281,31 +250,20 @@ the latter and making process scripts more readable and easy to maintain. For ex
     }
 
 
+在上面的简单示例中，``$USER`` 变量由Bash解释器管理，而``!{str}``作为由Nextflow管理的process输入变量处理。
 
-In the above trivial example the ``$USER`` variable is managed by the Bash interpreter, while ``!{str}`` is handled
-as a process input variable managed by Nextflow.
-
-.. note::
-
-    - Shell script definition requires the use of single-quote ``'`` delimited strings. When using double-quote ``"``
-      delimited strings, dollar variables are interpreted as Nextflow variables as usual. See :ref:`string-interpolation`.
-
-    - Exclamation mark prefixed variables always need to be enclosed in curly brackets i.e. ``!{str}`` is a valid 
-      variable while ``!str`` is ignored.
-
-    - Shell script supports the use of the file :ref:`process-template` mechanism. The same rules are applied to the variables
-      defined in the script template.
+.. note::  -Shell脚本定义需要使用单引号 ``'`` 分隔字符串。 当使用双引号 ``"`` 分隔字符串时，美元变量像往常一样被解释为Nextflow变量。请参阅 :ref:`string-interpolation` 。
+     -感叹号前缀变量总是需要用大括号括起来，即 ``!{str}`` 是有效变量，而 ``!str`` 被忽略。
+     -Shell脚本支持使用 :ref:`process-template` 文件机制。 相同的规则适用于脚本模板中定义的变量。
 
 .. _process-native:
 
-Native execution
+本地执行
 ----------------
 
-Nextflow processes can execute native code other than system scripts as shown in the previous paragraphs.
+Nextflow process可以执行除系统脚本之外的本机代码，如前面段落所示。
 
-This means that instead of specifying the process command to be executed as a string script, you can
-define it by providing one or more language statements, as you would do in the rest of the pipeline script.
-Simply starting the script definition block with the ``exec:`` keyword, for example::
+这意味着您可以通过提供一个或多个语言语句来定义它，而不是将process命令指定为字符串脚本，而不是像在流程脚本的其余部分中那样。 只需使用 ``exec:`` 关键字启动脚本定义块，例如::
 
     x = Channel.from( 'a', 'b', 'c')
 
@@ -330,27 +288,25 @@ Will display::
 Inputs
 ======
 
-Nextflow processes are isolated from each other but can communicate between themselves sending values through channels.
+Nextflow process彼此隔离，但可以在它们之间通过channels发送值进行通信。
 
-The `input` block defines which channels the process is expecting to receive inputs data from. You can only define one
-input block at a time and it must contain one or more inputs declarations.
 
-The input block follows the syntax shown below::
+``input`` 块定义了process期望从哪些channels接收输入数据。 您一次只能定义一个输入块，并且必须包含一个或多个输入声明。
+
+input块遵循以下语法::
 
     input:
       <input qualifier> <input name> [from <source channel>] [attributes]
 
 
-An input definition starts with an input `qualifier` and the input `name`, followed by the keyword ``from`` and
-the actual channel over which inputs are received. Finally some input optional attributes can be specified.
+input定义以输入限定符(input `qualifier`)和输入名称(input `name`)开头，后跟关键字 ``from`` 和接收输入的实际通道。 最后，可以指定一些输入可选属性。
 
-.. note:: When the input name is the same as the channel name, the ``from`` part of the declaration can be omitted.
+.. note:: 当输入名称与channel名称相同时，可以省略声明的 ``from`` 部分。
 
-The input qualifier declares the `type` of data to be received. This information is used by Nextflow to apply the
-semantic rules associated to each qualifier and handle it properly depending on the target execution platform
-(grid, cloud, etc).
 
-The qualifiers available are the ones listed in the following table:
+输入限定符声明要接收的数据类型。 Nextflow使用此信息来应用与每个限定符关联的语义规则，并根据目标执行平台（grid, cloud, etc）正确处理它。
+
+可用的限定符是下表中列出的限定符：
 
 =========== =============
 Qualifier   Semantic
@@ -365,11 +321,10 @@ each        Lets you execute the process for each entry in the input collection.
 =========== =============
 
 
-Input of generic values
+输入通用值
 -----------------------
 
-The ``val`` qualifier allows you to receive data of any type as input. It can be accessed in the process script
-by using the specified input name, as shown in the following example::
+``val`` 限定符允许您接收任何类型的数据作为输入。 可以使用指定的输入名称在进程脚本中访问它，如以下示例所示::
 
     num = Channel.from( 1, 2, 3 )
 
@@ -382,20 +337,16 @@ by using the specified input name, as shown in the following example::
     }
 
 
-In the above example the process is executed three times, each time a value is received from the channel ``num``
-and used to process the script. Thus, it results in an output similar to the one shown below::
+在上面的例子中，每次从 channel ``num`` 接收一个值并用于处理脚本时，该过程执行三次。 因此，它产生类似于下图所示的输出::
 
     process job 3
     process job 1
     process job 2
 
-.. note:: The `channel` guarantees that items are delivered in the same order as they have been sent - but -
-  since the process is executed in a parallel manner, there is no guarantee that they are processed in the
-  same order as they are received. In fact, in the above example, value ``3`` is processed before the others.
+.. note::  channel保证项目(items)的发送顺序与被发送顺序相同 - 但是 - 由于该过程以并行方式执行，因此无法保证按照接收顺序处理它们。 实际上，在上面的例子中，值 ``3`` 在其他之前被处理。
 
 
-When the ``val`` has the same name as the channel from where the data is received, the ``from`` part can be omitted.
-Thus the above example can be written as shown below::
+当 ``val`` 与接收数据的channel同名时，可以省略 ``from`` 部分。 因此，上面的例子可以写成如下所示::
 
     num = Channel.from( 1, 2, 3 )
 
@@ -408,12 +359,10 @@ Thus the above example can be written as shown below::
     }
 
 
-Input of files
+输入文件
 --------------
 
-The ``file`` qualifier allows the handling of file values in the process execution context. This means that
-Nextflow will stage it in the process execution directory, and it can be access in the script by using the name
-specified in the input declaration. For example::
+``file`` 限定符允许在process执行上下文中处理文件。 这意味着Nextflow将在process执行目录中将其暂存，并且可以使用输入声明中指定的名称在脚本中进行访问。 例如::
 
     proteins = Channel.fromPath( '/some/path/*.fa' )
 
@@ -425,11 +374,11 @@ specified in the input declaration. For example::
 
     }
 
-In the above example all the files ending with the suffix ``.fa`` are sent over the channel ``proteins``.
-Then, these files are received by the process which will execute a `BLAST` query on each of them.
 
-When the file input name is the same as the channel name, the ``from`` part of the input declaration can be omitted.
-Thus, the above example could be written as shown below::
+在上面的例子中，所有以后缀 ``.fa`` 结尾的文件都是通过channel ``proteins`` 发送的。 然后，process将接收这些文件，这些文件将对每个文件执行BLAST比对。
+
+
+当文件输入名称与channel名称相同时，可以省略输入声明的 ``from`` 部分。 因此，上面的例子可以写成如下所示::
 
     proteins = Channel.fromPath( '/some/path/*.fa' )
 
@@ -442,25 +391,22 @@ Thus, the above example could be written as shown below::
     }
 
 
-It's worth noting that in the above examples, the name of the file in the file-system is not touched, you can
-access the file even without knowing its name because you can reference it in the process script by using the
-variable whose name is specified in the input file parameter declaration.
+值得注意的是，在上面的示例中，未触及文件系统中文件的名称，即使不知道其名称也可以访问该文件，因为您可以使用指定名称的变量在process脚本中引用它,在输入文件参数中声明。
 
-There may be cases where your task needs to use a file whose name is fixed, it does not have to change along
-with the actual provided file. In this case you can specify its name by specifying the ``name`` attribute in the
-input file parameter declaration, as shown in the following example::
+
+在某些情况下，您的任务需要使用名称已修复的文件，而不必随实际提供的文件一起更改。 在这种情况下，您可以通过在输入文件参数声明中指定 ``name`` 属性来指定其名称，如以下示例所示::
 
     input:
         file query_file name 'query.fa' from proteins
 
 
-Or alternatively using a shorter syntax::
+或者使用更短的语法::
 
     input:
         file 'query.fa' from proteins
 
 
-Using this, the previous example can be re-written as shown below::
+使用它，可以重写前面的示例，如下所示::
 
     proteins = Channel.fromPath( '/some/path/*.fa' )
 
@@ -473,30 +419,22 @@ Using this, the previous example can be re-written as shown below::
     }
 
 
-What happens in this example is that each file, that the process receives, is staged with the name ``query.fa``
-in a different execution context (i.e. the folder where the job is executed) and an independent process
-execution is launched.
+在此示例中发生的情况是，process接收的每个文件在不同的执行上下文（即执行作业的文件夹）中使用名称 ``query.fa`` 进行暂存，并启动独立的process执行。
 
-.. tip:: This allows you to execute the process command various time without worrying the files names changing.
-  In other words, `Nextflow` helps you write pipeline tasks that are self-contained and decoupled by the execution
-  environment. This is also the reason why you should avoid whenever possible to use absolute or relative paths
-  referencing files in your pipeline processes.
+.. tip:: 这允许您在不必担心文件名更改的情况下执行各种时间的process命令。 换句话说，Nextflow可帮助您编写由执行环境自包含和解耦的流程任务。 这也是您应该尽可能避免使用引用流程processes中的文件的绝对路径或相对路径的原因。
 
 
 .. TODO describe that file can handle channels containing any data type not only file
 
 
-Multiple input files
+多个输入文件
 --------------------
 
-A process can declare as input file a channel that emits a collection of values, instead of a simple value.
+process可以将声明为值集合的channel声明为输入文件，而不是简单值。
 
-In this case, the script variable defined by the input file parameter will hold a list of files. You can
-use it as shown before, referring to all the files in the list, or by accessing a specific entry using the
-usual square brackets notation.
+在这种情况下，输入文件参数定义的脚本变量将包含文件列表。 您可以如前所示使用它，引用列表中的所有文件，或使用通常的方括号表示法访问特定条目。
 
-When a target file name is defined in the input parameter and a collection of files is received by the process,
-the file name will be appended by a numerical suffix representing its ordinal position in the list. For example::
+当在输入参数中定义目标文件名并且process接收到文件集合时，文件名将附加一个数字后缀，表示其在列表中的序号位置。 例如::
 
     fasta = Channel.fromPath( "/some/path/*.fa" ).buffer(size:3)
 
@@ -514,9 +452,8 @@ Will output::
     seq1 seq2 seq3
     ...
 
-The target input file name can contain the ``*`` and ``?`` wildcards, that can be used
-to control the name of staged files. The following table shows how the wildcards are
-replaced depending on the cardinality of the received input collection.
+
+目标输入文件名可以包含 ``*`` 和 ``?`` 通配符，可用于控制暂存文件的名称。 下表显示了如何根据接收的输入集合的基数替换通配符。
 
 ============ ============== ==================================================
 Cardinality   Name pattern     Staged file names
@@ -533,7 +470,8 @@ Cardinality   Name pattern     Staged file names
  many        ``dir*/*``      (as above)
 ============ ============== ==================================================
 
-The following fragment shows how a wildcard can be used in the input file declaration::
+
+以下片段显示了如何在输入文件声明中使用通配符::
 
 
     fasta = Channel.fromPath( "/some/path/*.fa" ).buffer(size:3)
@@ -547,16 +485,13 @@ The following fragment shows how a wildcard can be used in the input file declar
     }
 
 
-.. note:: Rewriting input file names according to a named pattern is an extra feature and not at all obligatory.
-  The normal file input constructs introduced in the `Input of files`_ section are valid for collections of
-  multiple files as well. To handle multiple input files preserving the original file names, use the ``*`` wildcard as
-  name pattern or a variable identifier.
+.. note::  根据命名模式重写输入文件名是一项额外功能，完全没有义务。 “文件输入”部分中引入的普通文件输入结构也适用于多个文件的集合。 要处理保留原始文件名的多个输入文件，请使用 ``*`` 通配符作为名称模式或变量标识符。
 
-Dynamic input file names
+
+动态输入文件名
 ------------------------
 
-When the input file name is specified by using the ``name`` file clause or the short `string` notation, you
-are allowed to use other input values as variables in the file name string. For example::
+使用 ``name``  文件子句或短字符串表示法指定输入文件名时，可以使用其他输入值作为文件名字符串中的变量。 例如::
 
 
   process simpleCount {
@@ -570,23 +505,19 @@ are allowed to use other input values as variables in the file name string. For 
   }
 
 
-In the above example, the input file name is set by using the current value of the ``x`` input value.
-
-This allows the input files to be staged in the script working directory with a name that is coherent
-with the current execution context.
-
-.. tip:: In most cases, you won't need to use dynamic file names, because each process is executed in its 
-  own private temporary directory, and input files are automatically staged to this directory by Nextflow. 
-  This guarantees that input files with the same name won't overwrite each other.
+在上面的示例中，使用 ``x`` 输入值的当前值设置输入文件名。
 
 
+这允许输入文件在脚本工作目录中暂存，其名称与当前执行上下文一致。
 
-Input of type 'stdin'
+.. tip::  在大多数情况下，您不需要使用动态文件名，因为每个进程都在其自己的专用临时目录中执行，并且输入文件由Nextflow自动转移到此目录。 这可以保证具有相同名称的输入文件不会相互覆盖。
+
+
+输入'stdin'类型
 ---------------------
 
-The ``stdin`` input qualifier allows you the forwarding of the value received from a channel to the
-`standard input <http://en.wikipedia.org/wiki/Standard_streams#Standard_input_.28stdin.29>`_
-of the command executed by the process. For example::
+``stdin`` 输入限定符允许您将从channel接收的值转发到process执行的命令的 `standard input <http://en.wikipedia.org/wiki/Standard_streams#Standard_input_.28stdin.29>`_ 。
+例如::
 
     str = Channel.from('hello', 'hola', 'bonjour', 'ciao').map { it+'\n' }
 
@@ -608,13 +539,10 @@ It will output::
     hello
 
 
-
-
-Input of type 'env'
+输入'env'类型
 -------------------
 
-The ``env`` qualifier allows you to define an environment variable in the process execution context based
-on the value received from the channel. For example::
+``env`` 限定符允许您根据从channel接收的值在process执行上下文中定义环境变量。 例如::
 
     str = Channel.from('hello', 'hola', 'bonjour', 'ciao')
 
@@ -637,13 +565,10 @@ on the value received from the channel. For example::
     hola world!
 
 
-
-Input of type 'set'
+输入'set'类型
 -------------------
 
-The ``set`` qualifier allows you to group multiple parameters in a single parameter definition. It can be useful
-when a process receives, in input, tuples of values that need to be handled separately. Each element in the tuple
-is associated to a corresponding element with the ``set`` definition. For example::
+``set`` 限定符允许您在单个参数定义中对多个参数进行分组。 当process在输入中接收需要单独处理的值的元组时，它会很有用。 元组中的每个元素都与具有 ``set`` 定义的对应元素相关联。 例如::
 
      tuple = Channel.from( [1, 'alpha'], [2, 'beta'], [3, 'delta'] )
 
@@ -659,12 +584,12 @@ is associated to a corresponding element with the ``set`` definition. For exampl
      }
 
 
-In the above example the ``set`` parameter is used to define the value ``x`` and the file ``latin.txt``,
-which will receive a value from the same channel.
+在上面的示例中，``set`` 参数用于定义值 ``x`` 和文件 ``latin.txt``，后者将从同一channel中接收值。
 
 In the ``set`` declaration items can be defined by using the following qualifiers: ``val``, ``env``, ``file`` and ``stdin``.
+在 ``set`` 声明中，可以使用以下限定符来定义项：``val``, ``env``, ``file`` 和 ``stdin``
 
-A shorter notation can be used by applying the following substitution rules:
+通过应用以下替换规则可以使用更短的表示法：
 
 ============== =======
 long            short
@@ -677,7 +602,7 @@ stdin           '-'
 env(x)          (not supported)
 ============== =======
 
-Thus the previous example could be rewritten as follows::
+因此，前面的示例可以重写如下::
 
       tuple = Channel.from( [1, 'alpha'], [2, 'beta'], [3, 'delta'] )
 
@@ -692,14 +617,13 @@ Thus the previous example could be rewritten as follows::
 
       }
 
-File names can be defined in *dynamic* manner as explained in the `Dynamic input file names`_ section.
+文件名可以 *动态方式* 定义，如  `动态输入文件名`_  部分所述。
 
 
-Input repeaters
+重复输入
 ---------------
 
-The ``each`` qualifier allows you to repeat the execution of a process for each item in a collection,
-every time a new data is received. For example::
+``each`` 限定符允许您在每次收到新数据时为集合中的每个项重复执行过程。 例如::
 
   sequences = Channel.fromPath('*.fa')
   methods = ['regular', 'expresso', 'psicoffee']
@@ -715,11 +639,9 @@ every time a new data is received. For example::
   }
 
 
-In the above example every time a file of sequences is received as input by the process,
-it executes *three* tasks running a T-coffee alignment with a different value for the ``mode`` parameter.
-This is useful when you need to `repeat` the same task for a given set of parameters.
+在上述示例中，每当过程接收到序列文件作为输入时，它执行三个任务，运行具有  ``mode`` 参数的不同值的T-coffee比对。 当您需要为给定的参数集重复相同的任务时，这非常有用。
 
-Since version 0.25+ input repeaters can be applied to files as well. For example::
+从版本0.25+开始，重复输入也可以应用于文件。 例如::
 
     sequences = Channel.fromPath('*.fa')
     methods = ['regular', 'expresso']
@@ -737,35 +659,34 @@ Since version 0.25+ input repeaters can be applied to files as well. For example
     }
 
 
-.. note:: When multiple repeaters are declared, the process is executed for each *combination* of them.
-
-In the latter example for any sequence input file emitted by the ``sequences`` channel are executed 6 alignments,
-3 using the ``regular`` method against each library files, and other 3 by using the ``expresso`` method always
-against the same library files.
+.. note::  当声明多个重复时，process将为它们的每个组合执行。
 
 
-.. hint:: If you need to repeat the execution of a process over n-tuple of elements instead a simple values or files,
-  create a channel combining the input values as needed to trigger the process execution multiple times.
-  In this regard, see the :ref:`operator-combine`, :ref:`operator-cross` and :ref:`operator-phase` operators.
+在后一示例中，对于 ``sequences`` channel发出的任何序列输入文件，执行6个比对，3个使用 ``regular`` 方法对每个库文件执行，而其他3个通过使用 ``expresso`` 方法。
+
+
+.. hint::  如果需要在n元组元素上重复执行进程而不是简单的值或文件，请根据需要创建一个组合输入值的channel，以多次触发process执行。 在这方面，请参阅 :ref:`operator-combine`, :ref:`operator-cross` 和 :ref:`operator-phase` 运算符。
+
 
 .. _process-understand-how-multiple-input-channels-work:
 
-Understand how multiple input channels work
+了解多个输入channels的工作原理
 -------------------------------------------
 
-A key feature of processes is the ability to handle inputs from multiple channels.
 
-When two or more channels are declared as process inputs, the process stops until
-there's a complete input configuration ie. it receives an input value from all the channels declared
-as input.
+processes的一个关键特性是能够处理来自多个channels的输入。
 
-When this condition is verified, it consumes the input values coming from the respective channels,
-and spawns a task execution, then repeat the same logic until one or more channels have no more content.
 
-This means channel values are consumed serially one after another and the first empty channel
-cause the process execution to stop even if there are other values in other channels.
+当两个或多个channels被声明为process输入时，process将停止，直到有完整的输入配置，即它从声明为输入的所有channels接收输入值。
 
-For example::
+
+当验证该条件时，它消耗来自各个channels的输入值，并产生任务执行，然后重复相同的逻辑，直到一个或多个channels不再有内容。
+
+
+这意味着channel一个接一个地串行消耗，第一个空channel导致进程执行停止，即使其他channels中还有其他值。
+
+
+例如::
 
   process foo {
     echo true
@@ -779,26 +700,21 @@ For example::
   }
 
 
-The process ``foo`` is executed two times because the first input channel only provides two values and therefore
-the ``c`` element is discarded. It prints::
+process ``foo`` 执行两次，因为第一个输入channel只提供两个值，因此丢弃了 ``c`` 元素。 它打印::
 
     1 and a
     2 and b
 
 
-.. warning:: A different semantic is a applied when using *Value channel* a.k.a. *Singleton channel*.
+.. warning:: 在使用值通道(*Value channel*)时应用了另一种语义，即单例通道(*Singleton channel*)。
 
-This kind of channel is created by the :ref:`Channel.value <channel-value>` factory method or implicitly
-when a process input specifies a simple value in the ``from`` clause.
+这种channel由 :ref:`Channel.value <channel-value>` factory方法创建，或者在process输入指定 ``from`` 子句中的简单值时隐式创建。
 
-By definition, a *Value channel* is bound to a single value and it can be read unlimited times without
-consuming its content.
+根据定义， *Value channel* 绑定到单个值，可以无限次读取而不消耗其内容。
 
-These properties make that when mixing a *value channel* with one or more (queue) channels,
-it does not affect the process termination which only depends by the other channels and its
-content is applied repeatedly.
+这些属性使得在将value channel与一个或多个（队列）channels混合时，它不会影响仅仅依赖于其他channels并且其内容被重复应用的process终止。
 
-To better understand this behavior compare the previous example with the following one::
+为了更好地理解此行为，请将前一个示例与以下示例进行比较::
 
   process bar {
     echo true
@@ -811,9 +727,8 @@ To better understand this behavior compare the previous example with the followi
      """
   }
 
-The above snippet executes the ``bar`` process three times because the first input is a *value channel*, therefore
-its content can be read as many times as needed. The process termination is determined by the content of the second
-channel. It prints::
+
+上面的代码段执行 ``bar``  process三次，因为第一个输入是一个value channel，因此可以根据需要多次读取其内容。 process终止由第二channel的内容确定。它打印::
 
 
   1 and a
@@ -822,26 +737,25 @@ channel. It prints::
 
 See also: :ref:`channel-types`.
 
-Outputs
+
+输出
 =======
 
-The `output` declaration block allows to define the channels used by the process to send out the results produced.
+``output`` 声明块允许定义process用于发送生成结果的channels。
 
-It can be defined at most one output block and it can contain one or more outputs declarations.
-The output block follows the syntax shown below::
+
+它最多可以定义一个输出块，它可以包含一个或多个输出声明。 输出块遵循以下语法::
 
     output:
       <output qualifier> <output name> [into <target channel>[,channel,..]] [attribute [,..]]
 
-Output definitions start by an output `qualifier` and the output `name`, followed by the keyword ``into`` and
-one or more channels over which outputs are sent. Finally some optional attributes can be specified.
+输出定义以输出限定符和输出名称开头，后跟关键字 ``into`` 以及发送输出的一个或多个channels。 最后，可以指定一些可选属性。
 
-.. note:: When the output name is the same as the channel name, the ``into`` part of the declaration can be omitted.
-
+.. note::  当输出名称与channel名称相同时，可以省略 ``into`` 声明的部分内容。
 
 .. TODO the channel is implicitly create if does not exist
 
-The qualifiers that can be used in the output declaration block are the ones listed in the following table:
+可以在输出声明块中使用的限定符是下表中列出的限定符：
 
 =========== =============
 Qualifier   Semantic
@@ -856,8 +770,7 @@ set         Lets to send multiple values over the same output channel.
 Output values
 -------------
 
-The ``val`` qualifier allows to output a `value` defined in the script context. In a common usage scenario,
-this is a value which has been defined in the `input` declaration block, as shown in the following example::
+``val`` 限定符允许输出脚本上下文中定义的值。 在常见的使用场景中，这是一个已在输入声明块中定义的值，如以下示例所示::
 
    methods = ['prot','dna', 'rna']
 
@@ -877,8 +790,7 @@ this is a value which has been defined in the `input` declaration block, as show
    receiver.println { "Received: $it" }
 
 
-Valid output values are value literals, input values identifiers, variables accessible in the process scope and
-value expressions. For example::
+有效输出值是文字，输入值标识符，进程范围和值表达式中可访问的变量。 例如::
 
     process foo {
       input:
@@ -902,8 +814,7 @@ value expressions. For example::
 Output files
 ------------
 
-The ``file`` qualifier allows to output one or more files, produced by the process, over the specified channel.
-For example::
+``file`` 限定符允许通过指定的channel输出由process生成的一个或多个文件。 例如::
 
 
     process randomNum {
@@ -920,13 +831,9 @@ For example::
     numbers.subscribe { println "Received: " + it.text }
 
 
-In the above example the process, when executed, creates a file named ``result.txt`` containing a random number.
-Since a file parameter using the same name is declared between the outputs, when the task is completed that
-file is sent over the ``numbers`` channel. A downstream `process` declaring the same channel as `input` will
-be able to receive it.
+在上面的示例中，该过程在执行时会创建一个名为 ``result.txt`` 的文件，其中包含一个随机数。 由于在输出之间声明了使用相同名称的文件参数，因此当任务完成时，该文件通过 ``numbers``  channel发送。 声明与输入相同的channel的下游process将能够接收它。
 
-.. note:: If the channel specified as output has not been previously declared in the pipeline script, it
-  will implicitly created by the output declaration itself.
+.. note::  如果先前未在pipeline脚本中声明指定为输出的channel，则它将由输出声明本身隐式创建。
 
 
 .. TODO explain Path object
@@ -934,8 +841,7 @@ be able to receive it.
 Multiple output files
 ---------------------
 
-When an output file name contains a ``*`` or ``?`` wildcard character it is interpreted as a `glob`_ path matcher.
-This allows to *capture* multiple files into a list object and output them as a sole emission. For example::
+当输出文件名包含 ``*`` 或 ``?`` 时 通配符，它被解释为  `glob`_  路径匹配器。 这允许将多个文件捕获到列表对象中并将它们作为唯一的输出。 例如::
 
     process splitLetters {
 
@@ -958,29 +864,19 @@ It prints::
     File: chunk_ac => l
     File: chunk_ad => a
 
-.. note:: In the above example the operator :ref:`operator-flatmap` is used to transform the list of files emitted by
-  the ``letters`` channel into a channel that emits each file object independently.
+.. note::  在上面的示例中，运算符 :ref:`operator-flatmap` 用于将 ``letters`` channel发出的文件列表转换为独立发送每个文件对象的channel。
 
-Some caveats on glob pattern behavior:
 
-* Input files are not included in the list of possible matches.
-* Glob pattern matches against both files and directories path.
-* When a two stars pattern ``**`` is used to recourse across directories, only file paths are matched
-  i.e. directories are not included in the result list.
+关于glob模式行为的一些警告：
+* 输入文件不包含在可能的匹配列表中。
+* Glob模式匹配文件和目录路径。
+* 当两星模式 ``**`` 用于跨目录匹配时，只匹配文件路径，即目录不包括在结果列表中。
 
-.. warning:: Although the input files matching a glob output declaration are not included in the
-   resulting output channel, these files may still be transferred from the task scratch directory
-   to the target task work directory. Therefore, to avoid unnecessary file copies it is recommended
-   to avoid the usage of loose wildcards when defining output files e.g. ``file '*'`` .
-   Instead, use a prefix or a postfix naming notation to restrict the set of matching files to
-   only the expected ones e.g. ``file 'prefix_*.sorted.bam'``. 
+.. warning:: 尽管与结果输出channel匹配的输入文件未包含在结果输出channel中，但这些文件仍可从任务暂存目录传输到目标任务工作目录。 因此，为避免不必要的文件复制，建议在定义输出文件时避免使用松散的通配符，例如 ``file '*'`` 。 相反，使用前缀或后缀命名符号将匹配文件集限制为仅预期的匹配文件，例如 ``file 'prefix_*.sorted.ba'``。
 
-.. tip::
-    By default all the files matching the specified glob pattern are emitted by the channel as a sole (list) item.
-    It is also possible to emit each file as a sole item by adding the ``mode flatten`` attribute in the output file
-    declaration.
+.. tip::  默认情况下，所有与指定的glob模式匹配的文件都由channel作为唯一（列表）项发出。 通过在输出文件声明中添加 ``mode flatten`` 属性，还可以将每个文件作为唯一项输出。
 
-By using the `mode` attribute the previous example can be re-written as show below::
+通过使用mode属性，可以重写上一个示例，如下所示::
 
     process splitLetters {
 
@@ -1003,12 +899,11 @@ Read more about glob syntax at the following link `What is a glob?`_
 
 .. _process-dynoutname:
 
-Dynamic output file names
+
+动态输出文件名
 -------------------------
 
-When an output file name needs to be expressed dynamically, it is possible to define it using a dynamic evaluated
-string which references values defined in the input declaration block or in the script global context.
-For example::
+当需要动态表示输出文件名时，可以使用动态计算字符串来定义它，该字符串引用在输入声明块或脚本全局上下文中定义的值。 例如::
 
 
   process align {
@@ -1024,30 +919,21 @@ For example::
     """
   }
 
-In the above example, each time the process is executed an alignment file is produced whose name depends
-on the actual value of the ``x`` input.
+在上面的示例中，每次执行该process时，都会生成一个比对文件，其名称取决于 ``x`` 输入的实际值。
 
-.. tip:: The management of output files is a very common misunderstanding when using Nextflow. 
-  With other tools, it is generally necessary to organize the outputs files into some kind of directory 
-  structure or to guarantee a unique file name scheme, so that result files won't overwrite each other 
-  and that they can be referenced univocally by downstream tasks.
+.. tip:: 使用Nextflow时，输出文件的管理是一个非常常见的误解。使用其他工具时，通常需要将输出文件组织成某种目录结构或保证唯一的文件名方案，以便结果文件不会相互覆盖，并且可以由下游任务单独引用它们。
 
-  With Nextflow, in most cases, you don't need to take care of naming output files, because each task is executed 
-  in its own unique temporary directory, so files produced by different tasks can never override each other.
-  Also meta-data can be associated with outputs by using the :ref:`set output <process-set>` qualifier, instead of
-  including them in the output file name.
+  使用Nextflow，在大多数情况下，您不需要处理命名输出文件，因为每个任务都在其自己唯一的临时目录中执行，因此由不同任务生成的文件永远不会相互覆盖。此外，元数据可以通过使用  :ref:`set output <process-set>` 限定符与输出相关联，而不是将它们包含在输出文件名中。
 
-  To sum up, the use of output files with static names over dynamic ones is preferable whenever possible, 
-  because it will result in a simpler and more portable code.
+  总而言之，尽可能使用具有静态名称的输出文件而不是动态名称，因为它将导致更简单和更可移植的代码。
 
 
 .. _process-stdout:
 
-Output 'stdout' special file
+输出 'stdout' 特殊文件
 ----------------------------
 
-The ``stdout`` qualifier allows to `capture` the `stdout` output of the executed process and send it over
-the channel specified in the output parameter declaration. For example::
+``stdout`` 限定符允许捕获已执行进程的stdout输出，并通过输出参数声明中指定channel发送它。 例如::
 
     process echoSomething {
         output:
@@ -1063,12 +949,10 @@ the channel specified in the output parameter declaration. For example::
 
 .. _process-set:
 
-Output 'set' of values
+输出'set'值
 ----------------------
 
-The ``set`` qualifier allows to send multiple values into a single channel. This feature is useful
-when you need to `group together` the results of multiple executions of the same process, as shown in the following
-example::
+``set`` 限定符允许将多个值发送到单个channel。 当您需要将同一process的多次执行结果组合在一起时，此功能非常有用，如以下示例所示::
 
     query = Channel.fromPath '*.fa'
     species = Channel.from 'human', 'cow', 'horse'
@@ -1088,44 +972,39 @@ example::
     }
 
 
-In the above example a `BLAST` task is executed for each pair of ``species`` and ``query`` that are received.
-When the task completes a new tuple containing the value for ``species`` and the file ``result`` is sent to the ``blastOuts`` channel.
+在上面的示例中，针对接收的每对 ``species``  和 ``query`` 执行BLAST任务。 当任务完成一个包含 ``species`` 值的新元组时， ``result`` 文件将被发送到 ``blastOuts``  channel。
 
+set声明可以包含以下描述的以下限定符的任意组合： ``val``, ``file`` 和 ``stdout``.
 
-A `set` declaration can contain any combination of the following qualifiers, previously described: ``val``, ``file`` and ``stdout``.
+.. tip:: 变量标识符被解释为值，而字符串文字默认被解释为文件，因此可以使用短符号重写上述输出集，如下所示。
+    ::
 
-.. tip:: Variable identifiers are interpreted as `values` while strings literals are interpreted as `files` by default,
-  thus the above output `set` can be rewritten using a short notation as shown below.
-
-::
-
-    output:
-        set species, 'result' into blastOuts
+       output:
+           set species, 'result' into blastOuts
 
 
 
-File names can be defined in a dynamic manner as explained in the :ref:`process-dynoutname` section.
+文件名可以动态方式定义，如  :ref:`process-dynoutname` 分所述。
 
-Optional Output
+可选输出
 ---------------
 
-In most cases a process is expected to generate output that is added to the output channel.  However, there are situations where it is valid for a process to `not` generate output. In these cases ``optional true`` may be added to the output declaration, which tells Nextflow not to fail the process if the declared output is not created.
+在大多数情况下，一个process会生成添加到输出channel的输出。 但是，有些情况下，process无法生成输出。 在这些情况下，可以将 ``optional true`` 添加到输出声明中，如果未创建声明的输出，则声明Nextflow不会使进程失败。
 
 ::
 
     output:
         file("output.txt") optional true into outChannel
 
-In this example, the process is normally expected to generate an ``output.txt`` file, but in the cases where the file is legitimately missing, the process does not fail. ``outChannel`` is only populated by those processes that do generate ``output.txt``. 
 
+在此示例中，通常期望该process生成  ``output.txt``  文件，但在文件合法丢失的情况下，该进程不会失败。  ``outChannel`` 仅由生成 ``output.txt`` 的processes填充。
 
 When
 ====
 
-The ``when`` declaration allows you to define a condition that must be verified in order to execute the process.
-This can be any expression that evaluates a boolean value.
+``when`` 声明允许您定义必须在验证条件下才能执行该process。 这可以是任何计算布尔值的表达式。
 
-It is useful to enable/disable the process execution depending the state of various inputs and parameters. For example::
+根据各种输入和参数的状态启用/禁用process执行非常有用。 例如::
 
 
     process find {
@@ -1149,17 +1028,15 @@ It is useful to enable/disable the process execution depending the state of vari
 Directives
 ==========
 
-Using the `directive` declarations block you can provide optional settings that will affect the execution of the current
-process.
+使用directive声明块，您可以提供将影响当前process执行的可选设置。
 
-They must be entered at the top of the process `body`, before any other declaration blocks (i.e. ``input``, ``output``, etc) 
-and have the following syntax::
+它们必须在任何其他声明块（即 ``input``, ``output``, 等）之前输入到process body的顶部，并具有以下语法::
 
     name value [, value2 [,..]]
 
-Some directives are generally available to all processes, some others depends on the `executor` currently defined.
+某些指令通常可用于所有processes，其他指令取决于当前定义的执行程序。
 
-The directives are:
+这些指令是：
 
 * `afterScript`_
 * `beforeScript`_
@@ -1195,14 +1072,12 @@ The directives are:
 afterScript
 -----------
 
-The ``afterScript`` directive allows you to execute a custom (Bash) snippet immediately *after* the main process has run.
-This may be useful to clean up your staging area.
+``afterScript``  指令允许您在主进程运行后立即执行自定义（Bash）代码段。 这可能有助于清理您的临时区域。
 
 beforeScript
 ------------
 
-The ``beforeScript`` directive allows you to execute a custom (Bash) snippet *before* the main process script is run.
-This may be useful to initialise the underlying cluster environment or for other custom initialisation.
+``beforeScript`` 指令允许您在运行主进程脚本之前执行自定义（Bash）代码段。 这可能对初始化基础集群环境或其他自定义初始化很有用。
 
 For example::
 
@@ -1220,17 +1095,11 @@ For example::
 cache
 -----
 
-The ``cache`` directive allows you to store the process results to a local cache. When the cache is enabled *and*
-the pipeline is launched with the :ref:`resume <getstart-resume>` option, any following attempt to execute the process,
-along with the same inputs, will cause the process execution to be skipped, producing the stored data as
-the actual results.
+``cache`` 指令允许您将进程结果存储到本地缓存。 启用高速缓存并使用 :ref:`resume <getstart-resume>` 选项启动pipeline时，执行该过程的任何后续尝试以及相同的输入将导致跳过流程执行，从而将存储的数据生成为实际结果。
 
-The caching feature generates a unique `key` by indexing the process script and inputs. This key is used
-identify univocally the outputs produced by the process execution.
+缓存功能通过索引进程脚本和输入来生成唯一键。 该密钥用于明确识别process执行产生的输出。
 
-
-The cache is enabled by default, you can disable it for a specific process by setting the ``cache``
-directive to ``false``. For example:: 
+默认情况下启用缓存，您可以通过将 ``cache`` 指令设置为 ``false`` 来禁用特定process。 例如::
 
   process noCacheThis {
     cache false
@@ -1239,7 +1108,8 @@ directive to ``false``. For example::
     <your command string here>
   }
 
-The ``cache`` directive possible values are shown in the following table:
+
+``cache`` 指令可能的值如下表所示：
 
 ===================== =================
 Value                 Description
@@ -1256,11 +1126,10 @@ Value                 Description
 conda
 -----
 
-The ``conda`` directive allows for the definition of the process dependencies using the `Conda <https://conda.io>`_
-package manager.
 
-Nextflow automatically sets up an environment for the given package names listed by in the ``conda`` directive.
-For example::
+``conda`` 指令允许使用 `Conda <https://conda.io>`_ 包管理器定义process依赖性。
+
+Nextflow自动为 ``conda`` 指令中列出的给定包名称设置环境。 例如::
 
   process foo {
     conda 'bwa=0.7.15'
@@ -1271,25 +1140,20 @@ For example::
   }
 
 
-Multiple packages can be specified separating them with a blank space eg. ``bwa=0.7.15 fastqc=0.11.5``.
-The name of the channel from where a specific package needs to be downloaded can be specified using the usual
-Conda notation i.e. prefixing the package with the channel name as shown here ``bioconda::bwa=0.7.15``.
+可以指定多个包，用空格分隔它们，例如: ``bwa=0.7.15 fastqc=0.11.5``. 可以使用通常的Conda表示法指定需要下载特定包的channel的名称，即在包之前添加频道名称，如此处所示 ``bioconda::bwa=0.7.15``.
 
-The ``conda`` directory also allows the specification of a Conda environment file
-path or the path of an existing environment directory. See the :ref:`conda-page` page for further details.
+``conda``  目录还允许指定Conda环境文件路径或现有环境目录的路径。 有关更多详细信息，请参阅  :ref:`conda-page` 。
 
 .. _process-container:
 
 container
 ---------
 
-The ``container`` directive allows you to execute the process script in a `Docker <http://docker.io>`_ container.
+ ``container`` 指令允许您在 `Docker <http://docker.io>`_ 容器中执行process脚本。
 
-It requires the Docker daemon to be running in machine where the pipeline is executed, i.e. the local machine when using the
-*local* executor or the cluster nodes when the pipeline is deployed through a *grid* executor.
+它要求Docker守护程序在执行pipeline的机器中运行，即当通过网格执行器部署pipeline时使用本地执行程序或集群节点时的本地机器。
 
 For example::
-
 
     process runThisInDocker {
 
@@ -1302,21 +1166,18 @@ For example::
     }
 
 
-Simply replace in the above script ``dockerbox:tag`` with the Docker image name you want to use.
+只需在上面的脚本 ``dockerbox:tag`` 中替换您要使用的Docker镜像名称。
 
-.. tip:: This can be very useful to execute your scripts into a replicable self-contained environment or to deploy your pipeline in the cloud.
+.. tip:: 这对于将脚本执行到可复制的自包含环境或在云中部署pipeline非常有用。
 
-.. note:: This directive is ignore for processes :ref:`executed natively <process-native>`.
-
+.. note:: 对于本机执行的processes  :ref:`executed natively <process-native>`，该指令被忽略。
 
 .. _process-containerOptions:
 
 containerOptions
 ----------------
 
-The ``containerOptions`` directive allows you to specify any container execution option supported by the underlying
-container engine (ie. Docker, Singularity, etc). This can be useful to provide container settings
-only for a specific process e.g. mount a custom path::
+``containerOptions`` 指令允许您指定底层容器引擎支持的任何容器执行选项（即Docker，Singularity等）。这对于仅为特定过程提供容器设置是有用的，例如 安装自定义路径::
 
 
   process runThisWithDocker {
@@ -1332,15 +1193,15 @@ only for a specific process e.g. mount a custom path::
   }
 
 
-.. warning:: This feature is not supported by :ref:`awsbatch-executor` and :ref:`k8s-executor` executors.
+.. warning::  :ref:`awsbatch-executor`  和  :ref:`k8s-executor` executors 不支持此功能。
+
 
 .. _process-cpus:
 
 cpus
 ----
 
-The ``cpus`` directive allows you to define the number of (logical) CPU required by the process' task.
-For example::
+``cpus`` 指令允许您定义process任务所需的（逻辑）CPU数量。 例如::
 
     process big_job {
 
@@ -1353,8 +1214,7 @@ For example::
     }
 
 
-This directive is required for tasks that execute multi-process or multi-threaded commands/tools and it is meant
-to reserve enough CPUs when a pipeline task is executed through a cluster resource manager.
+执行多进程或多线程命令/工具的任务需要此指令，并且当通过集群资源管理器执行pipeline任务时，该指令用于保留足够的CPU。
 
 See also: `penv`_, `memory`_, `time`_, `queue`_, `maxForks`_
 
@@ -1363,20 +1223,19 @@ See also: `penv`_, `memory`_, `time`_, `queue`_, `maxForks`_
 clusterOptions
 --------------
 
-The ``clusterOptions`` directive allows the usage of any `native` configuration option accepted by your cluster submit command.
-You can use it to request non-standard resources or use settings that are specific to your cluster and not supported
-out of the box by Nextflow.
+``clusterOptions``  指令允许使用cluster submit命令接受的任何本机配置选项。 您可以使用它来请求非标准资源或使用特定于您的群集的设置，并且Nextflow不支持开箱即用。
 
-.. note:: This directive is taken in account only when using a grid based executor:
+.. note:: 仅当使用基于网格的执行程序(grid based executor)时才考虑此指令:
   :ref:`sge-executor`, :ref:`lsf-executor`, :ref:`slurm-executor`, :ref:`pbs-executor` and
   :ref:`condor-executor` executors.
 
 .. _process-disk:
 
+
 disk
 ----
 
-The ``disk`` directive allows you to define how much local disk storage the process is allowed to use. For example::
+``disk`` 指令允许您定义允许process使用多少本地磁盘存储。 例如::
 
     process big_job {
 
@@ -1388,7 +1247,8 @@ The ``disk`` directive allows you to define how much local disk storage the proc
         """
     }
 
-The following memory unit suffix can be used when specifying the disk value:
+
+指定磁盘值时，可以使用以下内存单元后缀：
 
 ======= =============
 Unit    Description
@@ -1410,9 +1270,7 @@ See also: `cpus`_, `memory`_ `time`_, `queue`_ and `Dynamic computing resources`
 echo
 ----
 
-By default the `stdout` produced by the commands executed in all processes is ignored.
-Setting the ``echo`` directive to ``true`` you can forward the process `stdout` to the current top
-running process `stdout` file, showing it in the shell terminal.
+默认情况下，所有processes中执行的命令生成的stdout将被忽略。 将 ``echo``  指令设置为 ``true`` ，可以将process stdout转发到当前运行最高的process stdout文件，并在shell终端中显示它。
 
 For example::
 
@@ -1427,7 +1285,8 @@ For example::
 
     Hello
 
-Without specifying ``echo true`` you won't see the ``Hello`` string printed out when executing the above example.
+
+如果不指定  ``echo true`` ，则在执行上述示例时不会看到打印出的 ``Hello``  字符串。
 
 
 .. _process-page-error-strategy:
@@ -1435,11 +1294,10 @@ Without specifying ``echo true`` you won't see the ``Hello`` string printed out 
 errorStrategy
 -------------
 
-The ``errorStrategy`` directive allows you to define how an error condition is managed by the process. By default when
-an error status is returned by the executed script, the process stops immediately. This in turn forces the entire pipeline
-to terminate.
+``errorStrategy`` 指令允许您定义进程管理错误条件的方式。 默认情况下，执行的脚本返回错误状态时，进程立即停止。 这反过来迫使整个pipeline终止。
 
-Table of available error strategies:
+
+可用错误策略表：
 
 ============== ==================
 Name            Executor
@@ -1451,8 +1309,7 @@ Name            Executor
 ============== ==================
 
 
-When setting the ``errorStrategy`` directive to ``ignore`` the process doesn't stop on an error condition,
-it just reports a message notifying you of the error event.
+设置 ``errorStrategy``  指令为 ``ignore`` , 进程在错误情况下不会停止时，它只会报告一条消息，通知您错误事件。
 
 For example::
 
@@ -1466,8 +1323,8 @@ For example::
 .. tip:: By definition a command script fails when it ends with a non-zero exit status. To change this behavior
   see `validExitStatus`_.
 
-The ``retry`` `error strategy`, allows you to re-submit for execution a process
-returning an error condition. For example::
+
+``retry`` 错误策略允许您重新提交执行过程，返回错误条件。 例如::
 
     process retryIfFail {
        errorStrategy 'retry'
@@ -1477,18 +1334,16 @@ returning an error condition. For example::
     }
 
 
-The number of times a failing process is re-executed is defined by the `maxRetries`_ and `maxErrors`_ directives.
+重新执行失败进程的次数由 `maxRetries`_ 和 `maxErrors`_  指令定义。
 
 .. _process-executor:
 
 executor
 --------
 
-The `executor` defines the underlying system where processes are executed. By default a process uses the executor
-defined globally in the ``nextflow.config`` file.
+``executor`` 定义执行进程的底层系统。 默认情况下，process使用 ``nextflow.config`` 文件中全局定义的执行程序。
 
-The ``executor`` directive allows you to configure what executor has to be used by the process, overriding the default
-configuration. The following values can be used:
+``executor`` 指令允许您配置进程必须使用的执行程序，从而覆盖默认配置。 可以使用以下值：
 
 ============== ==================
 Name            Executor
@@ -1518,16 +1373,16 @@ The following example shows how to set the process's executor::
    }
 
 
-.. note:: Each executor provides its own set of configuration options that can set be in the `directive` declarations block.
-   See :ref:`executor-page` section to read about specific executor directives.
+.. note:: 每个执行程序都提供自己的一组配置选项，可以在指令声明块中进行设置。 请参阅 :ref:`executor-page` 部分以了解特定执行程序指令。
+
+
 
 .. _process-ext:
 
 ext
 ---
 
-The ``ext`` is a special directive used as *namespace* for user custom process directives. This can be useful for
-advanced configuration options. For example::
+``ext`` 是一个特殊指令，用作用户自定义流程指令的命名空间。 这对高级配置选项很有用。 例如::
 
     process mapping {
       container "biocontainers/star:${task.ext.version}"
@@ -1541,8 +1396,8 @@ advanced configuration options. For example::
       """
     }
 
-In the above example, the process uses a container whose version is controlled by the ``ext.version`` property.
-This can be defined in the ``nextflow.config`` file as shown below::
+
+在上面的示例中，该process使用一个容器，其版本由 ``ext.version`` 属性控制。 这可以在 ``nextflow.config`` 文件中定义，如下所示::
 
     process.ext.version = '2.5.3'
 
@@ -1553,8 +1408,7 @@ This can be defined in the ``nextflow.config`` file as shown below::
 maxErrors
 ---------
 
-The ``maxErrors`` directive allows you to specify the maximum number of times a process can fail when using the ``retry`` `error strategy`.
-By default this directive is disabled, you can set it as shown in the example below::
+``maxErrors``  指令允许您指定使用 ``retry`` 错误策略时process可能失败的最大次数。 默认情况下，此指令被禁用，您可以如下例所示进行设置::
 
     process retryIfFail {
       errorStrategy 'retry'
@@ -1565,8 +1419,7 @@ By default this directive is disabled, you can set it as shown in the example be
       """
     }
     
-.. note:: This setting considers the **total** errors accumulated for a given process, across all instances. If you want
-  to control the number of times a process **instance** (aka task) can fail, use ``maxRetries``.
+.. note:: 此设置考虑了在所有实例中为给定进程累积的总错误。 如果要控制process实例（也称为task）失败的次数，请使用 ``maxRetries``。.
 
 See also: `errorStrategy`_ and `maxRetries`_.
 
@@ -1575,10 +1428,9 @@ See also: `errorStrategy`_ and `maxRetries`_.
 maxForks
 --------
 
-The ``maxForks`` directive allows you to define the maximum number of process instances that can be executed in parallel.
-By default this value is equals to the number of CPU cores available minus 1.
+``maxForks``  指令允许您定义可以并行执行的最大process实例数。 默认情况下，此值等于可用CPU核心数减1。
 
-If you want to execute a process in a sequential manner, set this directive to one. For example::
+如果要以顺序方式执行process，请将此指令设置为1。 例如::
 
     process doNotParallelizeIt {
 
@@ -1595,9 +1447,7 @@ If you want to execute a process in a sequential manner, set this directive to o
 maxRetries
 ----------
 
-The ``maxRetries`` directive allows you to define the maximum number of times a process instance can be
-re-submitted in case of failure. This value is applied only when using the ``retry`` `error strategy`. By default
-only one retry is allowed, you can increase this value as shown below::
+``maxRetries`` 指令允许您定义在发生故障时可以重新提交process实例的最大次数。 仅在使用 ``retry`` 错误策略时才应用此值。 默认情况下，只允许重试一次，您可以增加此值，如下所示::
 
     process retryIfFail {
         errorStrategy 'retry'
@@ -1609,10 +1459,8 @@ only one retry is allowed, you can increase this value as shown below::
     }
 
 
-.. note:: There is a subtle but important difference between ``maxRetries`` and the ``maxErrors`` directive.
-    The latter defines the total number of errors that are allowed during the process execution (the same process can
-    launch different execution instances), while the ``maxRetries`` defines the maximum number of times the same process
-    execution can be retried in case of an error.
+.. note:: ``maxRetries`` 和 ``maxErrors`` 指令之间存在微妙但重要的区别。 后者定义了process执行期间允许的错误总数（同一process可以启动不同的执行实例），而  ``maxRetries``  定义了在发生错误时可以重试相同process执行的最大次数。
+	
 
 See also: `errorStrategy`_ and `maxErrors`_.
 
@@ -1622,7 +1470,7 @@ See also: `errorStrategy`_ and `maxErrors`_.
 memory
 ------
 
-The ``memory`` directive allows you to define how much memory the process is allowed to use. For example::
+``memory`` 指令允许您定义允许process使用多少内存。 例如::
 
     process big_job {
 
@@ -1657,14 +1505,11 @@ See also: `cpus`_, `time`_, `queue`_ and `Dynamic computing resources`_.
 module
 ------
 
-`Environment Modules <http://modules.sourceforge.net/>`_ is a package manager that allows you to dynamically configure
-your execution environment and easily switch between multiple versions of the same software tool.
+`Environment Modules <http://modules.sourceforge.net/>`_ 是一个包管理器，允许您动态配置执行环境，并在同一软件工具的多个版本之间轻松切换.
 
-If it is available in your system you can use it with Nextflow in order to configure the processes execution
-environment in your pipeline.
+如果它在您的系统中可用，您可以将其与Nextflow一起使用，以便在pipeline中配置process执行环境。
 
-In a process definition you can use the ``module`` directive to load a specific module version to be used in the
-process execution environment. For example::
+在process定义中，您可以使用 ``module`` 指令加载要在process执行环境中使用的特定模块版本。 例如::
 
   process basicExample {
 
@@ -1675,9 +1520,7 @@ process execution environment. For example::
     """
   }
 
-You can repeat the ``module`` directive for each module you need to load. Alternatively multiple modules
-can be specified in a single ``module`` directive by separating all the module names by using a ``:``
-(colon) character as shown below::
+您可以为需要加载的每个模块重复  ``module`` 指令。 或者，可以在单个 ``module`` 指令中指定多个模块，方法是使用 ``:`` (冒号）字符分隔所有模块名称，如下所示::
 
    process manyModules {
 
@@ -1694,8 +1537,7 @@ can be specified in a single ``module`` directive by separating all the module n
 penv
 ----
 
-The ``penv`` directive  allows you to define the `parallel environment` to be used when submitting a parallel task to the
-:ref:`SGE <sge-executor>` resource manager. For example::
+``penv`` 指令允许您定义在向 :ref:`SGE <sge-executor>` 资源管理器提交并行任务时要使用的并行环境。 例如::
 
     process big_job {
 
@@ -1708,8 +1550,7 @@ The ``penv`` directive  allows you to define the `parallel environment` to be us
       """
     }
 
-This configuration depends on the parallel environment provided by your grid engine installation. Refer to your
-cluster documentation or contact your admin to lean more about this.
+此配置取决于Grid Engine安装提供的并行环境。 请参阅您的群集文档或与您的管理员联系以了解更多信息。
 
 .. note:: This setting is available when using the :ref:`sge-executor` executor.
 
@@ -1720,8 +1561,7 @@ See also: `cpus`_, `memory`_, `time`_
 pod
 ---
 
-The ``pod`` directive allows the definition of pods specific settings, such as environment variables, secrets
-and config maps when using the :ref:`k8s-executor` executor.
+``pod`` 指令允许在使用 :ref:`k8s-executor` executor 时定义pod特定设置，例如环境变量，机密和配置映射。
 
 For example::
 
@@ -1734,8 +1574,9 @@ For example::
   }
 
 The above snippet defines an environment variable named ``FOO`` which value is ``bar``.
+上面的代码片段定义了一个名为 ``FOO``  的环境变量，其值为 ``bar``.
 
-The ``pod`` directive allows the definition of the following options:
+``pod``  指令允许定义以下选项：
 
 ================================================= =================================================
 ``label: <K>, value: <V>``                        Defines a pod label with key ``K`` and value ``V``.
@@ -1750,14 +1591,14 @@ The ``pod`` directive allows the definition of the following options:
 ``runAsUser: <UID>``                              Specifies the user ID to be used to run the container.
 ================================================= =================================================
 
-When defined in the Nextflow configuration file, a pod setting can be defined using the canonical
-associative array syntax. For example::
+
+在Nextflow配置文件中定义时，可以使用规范关联数组语法定义pod设置。 例如::
 
   process {
     pod = [env: 'FOO', value: 'bar']
   }
 
-When more than one setting needs to be provides they must be enclosed in a list definition as shown below::
+当需要提供多个设置时，必须将它们包含在列表定义中，如下所示::
 
   process {
     pod = [ [env: 'FOO', value: 'bar'], [secret: 'my-secret/key1', mountPath: '/etc/file.txt'] ]
@@ -1769,8 +1610,7 @@ When more than one setting needs to be provides they must be enclosed in a list 
 publishDir
 ----------
 
-The ``publishDir`` directive allows you to publish the process output files to a specified folder. For example::
-
+``publishDir`` 指令允许您将process输出文件输出到指定的文件夹。 例如::
 
     process foo {
 
@@ -1785,16 +1625,13 @@ The ``publishDir`` directive allows you to publish the process output files to a
     }
 
 
-The above example splits the string ``Hola`` into file chunks of a single byte. When complete the ``chunk_*`` output files
-are published into the ``/data/chunks`` folder.
+上面的示例将字符串 ``Hola`` 拆分为单个字节的文件块。 完成后， ``chunk_*`` 输出文件到 ``/data/chunks`` 文件夹中。
 
-.. tip:: The ``publishDir`` directive can be specified more than one time in to publish the output files
-  to different target directories. This feature requires version 0.29.0 or higher.
+.. tip::  可以多次指定  ``publishDir`` 指令将输出文件发布到不同的目标目录。 此功能需要0.29.0或更高版本。
 
-By default files are published to the target folder creating a *symbolic link* for each process output that links
-the file produced into the process working directory. This behavior can be modified using the ``mode`` parameter.
+默认情况下，文件将发布到目标文件夹，为每个process输出创建一个符号链接，该链接将生成的文件链接到进程工作目录。 可以使用``mode`` 参数修改此行为。
 
-Table of optional parameters that can be used with the ``publishDir`` directive:
+可与 ``publishDir`` 指令一起使用的可选参数表:
 
 =============== =================
 Name            Description
@@ -1852,8 +1689,7 @@ move            Moves the output files into the published directory. **Note**: t
 queue
 -----
 
-The ``queue`` directory allows you to set the `queue` where jobs are scheduled when using a grid based executor
-in your pipeline. For example::
+``queue`` 目录允许您设置在pipeline中使用基于网格的执行程序时计划作业的队列。 例如::
 
     process grid_job {
 
@@ -1866,7 +1702,7 @@ in your pipeline. For example::
     }
 
 
-Multiple queues can be specified by separating their names with a comma for example::
+可以通过用逗号分隔它们的名称来指定多个队列，例如::
 
     process grid_job {
 
@@ -1888,8 +1724,7 @@ Multiple queues can be specified by separating their names with a comma for exam
 label
 -----
 
-The ``label`` directive allows the annotation of processes with mnemonic identifier of your choice.
-For example::
+``label`` 指令允许使用您选择的助记符标识符对process进行注释。 例如::
 
   process bigTask {
 
@@ -1901,14 +1736,13 @@ For example::
   }
 
 
-The same label can be applied to more than a process and multiple labels can be applied to the same
-process using the ``label`` directive more than one time.
+相同的标签可以应用于多个process，并且可以使用 ``label`` 指令多次将多个标签应用于同一process。
 
 .. note:: A label must consist of alphanumeric characters or ``_``, must start with an alphabetic character
   and must end with an alphanumeric character.
 
-Labels are useful to organise workflow processes in separate groups which can be referenced
-in the configuration file to select and configure subset of processes having similar computing requirements.
+
+标签对于在单独的组中组织工作process过程非常有用，可以在配置文件中引用它们来选择和配置具有类似计算要求的过程子集。
 
 See the :ref:`config-process-selectors` documentation for details.
 
@@ -1918,13 +1752,11 @@ See the :ref:`config-process-selectors` documentation for details.
 scratch
 -------
 
-The ``scratch`` directive allows you to execute the process in a temporary folder that is local to the execution node.
+``scratch`` 指令允许您在执行节点本地的临时文件夹中执行该process。
 
-This is useful when your pipeline is launched by using a `grid` executor, because it permits to decrease the NFS
-overhead by running the pipeline processes in a temporary directory in the local disk of the actual execution node.
-Only the files declared as output in the process definition will be copied in the pipeline working area.
+当您使用网格执行程序启动pipeline时，这非常有用，因为它允许通过在实际执行节点的本地磁盘中的临时目录中运行pipeline进程来减少NFS开销。 只有在process定义中声明为输出的文件才会被复制到pipeline工作区中。
 
-In its basic form simply specify ``true`` at the directive value, as shown below::
+在其基本形式中，只需在指令值中指定 ``true``，如下所示::
 
   process simpleTask {
 
@@ -1939,25 +1771,24 @@ In its basic form simply specify ``true`` at the directive value, as shown below
   }
 
 
-By doing this, it tries to execute the script in the directory defined by the variable ``$TMPDIR`` in the execution node.
-If this variable does not exist, it will create a new temporary directory by using the Linux command ``mktemp``.
+通过这样做，它尝试在执行节点中的变量 ``$TMPDIR`` 定义的目录中执行脚本。 如果此变量不存在，它将使用Linux命令 ``mktemp`` 创建一个新的临时目录。
 
-A custom environment variable, other than ``$TMPDIR``, can be specified by simply using it as the scratch value, for
-example::
+可以通过简单地将其用作临时值来指定除 ``$TMPDIR`` 之外的自定义环境变量，例如::
 
   scratch '$MY_GRID_TMP'
 
-Note, it must be wrapped by single quotation characters, otherwise the variable will be evaluated in the
-pipeline script context.
 
-You can also provide a specific folder path as scratch value, for example::
+注意，它必须用单引号字符包装，否则将在pipeline脚本上下文中评估变量。
+
+
+您还可以将特定文件夹路径提供为临时值，例如::
 
   scratch '/tmp/my/path'
 
-By doing this, a new temporary directory will be created in the specified path each time a process is executed.
 
-Finally, when the ``ram-disk`` string is provided as ``scratch`` value, the process will be execute in the node
-RAM virtual disk.
+通过执行此操作，每次执行process时，将在指定的路径中创建新的临时目录。
+
+最后，当 ``ram-disk`` 字符串作为 ``scratch`` 值提供时，该process将在节点RAM虚拟磁盘中执行。
 
 Summary of allowed values:
 
@@ -1976,19 +1807,15 @@ ram-disk    Creates a scratch folder in the RAM disk ``/dev/shm/`` (experimental
 storeDir
 --------
 
-The ``storeDir`` directive allows you to define a directory that is used as `permanent` cache for your process results.
+``storeDir`` 指令允许您定义用作process结果的永久缓存的目录。
 
-In more detail, it affects the process execution in two main ways:
+更详细地说，它以两种主要方式影响process执行:
 
-#. The process is executed only if the files declared in the `output` clause do not exist in the directory specified by
-   the ``storeDir`` directive. When the files exist the process execution is skipped and these files are used as
-   the actual process result.
+#. 只有在 ``storeDir``  指令指定的目录中不存在output子句中声明的文件时，才会执行该过程。 当文件存在时，将跳过流程执行，并将这些文件用作实际流程结果。
 
-#. Whenever a process is successfully completed the files listed in the `output` declaration block are moved into the directory
-   specified by the ``storeDir`` directive.
+#. 每当process成功完成时，输出声明块中列出的文件将被移动到 ``storeDir`` 指令指定的目录中.
 
-The following example shows how to use the ``storeDir`` directive to create a directory containing a BLAST database
-for each species specified by an input parameter::
+以下示例显示如何使用 ``storeDir`` 指令为输入参数指定的每个物种创建包含BLAST数据库的目录::
 
   genomes = Channel.fromPath(params.genomes)
 
@@ -2011,9 +1838,8 @@ for each species specified by an input parameter::
   }
 
 
-.. warning:: The ``storeDir`` directive is meant for long term process caching and should not be used to
-    output the files produced by a process to a specific folder or organise result data in `semantic` directory structure.
-    In these cases you may use the `publishDir`_ directive instead.
+.. warning:: ``storeDir`` 指令用于长期process缓存，不应用于将process生成的文件输出到特定文件夹或组织语义目录结构中的结果数据。 在这些情况下，您可以使用 `publishDir`_ 指令。
+
 
 .. note:: The use of AWS S3 path is supported however it requires the installation of the `AWS CLI tool <https://aws.amazon.com/cli/>`_
   (ie. ``aws``) in the target computing node.
@@ -2023,8 +1849,7 @@ for each species specified by an input parameter::
 stageInMode
 -----------
 
-The ``stageInMode`` directive defines how input files are staged-in to the process work directory. The following values
-are allowed:
+``stageInMode`` 指令定义输入文件如何进入process工作目录。 允许以下值：
 
 ======= ==================
 Value   Description
@@ -2041,8 +1866,7 @@ rellink Input files are staged in the process work directory by creating a symbo
 stageOutMode
 ------------
 
-The ``stageOutMode`` directive defines how output files are staged-out from the scratch directory to the process work
-directory. The following values are allowed:
+``stageOutMode`` 指令定义输出文件如何从暂存目录转移到process工作目录。 允许以下值：
 
 ======= ==================
 Value   Description
@@ -2060,8 +1884,7 @@ See also: `scratch`_.
 tag
 ---
 
-The ``tag`` directive allows you to associate each process executions with a custom label, so that it will be easier
-to identify them in the log file or in the trace execution report. For example::
+``tag`` 指令允许您将每个process执行与自定义标签相关联，以便在日志文件或跟踪执行报告中更容易识别它们。 例如::
 
     process foo {
       tag "$code"
@@ -2074,7 +1897,7 @@ to identify them in the log file or in the trace execution report. For example::
       """
     }
 
-The above snippet will print a log similar to the following one, where process names contain the tag value::
+上面的代码段将打印一个类似于以下内容的日志，其中process名称包含标记值::
 
     [6e/28919b] Submitted process > foo (alpha)
     [d2/1c6175] Submitted process > foo (gamma)
@@ -2089,7 +1912,7 @@ See also :ref:`Trace execution report <trace-report>`
 time
 ----
 
-The ``time`` directive allows you to define how long a process is allowed to run. For example::
+``time`` 指令允许您定义允许process运行的时间。 例如::
 
     process big_job {
 
@@ -2101,8 +1924,7 @@ The ``time`` directive allows you to define how long a process is allowed to run
     }
 
 
-
-The following time unit suffix can be used when specifying the duration value:
+指定持续时间值时，可以使用以下时间单位后缀：
 
 ======= =============
 Unit    Description
@@ -2125,11 +1947,9 @@ See also: `cpus`_, `memory`_, `queue`_ and `Dynamic computing resources`_.
 validExitStatus
 ---------------
 
-A process is terminated when the executed command returns an error exit status. By default any error status
-other than ``0`` is interpreted as an error condition.
+当执行的命令返回错误退出状态时，process终止。 默认情况下，除 ``0``  以外的任何错误状态都将被解释为错误条件。
 
-The ``validExitStatus`` directive allows you to fine control which error status will represent a successful command execution.
-You can specify a single value or multiple values as shown in the following example::
+``validExitStatus`` 指令允许您精确控制哪个错误状态将代表成功执行命令。 您可以指定单个值或多个值，如以下示例所示::
 
 
     process returnOk {
@@ -2143,20 +1963,17 @@ You can specify a single value or multiple values as shown in the following exam
     }
 
 
-In the above example, although the command script ends with a ``1`` exit status, the process
-will not return an error condition because the value ``1`` is declared as a `valid` status in
-the ``validExitStatus`` directive.
 
+在上面的示例中，尽管命令脚本以 ``1`` 退出状态结束，但该process不会返回错误条件，因为值 ``1``  在 ``validExitStatus`` 指令中被声明为有效状态。
 
 
 Dynamic directives
 ------------------
 
-A directive can be assigned *dynamically*, during the process execution, so that its actual value can be evaluated
-depending on the value of one, or more, process' input values.
 
-In order to be defined in a dynamic manner the directive's value needs to be expressed by using a :ref:`closure <script-closure>`
-statement, as in the following example::
+可以在process执行期间动态分配指令，以便可以根据一个或多个process输入值来评估其实际值。
+
+为了以动态方式定义，需要使用 :ref:`closure <script-closure>` 语句表达指令的值，如下例所示::
 
     process foo {
 
@@ -2172,17 +1989,16 @@ statement, as in the following example::
       """
     }
 
-In the above example the `queue`_ directive is evaluated dynamically, depending on the input value ``entries``. When it is
-bigger than 100, jobs will be submitted to the queue ``long``, otherwise the ``short`` one will be used.
+在上面的示例中， `queue`_ 指令是动态计算的，具体取决于输入值 ``entries`` 。 当它大于100时，作业将被提交到 ``long`` 队列中，否则将使用 ``short`` 队列作业。
 
-All directives can be assigned to a dynamic value except the following:
+
+可以将所有指令分配给动态值，但以下情况除外：
 
 * `executor`_
 * `maxForks`_
 
 
-.. note:: You can retrieve the current value of a dynamic directive in the process script by using the implicit variable ``task``
-  which holds the directive values defined in the current process instance.
+.. note::  您可以使用包含当前process实例中定义的指令值的隐式变量 ``task`` 来检索process脚本中动态指令的当前值。
 
 For example::
 
@@ -2204,12 +2020,9 @@ For example::
 Dynamic computing resources
 ---------------------------
 
-It's a very common scenario that different instances of the same process may have very different needs in terms of computing resources. 
-In such situations requesting, for example, an amount of memory too low will cause some tasks to fail. 
-Instead, using a higher limit that fits all the tasks in your execution could significantly decrease the execution priority of your jobs.
+这是一种非常常见的情况，即同一process的不同实例在计算资源方面可能有非常不同的需求。 例如，在这种情况下请求一定量的内存太低会导致某些任务失败。 相反，使用适合执行中所有任务的更高限制可能会显着降低作业的执行优先级。
 
-The `Dynamic directives`_ evaluation feature can be used to modify the amount of computing resources requested in case
-of a process failure and try to re-execute it using a higher limit. For example::
+`Dynamic directives`_  评估功能可用于修改在process失败的情况下请求的计算资源量，并尝试使用更高的限制重新执行它。 例如::
 
 
     process foo {
@@ -2226,11 +2039,8 @@ of a process failure and try to re-execute it using a higher limit. For example:
     }
 
 
-In the above example the `memory`_ and execution `time`_ limits are defined dynamically. The first time the process
-is executed the ``task.attempt`` is set to ``1``, thus it will request a two GB of memory and one hour of maximum execution
-time.
+在上面的示例中，动态定义了 `memory`_ 和执行 `time`_ 限制。 第一次执行该process时， ``task.attempt`` 设置为 ``1``，因此它将请求2GB的内存和1小时的最长执行时间。
 
-If the task execution fail reporting an exit status equals ``140``, the task is re-submitted (otherwise terminates immediately).
-This time the value of ``task.attempt`` is ``2``, thus increasing the amount of the memory to four GB and the time to 2 hours, and so on.
+如果任务执行失败，报告退出状态等于 ``140``，则重新提交任务（否则立即终止）。 这次 ``task.attempt`` 的值为 ``2``，从而将内存量增加到4GB，时间增加到2小时，依此类推。
 
-The directive `maxRetries`_ set the maximum number of time the same task can be re-executed.
+指令 `maxRetries` 设置可以重新执行同一任务的最大时间。
