@@ -8,7 +8,7 @@ Nextflow-中文文档
 =====================================================
 
 
-:作者: `Henri E. Bal , Jennifer G. Steiner , Andrew S. Tanenbaum <https://github.com/nextflow-io/nextflow>`_
+:作者: `pditommaso, ewels, bmsanjuan, etc. <https://github.com/nextflow-io/nextflow/graphs/contributors>`_
 :翻译: `lidanqing <https://github.com/lidanqing123>`_ , 邵明辉, 刘肖川, 许洪柱
  
 .. Note::
