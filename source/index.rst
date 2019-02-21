@@ -41,6 +41,7 @@ Nextflow-中文文档
    doc/metadata
    doc/mail
    doc/example
+   doc/metrics
    doc/faq
 
 

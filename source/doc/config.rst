@@ -712,8 +712,6 @@ The above feature requires version 0.28.x or higher.
 =====================
 
 以下环境变量控制Nextflow运行时的配置及其使用的Java虚拟机。
-The following environment variables control the configuration of the Nextflow runtime and
-the Java virtual machine used by it.
 
 =========================== ================
 Name                        Description
