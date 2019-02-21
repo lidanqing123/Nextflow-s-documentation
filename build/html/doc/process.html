@@ -242,16 +242,16 @@
   <div class="section" id="processes">
 <span id="process-page"></span><h1>Processes<a class="headerlink" href="#processes" title="永久链接至标题">¶</a></h1>
 <p>在Nextflow中，<code class="docutils literal notranslate"><span class="pre">process</span></code> 是执行用户脚本的基本处理进程。</p>
-<dl class="docutils">
-<dt>process定义以关键字 <code class="docutils literal notranslate"><span class="pre">process</span></code> 开始，后跟process名称，最后由大括号分隔的process代码块。 <code class="docutils literal notranslate"><span class="pre">process</span></code> 正文必须包含表示命令的字符串，或者更一般地说，包含由其执行的脚本。 一个基本 <code class="docutils literal notranslate"><span class="pre">process</span></code> 如下例所示::</dt>
-<dd><p class="first">process sayHello {</p>
-<blockquote>
-<div>“””
-echo ‘Hello world!’ &gt; file
-“”“</div></blockquote>
-<p class="last">}</p>
-</dd>
-</dl>
+<p>process定义以关键字 <code class="docutils literal notranslate"><span class="pre">process</span></code> 开始，后跟process名称，最后由大括号分隔的process代码块。 <code class="docutils literal notranslate"><span class="pre">process</span></code> 正文必须包含表示命令的字符串，或者更一般地说，包含由其执行的脚本。 一个基本 <code class="docutils literal notranslate"><span class="pre">process</span></code> 如下例所示:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">sayHello</span> <span class="p">{</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    echo &#39;Hello world!&#39; &gt; file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
 <p>一个process可以分别包含五个定义块, 分别是：指令(directives)，输入(inputs)，输出(outputs)，when子句和最后的process脚本。 语法定义如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="o">&lt;</span> <span class="n">name</span> <span class="o">&gt;</span> <span class="p">{</span>
 

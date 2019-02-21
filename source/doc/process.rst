@@ -8,6 +8,7 @@ Processes
 
 
 process定义以关键字 ``process`` 开始，后跟process名称，最后由大括号分隔的process代码块。 ``process`` 正文必须包含表示命令的字符串，或者更一般地说，包含由其执行的脚本。 一个基本 ``process`` 如下例所示::
+
   process sayHello {
 
       """
